@@ -27,7 +27,7 @@ interface userInfo {
   meal_source: string;
 }
 
-const HomePage = () => {
+export default function HomeScreen() {
   const [userInfo, setUserInfo] = useState<userInfo | null>(null);
   const [streak, setStreak] = useState(0);
   const router = useRouter();
@@ -96,18 +96,9 @@ const HomePage = () => {
         {/* Log Meals Button */}
         <Animated.View entering={FadeInUp.delay(500)} style={styles.buttonContainer}>
           <TouchableOpacity
-            onPress={() => router.push('/Pantry')}
-            style={{
-              backgroundColor: '#FF6B00',
-              padding: 20,
-              borderRadius: 16,
-              alignItems: 'center',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 8 },
-              shadowOpacity: 0.12,
-              shadowRadius: 24,
-              elevation: 8,
-              width: '80%'
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              // TODO: Navigate to meal logging
             }}
             style={styles.button}
           >
@@ -225,5 +216,3 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-
-export default HomePage

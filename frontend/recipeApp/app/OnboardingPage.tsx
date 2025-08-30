@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Animated, Dimensions, SafeAreaView } from 'react-native'
+import { View, Text, TouchableOpacity, Animated, Dimensions } from 'react-native'
 import React, { useState, useRef } from 'react'
 import Personal from './components/onboarding/Personal'
 import Health from './components/onboarding/Health'
@@ -6,6 +6,9 @@ import Goals from './components/onboarding/Goals'
 import Lifestyle from './components/onboarding/Lifestyle'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
+import { ProgressBar } from 'react-native-paper';
+import * as Haptics from 'expo-haptics';
+import AnimatedComponent, { FadeIn, FadeOut, SlideInLeft, SlideOutLeft, SlideInRight, SlideOutRight } from 'react-native-reanimated';
 
 interface userInfo {
   name: string;
@@ -20,15 +23,16 @@ interface userInfo {
   health_goals: string[];
   medication_details: string[];
   budget_for_food: number;
-  occupation_type: string;
+  occupation_type: string[];
   work_schedule: string;
   access_to_kitchen: string;
   stress_level: string;
-  meal_source: string;
+  meal_source: string[];
 }
 
 const OnboardingPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [animating, setAnimating] = useState(false);
   const [data, setData] = useState<userInfo>({
     name: '',
     age: 25,
@@ -42,42 +46,36 @@ const OnboardingPage = () => {
     health_goals: [],
     medication_details: [],
     budget_for_food: 1000,
-    occupation_type: '',
+    occupation_type: [],
     work_schedule: '',
     access_to_kitchen: '',
     stress_level: 'moderate',
-    meal_source: ''
+    meal_source: []
   });
 
   const { width } = Dimensions.get('window');
-  const animatedValue = useRef(new Animated.Value(0)).current;
   const router = useRouter();
 
   const handleBack = () => {
-    if (currentStep > 0) {
-      Animated.timing(animatedValue, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true
-      }).start(() => {
+    if (currentStep > 0 && !animating) {
+      setAnimating(true);
+      setTimeout(() => {
         setCurrentStep(currentStep - 1);
-        animatedValue.setValue(0);
-      });
+        setAnimating(false);
+      }, 150);
     }
   };
 
   const handleNext = () => {
-    if (currentStep < 3) {
-      Animated.timing(animatedValue, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true
-      }).start(() => {
+    if (currentStep < 3 && !animating) {
+      setAnimating(true);
+      setTimeout(() => {
         setCurrentStep(currentStep + 1);
-        animatedValue.setValue(0);
-      });
-    } else {
+        setAnimating(false);
+      }, 150);
+    } else if (currentStep === 3) {
       // Finish onboarding
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       console.log('userInfo:', data);
       // Send data to backend
       fetch('http://10.20.1.20:5000/store_user_info', {
@@ -116,46 +114,36 @@ const OnboardingPage = () => {
     }
   };
 
-  const currentTranslateX = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -width]
-  });
-
-  const nextTranslateX = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [width, 0]
-  });
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#F6F7F9' }}>
+    <View style={{ flex: 1, backgroundColor: '#F6F7F9' }}>
       <View style={{ flex: 1, backgroundColor: '#F6F7F9' }}>
-      <Animated.View
+        {/* Progress Bar */}
+        <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+          <ProgressBar progress={(currentStep + 1) / 4} color="#FF6B00" style={{ height: 8, borderRadius: 4 }} />
+          <Text style={{ textAlign: 'center', marginTop: 10, color: '#6B7280' }}>
+            Step {currentStep + 1} of 4
+          </Text>
+        </View>
+
+        {/* Skip Button */}
+        <View style={{ alignItems: 'flex-end', paddingHorizontal: 20, paddingBottom: 10 }}>
+          <TouchableOpacity onPress={() => router.push('/HomePage')}>
+            <Text style={{ color: '#FF6B00', fontSize: 16 }}>Skip</Text>
+          </TouchableOpacity>
+        </View>
+      <AnimatedComponent.View
+        key={currentStep}
+        entering={SlideInRight.duration(300)}
+        exiting={SlideOutLeft.duration(300)}
         style={{
-          transform: [{ translateX: currentTranslateX }],
           position: 'absolute',
           width: '100%',
           height: '100%',
-          padding: 20,
           justifyContent: 'center'
         }}
       >
         {renderComponent(currentStep)}
-      </Animated.View>
-
-      {currentStep < 3 && (
-        <Animated.View
-          style={{
-            transform: [{ translateX: nextTranslateX }],
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            padding: 20,
-            justifyContent: 'center'
-          }}
-        >
-          {renderComponent(currentStep + 1)}
-        </Animated.View>
-      )}
+      </AnimatedComponent.View>
 
       <View style={{ position: 'absolute', bottom: 40, left: 20, right: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
         {currentStep > 0 && (
@@ -195,8 +183,8 @@ const OnboardingPage = () => {
           </Text>
         </TouchableOpacity>
       </View>
+        </View>
     </View>
-    </SafeAreaView>
   )
 }
 

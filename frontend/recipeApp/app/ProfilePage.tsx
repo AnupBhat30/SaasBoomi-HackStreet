@@ -1,8 +1,11 @@
-import { View, Text, TouchableOpacity, TextInput, SafeAreaView, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, SafeAreaView, ScrollView, StyleSheet, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
+import * as ImagePicker from 'expo-image-picker';
+import Animated, { FadeInUp } from 'react-native-reanimated';
+import * as Haptics from 'expo-haptics';
 
 interface userInfo {
   name: string;
@@ -28,6 +31,7 @@ const ProfilePage = () => {
   const [userInfo, setUserInfo] = useState<userInfo | null>(null);
   const [editing, setEditing] = useState(false);
   const [editedData, setEditedData] = useState<userInfo | null>(null);
+  const [avatar, setAvatar] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -38,12 +42,35 @@ const ProfilePage = () => {
         setUserInfo(parsed);
         setEditedData(parsed);
       }
+      const avatarData = await AsyncStorage.getItem('avatar');
+      setAvatar(avatarData);
     };
     loadUserInfo();
   }, []);
 
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Sorry, we need camera roll permissions to make this work!');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setAvatar(result.assets[0].uri);
+      await AsyncStorage.setItem('avatar', result.assets[0].uri);
+    }
+  };
+
   const handleSave = async () => {
     if (editedData) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       // Update localStorage
       await AsyncStorage.setItem('userInfo', JSON.stringify(editedData));
       setUserInfo(editedData);
@@ -90,10 +117,10 @@ const ProfilePage = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#F6F7F9' }}>
-      <ScrollView style={{ flex: 1, padding: 20 }}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
         {/* Header */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+        <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()}>
             <MaterialIcons name="arrow-back" size={24} color="#1F2933" />
           </TouchableOpacity>
@@ -102,7 +129,20 @@ const ProfilePage = () => {
           </TouchableOpacity>
         </View>
 
-        <Text style={{ fontSize: 28, fontWeight: '700', color: '#1F2933', marginBottom: 20 }}>Your Profile</Text>
+        {/* Avatar */}
+        <Animated.View entering={FadeInUp.delay(100)} style={styles.avatarContainer}>
+          <TouchableOpacity onPress={pickImage}>
+            <Image
+              source={avatar ? { uri: avatar } : require('../assets/images/icon.png')}
+              style={styles.avatar}
+            />
+            <View style={styles.editIcon}>
+              <MaterialIcons name="camera-alt" size={16} color="white" />
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
+
+        <Animated.Text entering={FadeInUp.delay(200)} style={styles.title}>Your Profile</Animated.Text>
 
         {/* Personal Information Section */}
         <View style={{ backgroundColor: '#FFFFFF', borderRadius: 20, padding: 20, marginBottom: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.12, shadowRadius: 24, elevation: 8 }}>
@@ -397,5 +437,104 @@ const ProfilePage = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F6F7F9',
+  },
+  scrollView: {
+    flex: 1,
+    padding: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  avatarContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 3,
+    borderColor: '#FF6B00',
+  },
+  editIcon: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: '#FF6B00',
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F2933',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  section: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.12,
+    shadowRadius: 24,
+    elevation: 8,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#1F2933',
+    marginBottom: 15,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 8,
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#F6F7F9',
+  },
+  text: {
+    fontSize: 16,
+    color: '#6B7280',
+    backgroundColor: '#F6F7F9',
+    padding: 10,
+    borderRadius: 8,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  halfInput: {
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  saveButton: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 16,
+    alignItems: 'center',
+    marginTop: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.12,
+    shadowRadius: 24,
+    elevation: 8,
+  },
+});
 
 export default ProfilePage
