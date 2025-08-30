@@ -1,27 +1,19 @@
 {
-  "name": "Hamdan Shaik",
+  "name": "Hamdan",
   "age": 25,
   "height": 170,
   "weight": 70,
   "BMI": 24.2,
   "gender": "Male",
-  "location": "Margao",
-  "health_conditions": [
-    "Thyroid issues",
-    "Heart disease"
-  ],
+  "location": "",
+  "health_conditions": [],
   "allergies": [],
-  "health_goals": [
-    "Low-sodium",
-    "Better Health",
-    "Muscle Gain",
-    "Disease Management"
-  ],
+  "health_goals": [],
   "medication_details": [],
   "budget_for_food": 1000,
-  "occupation_type": "Student",
-  "work_schedule": "Shift work",
+  "occupation_type": "",
+  "work_schedule": "",
   "access_to_kitchen": "",
   "stress_level": "moderate",
-  "meal_source": "Roadside"
+  "meal_source": ""
 }

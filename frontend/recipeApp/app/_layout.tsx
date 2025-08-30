@@ -24,6 +24,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ headerShown: false }} />
          <Stack.Screen name="HomePage" options={{ headerShown: false }} />
          <Stack.Screen name="ProfilePage" options={{ headerShown: false }} />
+         <Stack.Screen name="LandingPage" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

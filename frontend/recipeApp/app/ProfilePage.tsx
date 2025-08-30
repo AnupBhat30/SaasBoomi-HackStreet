@@ -366,6 +366,33 @@ const ProfilePage = () => {
             <Text style={{ color: 'white', fontSize: 18, fontWeight: '600' }}>Save Changes</Text>
           </TouchableOpacity>
         )}
+
+        {/* Logout/Delete Account Section */}
+        <View style={{ backgroundColor: '#FFFFFF', borderRadius: 20, padding: 20, marginBottom: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.12, shadowRadius: 24, elevation: 8 }}>
+          <Text style={{ fontSize: 20, fontWeight: '600', color: '#1F2933', marginBottom: 15 }}>Account</Text>
+
+          <TouchableOpacity
+            onPress={async () => {
+              // Remove userInfo from localStorage
+              await AsyncStorage.removeItem('userInfo');
+              // Navigate to LandingPage
+              router.push('/LandingPage');
+            }}
+            style={{
+              backgroundColor: '#EF4444',
+              padding: 15,
+              borderRadius: 16,
+              alignItems: 'center',
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 8 },
+              shadowOpacity: 0.12,
+              shadowRadius: 24,
+              elevation: 8
+            }}
+          >
+            <Text style={{ color: 'white', fontSize: 18, fontWeight: '600' }}>Logout / Delete Account</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
