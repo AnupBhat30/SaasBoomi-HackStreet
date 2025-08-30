@@ -1,9 +1,14 @@
 {
   "breakfast": [
     "Iced tea",
-    "Hot tea (Garam Chai)"
+    "Hot tea (Garam Chai)",
+    "ice tea"
   ],
-  "lunch": [],
-  "snacks": [],
+  "lunch": [
+    "curry"
+  ],
+  "snacks": [
+    "chips"
+  ],
   "dinner": []
 }

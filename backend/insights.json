@@ -1,4 +1,58 @@
 {
-  "error": "could not parse extracted JSON",
-  "raw": "{\"key_insight\": \"Hamdan, your breakfast of iced tea and poha, followed by rice and dal for lunch, is a common Indian meal pattern. While poha and rice dal can be part of a balanced diet, the iced tea contributes to sugar intake, which can impact your goals for weight loss and energy, especially with your diabetes. Increasing protein and fiber at each meal will be key for better energy and blood sugar management.\", \"modern_approach\": \"To improve energy and support your health goals, focus on lean protein sources. Consider incorporating options like Greek yogurt or a protein shake, especially as a student with a busy schedule. As suggested in the posts, increasing protein intake is crucial for sustained energy levels and muscle maintenance.\", \"heritage_alternative\": \"For a more balanced meal, consider swapping refined grains for whole grains like millets (jowar, bajra) for your rotis, as mentioned in post-004. Adding a side of sprouts or a lentil preparation to your lunch can also significantly boost protein and fiber intake, supporting your diabetes management.\", \"simple_swap\": [{\"mealType\": \"breakfast\", \"current\": \"ice tea\", \"alternative\": \"Hot tea (Garam Chai)\", \"reasoning\": \"Opt for unsweetened hot tea like Garam Chai, which can be a comforting monsoon beverage and provides a caffeine boost without added sugar.\"}, {\"mealType\": \"breakfast\", \"current\": \"poha\", \"alternative\": \"Vegetable poha\", \"reasoning\": \"Adding vegetables to your poha will increase its fiber and nutrient content, which can help with satiety and blood sugar control.\"}, {\"mealType\": \"lunch\", \"current\": \"rice dal\", \"alternative\": \"Lentils and semolina porridge (Dal suji porridge/daliya)\", \"reasoning\": \"Daliya (broken wheat porridge) with lentils offers more fiber and can be a more filling option than rice dal, potentially aiding in weight loss and diabetes management.\"}, {\"mealType\": \"snacks\", \"current\": \"shawarma\", \"alternative\": \"Sprouts chaat with achar masala\", \"reasoning\": \"A sprouts chaat is a high-protein, high-fiber snack that can help manage hunger and energy levels. Using available achar masala for flavor is a budget-friendly option.\"}], \"general_summary\": [\"Start your day with unsweetened Garam Chai instead of iced tea to manage sugar intake, Hamdan. This is a simple swap that aligns with the monsoon season.\", \"For breakfast, try to incorporate vegetables into your poha to increase its fiber and nutrient content. This will help keep you feeling fuller for longer, supporting your weight loss goal.\", \"At lunch, consider having a lentil and daliya (broken wheat) porridge as a more filling and fiber-rich alternative to rice and dal. This aligns with recommendations for managing diabetes.\", \"For your snack, a sprouts chaat is a great option. You can flavor it with the available achar masala, making it a tasty and protein-rich choice to boost energy.\", \"As a student, preparing sprouts chaat ahead of time can save you time and ensure you have a healthy snack readily available, especially with your shift work schedule.\"]}\n}"
+  "key_insight": "Mr. Bhat, your meal log shows a reliance on fast food (ice tea, curry, chips), which may not be ideal given your anemia, diabetes, and thyroid conditions.  These meals lack the essential nutrients needed to improve immunity and energy levels, and the high sodium content in processed foods could exacerbate your conditions. Your BMI indicates you are overweight, and the current diet is unlikely to support your weight loss goals. Immediate attention to nutrient-rich choices is recommended.",
+  "modern_approach": "Incorporate more nutrient-dense options like smoothies packed with spinach, berries, and banana (easily available).  Consider adding a handful of almonds or a small serving of Greek yogurt (if not allergic) for added protein and healthy fats.  These help boost energy and immunity without significant calorie increase.",
+  "heritage_alternative": "For breakfast, try a warm, comforting bowl of moong dal cheela (pancakes) with a side of fresh fruit like banana or apple.  For lunch and snacks, focus on a filling and nutritious plate of mixed vegetables with a small serving of dal or other protein like paneer (if dairy is fine).  These are affordable, readily available options to replace fast food and processed snacks.",
+  "simple_swap": [
+    {
+      "mealType": "breakfast",
+      "current": "ice tea",
+      "alternative": "Moong dal cheela with banana",
+      "reasoning": "Provides essential nutrients, protein and fiber for sustained energy; better than just ice tea for anemia, diabetes and energy levels.",
+      "hasRecipe": true,
+      "hasRecipeReason": "Common pancake recipe",
+      "tags": [
+        "moong dal cheela with banana",
+        "with",
+        "moong",
+        "dal",
+        "cheela",
+        "banana"
+      ]
+    },
+    {
+      "mealType": "lunch",
+      "current": "curry",
+      "alternative": "Mixed vegetable curry with a small portion of dal",
+      "reasoning": "More balanced nutrition than typical curry; improves weight management. Add baby corn if available.",
+      "hasRecipe": true,
+      "hasRecipeReason": "Standard home-cooked curry",
+      "tags": [
+        "a",
+        "with",
+        "mixed vegetable curry with a small portion of dal",
+        "vegetable",
+        "small",
+        "portion",
+        "dal",
+        "of",
+        "mixed",
+        "curry"
+      ]
+    },
+    {
+      "mealType": "snacks",
+      "current": "chips",
+      "alternative": "Banana",
+      "reasoning": "Bananas are a healthy and readily available snack; provides potassium and fiber, a better choice than chips.",
+      "hasRecipe": false,
+      "hasRecipeReason": "Eaten as is"
+    }
+  ],
+  "general_summary": [
+    "Anup, start your day with a nutritious breakfast like moong dal cheela with banana. This helps manage blood sugar and energy levels throughout the day.",
+    "For lunch, aim for a balanced plate of mixed vegetables with dal or paneer, incorporating seasonal vegetables if possible (baby corn for example).",
+    "Swap your usual snacks with readily available fruit like bananas or apples.  These offer more nutrients and fiber than chips.",
+    "Given your flexible schedule, you have time to prepare simple meals. You can make moong dal cheela in advance or look for quick-prep alternatives when needed.",
+    "Remember to keep hydrated; carry a water bottle, especially since you are retired and have more time for self-care."
+  ]
 }

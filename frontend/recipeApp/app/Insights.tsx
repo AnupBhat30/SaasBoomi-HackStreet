@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
-import { Card, Button } from 'react-native-paper';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, FlatList, Dimensions, Alert } from 'react-native';
+import { Button } from 'react-native-paper';
+import { useRouter } from 'expo-router';
+import KeyInsights from './components/insights/KeyInsights';
+import ModernApproach from './components/insights/ModernApproach';
+import HeritageAlternative from './components/insights/HeritageAlternative';
+import SimpleSwaps from './components/insights/SimpleSwaps';
+import GeneralSummary from './components/insights/GeneralSummary';
+
+const { width } = Dimensions.get('window');
 
 const Insights = () => {
   const [insights, setInsights] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef<FlatList>(null);
+  const router = useRouter();
 
   useEffect(() => {
     fetchInsights();
@@ -40,102 +51,106 @@ const Insights = () => {
     );
   }
 
+  const pages = [
+    { component: KeyInsights, data: insights.key_insight },
+    { component: ModernApproach, data: insights.modern_approach },
+    { component: HeritageAlternative, data: insights.heritage_alternative },
+    { component: SimpleSwaps, data: insights.simple_swap },
+    { component: GeneralSummary, data: insights.general_summary },
+  ];
+
+  const renderItem = ({ item }: { item: any }) => (
+    <View style={styles.page}>
+      <item.component data={item.data} />
+    </View>
+  );
+
+  const onMomentumScrollEnd = (event: any) => {
+    const index = Math.round(event.nativeEvent.contentOffset.x / width);
+    setCurrentIndex(index);
+  };
+
+  const handleNext = () => {
+    if (currentIndex < pages.length - 1) {
+      flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
+    } else {
+      router.back();
+    }
+  };
+
+  const handleBack = () => {
+    if (currentIndex > 0) {
+      flatListRef.current?.scrollToIndex({ index: currentIndex - 1 });
+    }
+  };
+
+  const renderDots = () => (
+    <View style={styles.dotsContainer}>
+      {pages.map((_, index) => (
+        <View key={index} style={[styles.dot, index === currentIndex && styles.activeDot]} />
+      ))}
+    </View>
+  );
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Nutrition Insights</Text>
-
-      {insights.key_insight && (
-        <Card style={styles.card}>
-          <Card.Title title="Key Insight" />
-          <Card.Content>
-            <Text>{insights.key_insight}</Text>
-          </Card.Content>
-        </Card>
-      )}
-
-      {insights.modern_approach && (
-        <Card style={styles.card}>
-          <Card.Title title="Modern Approach" />
-          <Card.Content>
-            <Text>{insights.modern_approach}</Text>
-          </Card.Content>
-        </Card>
-      )}
-
-      {insights.heritage_alternative && (
-        <Card style={styles.card}>
-          <Card.Title title="Heritage Alternative" />
-          <Card.Content>
-            <Text>{insights.heritage_alternative}</Text>
-          </Card.Content>
-        </Card>
-      )}
-
-      {insights.simple_swap && insights.simple_swap.length > 0 && (
-        <Card style={styles.card}>
-          <Card.Title title="Simple Swaps" />
-          <Card.Content>
-            {insights.simple_swap.map((swap: any, index: number) => (
-              <View key={index} style={styles.swapItem}>
-                <Text style={styles.swapText}>
-                  {swap.mealType}: {swap.current} → {swap.alternative}
-                </Text>
-                <Text>{swap.reasoning}</Text>
-              </View>
-            ))}
-          </Card.Content>
-        </Card>
-      )}
-
-      {insights.general_summary && insights.general_summary.length > 0 && (
-        <Card style={styles.card}>
-          <Card.Title title="General Summary" />
-          <Card.Content>
-            {insights.general_summary.map((item: string, index: number) => (
-              <Text key={index} style={styles.summaryItem}>
-                {index + 1}. {item}
-              </Text>
-            ))}
-          </Card.Content>
-        </Card>
-      )}
-
-      <Button mode="contained" onPress={fetchInsights} style={styles.button}>
-        Refresh Insights
-      </Button>
-    </ScrollView>
+    <View style={styles.container}>
+      {renderDots()}
+      <FlatList
+        ref={flatListRef}
+        data={pages}
+        renderItem={renderItem}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        keyExtractor={(_, index) => index.toString()}
+      />
+      <View style={styles.buttonContainer}>
+        <Button mode="outlined" onPress={handleBack} disabled={currentIndex === 0} style={styles.button}>
+          Back
+        </Button>
+        <Button mode="contained" onPress={handleNext} style={styles.button}>
+          {currentIndex === pages.length - 1 ? 'Finish' : 'Next'}
+        </Button>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#F6F7F9',
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    textAlign: 'center',
+  page: {
+    width,
+    flex: 1,
+  },
+  dotsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
     marginBottom: 20,
-    color: '#1F2933',
   },
-  card: {
-    marginBottom: 16,
-    backgroundColor: '#FFFFFF',
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#ccc',
+    marginHorizontal: 5,
   },
-  swapItem: {
-    marginBottom: 10,
+  activeDot: {
+    backgroundColor: '#FF6B00',
   },
-  swapText: {
-    fontWeight: 'bold',
-  },
-  summaryItem: {
-    marginBottom: 5,
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
   },
   button: {
-    marginTop: 20,
-    backgroundColor: '#FF6B00',
+    flex: 1,
+    marginHorizontal: 10,
   },
 });
 
