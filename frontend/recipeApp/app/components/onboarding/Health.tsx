@@ -92,7 +92,7 @@ const Health: React.FC<Props> = ({ data, onChange }) => {
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
       <ScrollView style={{ flex: 1, backgroundColor: '#FFFFFF' }} contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 20 }}>
       <Animated.Text entering={FadeInUp.delay(100)} style={{ fontSize: 32, fontWeight: '700', color: '#1F2933', marginBottom: 8 }}>Your Health Profile</Animated.Text>
-      <Animated.Text entering={FadeInUp.delay(200)} style={{ fontSize: 14, fontWeight: '400', color: '#6B7280', marginBottom: 20 }}>Select any conditions you're managing. This information remains private and helps us tailor your plan.</Animated.Text>
+      <Animated.Text entering={FadeInUp.delay(200)} style={{ fontSize: 14, fontWeight: '400', color: '#6B7280', marginBottom: 20 }}>Select any conditions you&apos;re managing. This information remains private and helps us tailor your plan.</Animated.Text>
 
       <Animated.View entering={FadeInUp.delay(300)} style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Health Conditions</Text>

@@ -83,7 +83,7 @@ const Goals: React.FC<Props> = ({ data, onChange }) => {
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
         <Animated.Text entering={FadeInUp.delay(100)} style={styles.title}>Your Goals</Animated.Text>
-        <Animated.Text entering={FadeInUp.delay(200)} style={styles.subtitle}>Let's set your targets. We'll help you get there.</Animated.Text>
+        <Animated.Text entering={FadeInUp.delay(200)} style={styles.subtitle}>Let&apos;s set your targets. We&apos;ll help you get there.</Animated.Text>
 
         <Animated.View entering={FadeInUp.delay(300)} style={styles.section}>
           <Text style={styles.sectionTitle}>Health Goals</Text>

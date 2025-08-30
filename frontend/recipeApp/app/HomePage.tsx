@@ -1,11 +1,10 @@
 import { View, Text, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import Animated, { FadeInUp } from 'react-native-reanimated';
-import * as Haptics from 'expo-haptics';
 
 interface userInfo {
   name: string;
@@ -109,7 +108,6 @@ const HomePage = () => {
               elevation: 8,
               width: '80%'
             }}
-            style={styles.button}
           >
             <Text style={styles.buttonText}>Log Your Meals</Text>
             <Text style={styles.buttonSubtext}>Log your meals so we can provide you with a personalized plan</Text>

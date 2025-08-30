@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, Animated, Dimensions } from 'react-native'
-import React, { useState, useRef } from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import Personal from './components/onboarding/Personal'
 import Health from './components/onboarding/Health'
 import Goals from './components/onboarding/Goals'
@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
 import { ProgressBar } from 'react-native-paper';
 import * as Haptics from 'expo-haptics';
-import AnimatedComponent, { FadeIn, FadeOut, SlideInLeft, SlideOutLeft, SlideInRight, SlideOutRight } from 'react-native-reanimated';
+import AnimatedComponent, { SlideInRight, SlideOutLeft } from 'react-native-reanimated';
 
 interface userInfo {
   name: string;
@@ -53,7 +53,6 @@ const OnboardingPage = () => {
     meal_source: []
   });
 
-  const { width } = Dimensions.get('window');
   const router = useRouter();
 
   const handleBack = () => {

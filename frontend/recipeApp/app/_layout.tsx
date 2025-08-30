@@ -27,6 +27,7 @@ export default function RootLayout() {
          <Stack.Screen name="LandingPage" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
         <Stack.Screen name="Pantry" options={{ headerShown: false }} />
+        <Stack.Screen name="LogMeal" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
