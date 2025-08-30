@@ -1,33 +1,33 @@
 {
-  "key_insight": "Hamdan, your meals today included poha and a light dal with sabzi. While these are generally good choices, focus on increasing protein intake to support muscle gain and manage your thyroid and heart conditions. The current meal structure is a good base, and we can build upon it with smart additions.",
-  "modern_approach": "To boost protein and manage your conditions, consider adding a scoop of whey protein to your buttermilk or including lean protein sources like grilled chicken or fish in your meals. Focus on whole grains and complex carbohydrates for sustained energy.",
-  "heritage_alternative": "For a protein-rich breakfast, 'Sprouted moong poha' is an excellent choice. During lunch, pair your dal with a side of sprouted lentils or a small portion of paneer to enhance protein content. For dinner, consider 'Spinach Khichdi' which is nutrient-dense.",
+  "key_insight": "Hamdan, your meals today, including poha, dal, sabzi, and khichdi, were generally well-balanced. The poha for breakfast is a good start. Including seasonal vegetables in your lunch sabzi is excellent, especially during the monsoon. The khichdi for dinner is also a comforting and digestible option. Continue focusing on these wholesome meals.",
+  "modern_approach": "To further support your fitness goals, consider enhancing your protein intake. Try adding a scoop of whey protein to your post-workout drink or incorporating Greek yogurt as a snack. This will aid muscle recovery and growth effectively.",
+  "heritage_alternative": "For a nutrient-dense breakfast that aligns with traditional Indian eating, opt for 'Sprouted moong poha'. This option offers increased protein and fiber compared to regular poha, supporting sustained energy throughout your day.",
   "simple_swap": [
     {
       "mealType": "breakfast",
       "current": "Tea (small, low sugar)",
       "alternative": "Tea (small, low sugar)",
-      "reasoning": "No swap needed; this food aligns well with your goals.",
+      "reasoning": "Your current tea is fine. Consider adding a small portion of sprouts or a spoon of curd to your breakfast to boost protein.",
       "hasRecipe": true,
-      "hasRecipeReason": "Tea is commonly brewed at home.",
+      "hasRecipeReason": "Common home beverage.",
       "tags": [
-        "tea",
+        "small",
         "low",
         "sugar",
-        "small",
-        "tea small low sugar"
+        "tea small low sugar",
+        "tea"
       ]
     },
     {
       "mealType": "breakfast",
       "current": "Poha (small)",
       "alternative": "Sprouted moong poha",
-      "reasoning": "Sprouted moong poha offers more protein and fewer calories than regular poha, aiding muscle gain and health management.",
+      "reasoning": "Sprouted moong poha is a great choice as it offers more protein and fiber, aiding your fitness goals and keeping you full longer.",
       "hasRecipe": true,
-      "hasRecipeReason": "Poha dishes are frequently prepared at home.",
+      "hasRecipeReason": "Can be easily prepared at home with poha and sprouts.",
       "tags": [
-        "moong",
         "sprouted moong poha",
+        "moong",
         "poha",
         "sprouted"
       ]
@@ -36,104 +36,94 @@
       "mealType": "lunch",
       "current": "Dal (light)",
       "alternative": "Dal dhokli",
-      "reasoning": "Dal dhokli is a good heritage option; adding more vegetables and using less oil can further benefit your goals.",
+      "reasoning": "Dal dhokli is a wholesome meal that can be made even healthier by using whole wheat flour and adding more vegetables.",
       "hasRecipe": true,
-      "hasRecipeReason": "Dal dhokli is a traditional home-cooked dish.",
+      "hasRecipeReason": "Traditional Gujarati home-cooked dish.",
       "tags": [
-        "dal dhokli",
         "dhokli",
-        "dal"
+        "dal",
+        "dal dhokli"
       ]
     },
     {
       "mealType": "lunch",
       "current": "Seasonal sabzi (soft-cooked, less oil)",
       "alternative": "Seasonal sabzi (soft-cooked, less oil)",
-      "reasoning": "No swap needed; this food aligns well with your goals.",
+      "reasoning": "Your sabzi is a good choice. Continue with this preparation, perhaps adding a lentil or paneer side for extra protein.",
       "hasRecipe": true,
-      "hasRecipeReason": "Sabzi is a staple home-cooked vegetable dish.",
+      "hasRecipeReason": "Refers to a cooked vegetable dish, easily made at home.",
       "tags": [
-        "seasonal sabzi softcooked less oil",
-        "oil",
-        "softcooked",
-        "seasonal",
+        "sabzi",
         "less",
-        "sabzi"
+        "seasonal",
+        "seasonal sabzi softcooked less oil",
+        "softcooked",
+        "oil"
       ]
     },
     {
       "mealType": "snacks",
       "current": "Roasted chana",
       "alternative": "Roasted chana",
-      "reasoning": "No swap needed; this food aligns well with your goals.",
+      "reasoning": "Roasted chana is an excellent protein-rich snack. You could pair it with a small portion of banana for a balanced snack.",
       "hasRecipe": true,
-      "hasRecipeReason": "Roasted chana can be easily prepared at home.",
+      "hasRecipeReason": "Can be easily roasted at home.",
       "tags": [
-        "roasted",
         "chana",
-        "roasted chana"
+        "roasted chana",
+        "roasted"
       ]
     },
     {
       "mealType": "snacks",
       "current": "a small banana",
-      "alternative": "Roasted chana",
-      "reasoning": "Roasted chana provides a good balance of protein and fiber, making it a better snack choice for sustained energy.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Roasted chana can be easily prepared at home.",
-      "tags": [
-        "roasted",
-        "chana",
-        "roasted chana"
-      ]
+      "alternative": "a small banana",
+      "reasoning": "Bananas are good for quick energy. Consider pairing it with roasted chana for a more balanced snack with protein.",
+      "hasRecipe": false,
+      "hasRecipeReason": "A whole fruit, not a prepared dish."
     },
     {
       "mealType": "snacks",
       "current": "Buttermilk (chaas)",
       "alternative": "Buttermilk (chaas)",
-      "reasoning": "No swap needed; this food aligns well with your goals.",
+      "reasoning": "Buttermilk is hydrating and good for digestion, especially in monsoon. You can enhance its protein by adding a pinch of roasted cumin powder.",
       "hasRecipe": true,
-      "hasRecipeReason": "Chaas is commonly made at home by blending buttermilk.",
+      "hasRecipeReason": "Simple to make at home by whisking yogurt and water.",
       "tags": [
-        "buttermilk chaas",
         "chaas",
-        "buttermilk"
+        "buttermilk",
+        "buttermilk chaas"
       ]
     },
     {
       "mealType": "dinner",
       "current": "Khichdi",
       "alternative": "Spinach khichri (Palak khichri/khichdi)",
-      "reasoning": "Spinach khichri is a nutrient-dense option with fewer calories and lower sodium, supporting your health goals.",
+      "reasoning": "Spinach khichri is a nutrient-dense option that provides vitamins and minerals along with carbohydrates.",
       "hasRecipe": true,
-      "hasRecipeReason": "Khichdi is a common and simple home-cooked meal.",
+      "hasRecipeReason": "Common Indian comfort food, easily prepared at home.",
       "tags": [
-        "spinach khichri palak khichrikhichdi",
-        "khichrikhichdi",
         "khichri",
-        "palak",
-        "spinach"
+        "khichrikhichdi",
+        "spinach khichri palak khichrikhichdi",
+        "spinach",
+        "palak"
       ]
     },
     {
       "mealType": "dinner",
       "current": "Curd (small)",
       "alternative": "Curd (small)",
-      "reasoning": "No swap needed; this food aligns well with your goals.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Curd (yogurt) is often made at home from milk.",
-      "tags": [
-        "small",
-        "curd",
-        "curd small"
-      ]
+      "reasoning": "Curd is a good source of protein and probiotics. You can add a sprinkle of roasted seeds like chia or flax for added fiber and healthy fats.",
+      "hasRecipe": false,
+      "hasRecipeReason": "A dairy product, typically not home-cooked in this context."
     }
   ],
   "general_summary": [
-    "Hamdan, start your day with 'Sprouted moong poha' for a protein-rich breakfast to support your muscle gain goal.",
-    "For lunch, try 'Dal dhokli', focusing on adding more vegetables and keeping oil usage minimal, which aligns with your low-sodium goal.",
-    "As a student, carry 'Roasted chana' as a portable snack option for sustained energy between classes.",
-    "For dinner, opt for 'Spinach Khichdi' to incorporate more nutrients and manage your health conditions effectively.",
-    "Remember to stay hydrated by sipping on buttermilk throughout the day, as it's readily available and beneficial for digestion."
+    "Hamdan, start your day with the sprouted moong poha as a nutritious breakfast option.",
+    "For lunch, enjoy your lightly prepared dal with a side of nutrient-rich spinach khichdi.",
+    "Keep roasted chana and a banana handy for a balanced afternoon snack, especially if your work keeps you on the move.",
+    "For dinner, the spinach khichdi and a small portion of curd with seeds will provide sustained energy and protein.",
+    "Stay hydrated with buttermilk throughout the day, especially during the monsoon season."
   ]
 }

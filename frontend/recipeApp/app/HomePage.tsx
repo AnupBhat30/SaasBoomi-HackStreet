@@ -81,6 +81,7 @@ const HomePage = () => {
         {/* Log Meals Button */}
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity
+            onPress={() => router.push('/Pantry')}
             style={{
               backgroundColor: '#FF6B00',
               padding: 20,
