@@ -1,7 +1,7 @@
 {
-  "key_insight": "Your current meal log includes poha, light dal, and soft sabzi, which are generally good choices for managing hypertension and arthritis. The inclusion of buttermilk and roasted chana as snacks is also positive. However, for your goals of maintaining mobility and managing blood pressure, focusing on increasing protein intake and ensuring adequate fiber is important. Given your BMI of 26, a balanced approach with nutrient-dense foods will support your health.",
-  "modern_approach": "To address your goals of maintaining mobility and managing blood pressure, consider incorporating a small serving of protein-rich foods like Greek yogurt or cottage cheese with your breakfast. Post-001 suggests that increasing protein intake is crucial, especially for vegetarians, and can be achieved through options like tofu or tempeh if you find traditional sources insufficient.",
-  "heritage_alternative": "For breakfast, 'Sprouted moong poha' is a great heritage alternative to regular poha, offering more protein and fiber, which is beneficial for managing blood pressure and supporting mobility. You can also explore other nutrient-dense options like 'Ragi porridge' which is readily available in your location.",
+  "key_insight": "Hamdan, your meals today included poha and a light dal with sabzi. While these are generally good choices, focus on increasing protein intake to support muscle gain and manage your thyroid and heart conditions. The current meal structure is a good base, and we can build upon it with smart additions.",
+  "modern_approach": "To boost protein and manage your conditions, consider adding a scoop of whey protein to your buttermilk or including lean protein sources like grilled chicken or fish in your meals. Focus on whole grains and complex carbohydrates for sustained energy.",
+  "heritage_alternative": "For a protein-rich breakfast, 'Sprouted moong poha' is an excellent choice. During lunch, pair your dal with a side of sprouted lentils or a small portion of paneer to enhance protein content. For dinner, consider 'Spinach Khichdi' which is nutrient-dense.",
   "simple_swap": [
     {
       "mealType": "breakfast",
@@ -9,40 +9,40 @@
       "alternative": "Tea (small, low sugar)",
       "reasoning": "No swap needed; this food aligns well with your goals.",
       "hasRecipe": true,
-      "hasRecipeReason": "Tea is commonly made at home.",
+      "hasRecipeReason": "Tea is commonly brewed at home.",
       "tags": [
-        "sugar",
-        "low",
         "tea",
-        "tea small low sugar",
-        "small"
+        "low",
+        "sugar",
+        "small",
+        "tea small low sugar"
       ]
     },
     {
       "mealType": "breakfast",
       "current": "Poha (small)",
-      "alternative": "Sprouted moong poha ",
-      "reasoning": "Sprouted moong poha is a more nutrient-dense option, offering higher protein and fiber content compared to regular poha.",
+      "alternative": "Sprouted moong poha",
+      "reasoning": "Sprouted moong poha offers more protein and fewer calories than regular poha, aiding muscle gain and health management.",
       "hasRecipe": true,
-      "hasRecipeReason": "Poha dishes are typically home-cooked.",
+      "hasRecipeReason": "Poha dishes are frequently prepared at home.",
       "tags": [
-        "sprouted moong poha",
-        "sprouted",
         "moong",
-        "poha"
+        "sprouted moong poha",
+        "poha",
+        "sprouted"
       ]
     },
     {
       "mealType": "lunch",
       "current": "Dal (light)",
       "alternative": "Dal dhokli",
-      "reasoning": "Dal dhokli is a balanced dish that combines lentils and whole wheat, offering a good source of protein and carbohydrates. It's a comforting and nutritious choice.",
+      "reasoning": "Dal dhokli is a good heritage option; adding more vegetables and using less oil can further benefit your goals.",
       "hasRecipe": true,
       "hasRecipeReason": "Dal dhokli is a traditional home-cooked dish.",
       "tags": [
         "dal dhokli",
-        "dal",
-        "dhokli"
+        "dhokli",
+        "dal"
       ]
     },
     {
@@ -51,14 +51,14 @@
       "alternative": "Seasonal sabzi (soft-cooked, less oil)",
       "reasoning": "No swap needed; this food aligns well with your goals.",
       "hasRecipe": true,
-      "hasRecipeReason": "Sabzi (vegetable dish) is a staple of home cooking.",
+      "hasRecipeReason": "Sabzi is a staple home-cooked vegetable dish.",
       "tags": [
-        "seasonal",
         "seasonal sabzi softcooked less oil",
-        "sabzi",
-        "less",
         "oil",
-        "softcooked"
+        "softcooked",
+        "seasonal",
+        "less",
+        "sabzi"
       ]
     },
     {
@@ -69,22 +69,22 @@
       "hasRecipe": true,
       "hasRecipeReason": "Roasted chana can be easily prepared at home.",
       "tags": [
-        "roasted chana",
         "roasted",
-        "chana"
+        "chana",
+        "roasted chana"
       ]
     },
     {
       "mealType": "snacks",
       "current": "a small banana",
       "alternative": "Roasted chana",
-      "reasoning": "Roasted chana is a good source of protein and fiber, which can help with satiety and blood sugar control, making it a suitable swap for a banana.",
+      "reasoning": "Roasted chana provides a good balance of protein and fiber, making it a better snack choice for sustained energy.",
       "hasRecipe": true,
       "hasRecipeReason": "Roasted chana can be easily prepared at home.",
       "tags": [
-        "roasted chana",
         "roasted",
-        "chana"
+        "chana",
+        "roasted chana"
       ]
     },
     {
@@ -93,26 +93,26 @@
       "alternative": "Buttermilk (chaas)",
       "reasoning": "No swap needed; this food aligns well with your goals.",
       "hasRecipe": true,
-      "hasRecipeReason": "Chaas is a common homemade beverage.",
+      "hasRecipeReason": "Chaas is commonly made at home by blending buttermilk.",
       "tags": [
         "buttermilk chaas",
-        "buttermilk",
-        "chaas"
+        "chaas",
+        "buttermilk"
       ]
     },
     {
       "mealType": "dinner",
       "current": "Khichdi",
       "alternative": "Spinach khichri (Palak khichri/khichdi)",
-      "reasoning": "Spinach khichri is an excellent choice as it incorporates vegetables, adding vitamins and minerals to your meal while maintaining the comforting nature of khichdi.",
+      "reasoning": "Spinach khichri is a nutrient-dense option with fewer calories and lower sodium, supporting your health goals.",
       "hasRecipe": true,
-      "hasRecipeReason": "Khichdi is a popular home-cooked meal.",
+      "hasRecipeReason": "Khichdi is a common and simple home-cooked meal.",
       "tags": [
         "spinach khichri palak khichrikhichdi",
-        "khichri",
-        "spinach",
         "khichrikhichdi",
-        "palak"
+        "khichri",
+        "palak",
+        "spinach"
       ]
     },
     {
@@ -121,7 +121,7 @@
       "alternative": "Curd (small)",
       "reasoning": "No swap needed; this food aligns well with your goals.",
       "hasRecipe": true,
-      "hasRecipeReason": "Curd is often made or easily prepared at home.",
+      "hasRecipeReason": "Curd (yogurt) is often made at home from milk.",
       "tags": [
         "small",
         "curd",
@@ -130,10 +130,10 @@
     }
   ],
   "general_summary": [
-    "Start your day with 'Sprouted moong poha' for a protein and fiber boost, supporting your mobility and blood pressure goals.",
-    "For lunch, enjoy 'Dal dhokli' which offers a good balance of protein and carbohydrates, and is a wholesome meal choice.",
-    "Opt for 'Roasted chana' as a snack to help manage hunger between meals and provide sustained energy.",
-    "In the evening, choose 'Spinach khichri' for dinner, incorporating more vegetables into your diet.",
-    "Consider attending a 'digital_literacy_workshop' at your senior living community to work on your digital literacy goal and potentially reduce social isolation."
+    "Hamdan, start your day with 'Sprouted moong poha' for a protein-rich breakfast to support your muscle gain goal.",
+    "For lunch, try 'Dal dhokli', focusing on adding more vegetables and keeping oil usage minimal, which aligns with your low-sodium goal.",
+    "As a student, carry 'Roasted chana' as a portable snack option for sustained energy between classes.",
+    "For dinner, opt for 'Spinach Khichdi' to incorporate more nutrients and manage your health conditions effectively.",
+    "Remember to stay hydrated by sipping on buttermilk throughout the day, as it's readily available and beneficial for digestion."
   ]
 }

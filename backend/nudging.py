@@ -14,6 +14,41 @@ client = genai.Client(api_key=key)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class UserInfoModel(BaseModel):
+    userInfo: dict
+
+USER_DATA_FILE = os.path.join(os.path.dirname(__file__), "user_data.json")
+
+def load_user_info():
+    if os.path.exists(USER_DATA_FILE):
+        try:
+            with open(USER_DATA_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning(f"Failed to load user_data.json: {e}. Using fallback.")
+    return {
+        "name": "Mr. Sharma",
+        "location": "Jaipur",
+        "age": 68,
+        "BMI": 26,
+        "gender": "Male",
+        "health_conditions": ["hypertension", "arthritis", "social_isolation"],
+        "allergies": [],
+        "health_goals": ["reduce loneliness", "maintain mobility", "manage blood pressure", "improve digital literacy"],
+        "medication_details": [],
+        "budget_for_food": 1000,
+        "occupation_type": "retired",
+        "work_schedule": "none",
+        "access_to_kitchen": "shared_community_kitchen",
+        "stress_level": "moderate",
+        "meal_source": "home_cooked",
+    }
+
 def generate_tags(recipe_name):
     """Generate an array of tags from the recipe name for unique identification."""
     if not recipe_name:
@@ -29,25 +64,9 @@ def generate_tags(recipe_name):
     return tags
 
 # --- user info and meal log to be embedded into the system instruction ---
-userInfo = {
-    "name": "Mr. Sharma",
-    "age": 68,
-    "BMI": 26,
-    "gender": "Male",
-    "health_conditions": ["hypertension", "arthritis", "social_isolation"],
-    "allergies": [],
-    "health_goals": ["reduce loneliness", "maintain mobility", "manage blood pressure", "improve digital literacy"],
-    "medication_details": [],
-    "budget_for_food": 1000,  # Weekly budget for food in ₹ (reasonable for a Tier-2 retiree)
-    "occupation_type": "retired",
-    "work_schedule": "none",
-    "access_to_kitchen": "shared_community_kitchen",  # shared or limited personal kitchen
-    "stress_level": "moderate",
-    "meal_source": "home_cooked",  # primarily at-home / community meals
-}
+userInfo = load_user_info()
 
 environmentContext = {
-    "location": "Jaipur",
     "availability": [
         "tea", "poha", "upma", "dal", "rice", "chapati_flour", "seasonal_vegetables", "curd",
         "banana", "roasted_chana", "buttermilk", "cooking_oil", "basic_spices", "community_meals",
@@ -802,6 +821,18 @@ except Exception:
     mongo_swaps_preview = []
     meal_items_list = []
 
+@app.post("/store_user_info")
+async def store_user_info(data: UserInfoModel):
+    try:
+        user_info = data.userInfo
+        with open(USER_DATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(user_info, f, ensure_ascii=False, indent=2)
+        logger.info("userInfo stored successfully.")
+        return {"message": "userInfo stored successfully"}
+    except Exception as e:
+        logger.error(f"Error storing userInfo: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
 
 
 # --- CALL LLM AFTER MONGO CONTEXT (uses mongoReasoning + food_data context) ---
@@ -822,11 +853,11 @@ contents = (
     + "\n".join(context_summary)
     + "\n\nAlso consider user lifestyle factors (budget_for_food, occupation_type, work_schedule, access_to_kitchen, stress_level, meal_source) when choosing recommendations; tailor suggestions to be affordable, suitable for routine, and realistic given constraints.\n\n"
     + "Using the system instruction (which includes userInfo, mealLog and mongoReasoning), produce a single JSON object (only JSON, no extra text) with the following keys:\n"
-    "1) key_insight (string): a concise 4-5 line insight that explicitly references the user's profile (conditions, goals, BMI) and the meals the user actually ate today; describe how those meals are likely to affect the user's health (positive or negative impacts), and note any immediate concerns or helpful patterns observed.\n"
+    "1) key_insight (string): a concise 4-5 line insight that explicitly references the user's profile (conditions, goals, BMI) and the meals the user actually ate today; describe how those meals are likely to affect the user's health (positive or negative impacts), and note any immediate concerns or helpful patterns observed. Make it personal by addressing the user by their name, e.g., 'Mr. Sharma,'.\n"
     "2) modern_approach (string): a 3-4 line suggestion using modern foods or methods to help the user's goals; use the recommendations and comments from the matched posts where applicable.\n"
     "3) heritage_alternative (string): a 3-4 line set of Indian/heritage alternatives (specific Indian foods or preparations) relevant to the user's goals, drawn from food_data.json recommendations where applicable.\n"
     "4) simple_swap (array): an array of objects. Each object MUST have: mealType, current, alternative, reasoning (1-2 lines). Use the matched posts, substitutions_from_posts, and mongoReasoning to decide these swaps. The model should decide whether a swap is needed; if not, keep current as alternative and explain why.\n"
-    "5) general_summary (array): a 4-5 step action plan for the next logging (next day). Each step should be a short, encouraging, and realistic action that incorporates the simple_swap, modern_approach, and heritage_alternative where relevant. Subtly reference environmentContext (availability/season/location/cultural_event) and user lifestyle factors (budget_for_food/occupation_type/work_schedule/access_to_kitchen/stress_level/meal_source) in relevant steps — e.g., mention using an available ingredient for breakfast or choosing a warm monsoon-friendly lunch, or suggesting portable snacks for gig work — but keep it low-key. Include subtle suggestions for accessing the simple_swap alternatives based on occupation_type (e.g., 'as a student, you could prep this during study breaks'), work_schedule (e.g., 'for night shifts, keep this ready the evening before'), access_to_kitchen (e.g., 'if kitchen access is limited, look for pre-made versions at local stores'), and meal_source (e.g., 'when eating roadside, ask vendors for healthier preparation of this alternative'). Prioritize gentle, doable swaps rather than strict overhauls.\n\n"
+    "5) general_summary (array): a 4-5 step action plan for the next logging (next day). Each step should be a short, encouraging, and realistic action that incorporates the simple_swap, modern_approach, and heritage_alternative where relevant. Subtly reference environmentContext (availability/season/location/cultural_event) and user lifestyle factors (budget_for_food/occupation_type/work_schedule/access_to_kitchen/stress_level/meal_source) in relevant steps — e.g., mention using an available ingredient for breakfast or choosing a warm monsoon-friendly lunch, or suggesting portable snacks for gig work — but keep it low-key. Include subtle suggestions for accessing the simple_swap alternatives based on occupation_type (e.g., 'as a student, you could prep this during study breaks'), work_schedule (e.g., 'for night shifts, keep this ready the evening before'), access_to_kitchen (e.g., 'if kitchen access is limited, look for pre-made versions at local stores'), and meal_source (e.g., 'when eating roadside, ask vendors for healthier preparation of this alternative'). Prioritize gentle, doable swaps rather than strict overhauls. Personalize each step by mentioning the user's name or relevant profile details.\n\n"
     "When answering, heavily use the matched posts and the 'recommendations' fields from food_data.json, the digi_data.json content, and any previous insights in insights.json as context. If you cite specific suggested foods, ensure they are realistic Indian items.\n"
     "Return ONLY the JSON object. Keep each string reasonably short (approx 3-4 lines for string fields, 4-5 short strings for general_summary).\n\n"
     "ADDITIONAL_CONTEXT: substitutions_from_posts: " + json.dumps(substitutions_from_posts[:6]) + "\n"

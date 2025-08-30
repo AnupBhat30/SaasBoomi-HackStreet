@@ -7,6 +7,7 @@ interface PersonalData {
   height: number;
   weight: number;
   gender: 'Male' | 'Female' | 'Other';
+  location: string;
   BMI: number;
 }
 
@@ -67,6 +68,16 @@ const Personal: React.FC<Props> = ({ data, onChange }) => {
           value={data.name}
           onChangeText={(text) => updateField('name', text)}
           placeholder="Enter your name"
+          style={{ borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 8, padding: 10, fontSize: 16 }}
+        />
+      </View>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Location</Text>
+        <TextInput
+          value={data.location}
+          onChangeText={(text) => updateField('location', text)}
+          placeholder="Enter your location"
           style={{ borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 8, padding: 10, fontSize: 16 }}
         />
       </View>

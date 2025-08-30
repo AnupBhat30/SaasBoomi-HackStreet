@@ -4,6 +4,8 @@ import Personal from './components/onboarding/Personal'
 import Health from './components/onboarding/Health'
 import Goals from './components/onboarding/Goals'
 import Lifestyle from './components/onboarding/Lifestyle'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useRouter } from 'expo-router'
 
 interface userInfo {
   name: string;
@@ -12,6 +14,7 @@ interface userInfo {
   weight: number;
   BMI: number;
   gender: 'Male' | 'Female' | 'Other';
+  location: string;
   health_conditions: string[];
   allergies: string[];
   health_goals: string[];
@@ -33,6 +36,7 @@ const OnboardingPage = () => {
     weight: 70,
     BMI: 24.2,
     gender: 'Male',
+    location: '',
     health_conditions: [],
     allergies: [],
     health_goals: [],
@@ -47,6 +51,7 @@ const OnboardingPage = () => {
 
   const { width } = Dimensions.get('window');
   const animatedValue = useRef(new Animated.Value(0)).current;
+  const router = useRouter();
 
   const handleBack = () => {
     if (currentStep > 0) {
@@ -74,7 +79,25 @@ const OnboardingPage = () => {
     } else {
       // Finish onboarding
       console.log('userInfo:', data);
-      // Here you can navigate to the next screen or save data
+      // Send data to backend
+      fetch('http://10.20.1.20:5000/store_user_info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userInfo: data }),
+      })
+        .then(response => response.json())
+        .then(result => {
+          console.log('Storage result:', result);
+          // Save to localStorage
+          AsyncStorage.setItem('userInfo', JSON.stringify(data));
+          // Navigate to HomePage
+          router.push('/HomePage');
+        })
+        .catch(error => {
+          console.error('Error storing userInfo:', error);
+        });
     }
   };
 
