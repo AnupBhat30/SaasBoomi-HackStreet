@@ -1,129 +1,30 @@
 {
-  "key_insight": "Hamdan, your meals today, including poha, dal, sabzi, and khichdi, were generally well-balanced. The poha for breakfast is a good start. Including seasonal vegetables in your lunch sabzi is excellent, especially during the monsoon. The khichdi for dinner is also a comforting and digestible option. Continue focusing on these wholesome meals.",
-  "modern_approach": "To further support your fitness goals, consider enhancing your protein intake. Try adding a scoop of whey protein to your post-workout drink or incorporating Greek yogurt as a snack. This will aid muscle recovery and growth effectively.",
-  "heritage_alternative": "For a nutrient-dense breakfast that aligns with traditional Indian eating, opt for 'Sprouted moong poha'. This option offers increased protein and fiber compared to regular poha, supporting sustained energy throughout your day.",
+  "key_insight": "Hello Aaron, your breakfast of poha is a common Indian meal. While it provides carbohydrates for energy, it can be low in protein and fiber, which are important for satiety and muscle maintenance. Considering your age and BMI, focusing on nutrient-dense meals can support your overall health. For the monsoon season, ensuring meals are warming and satisfying is also a good consideration.",
+  "modern_approach": "To enhance your energy levels and support your goals, consider incorporating more protein and fiber into your breakfast. As suggested in the posts, a meal with a good balance of macronutrients, like yogurt with fruit and nuts, can be beneficial. Remember that managing caloric intake is key for weight management, as highlighted in the posts.",
+  "heritage_alternative": "For a nutritious breakfast, Aaron, try 'Sprouted moong poha'. This heritage alternative offers a good balance of protein and complex carbohydrates. Alternatively, besan ka cheela (gram flour pancake) or sattu parantha (roasted gram flour flatbread) are excellent sources of protein and can be prepared with minimal oil.",
   "simple_swap": [
     {
       "mealType": "breakfast",
-      "current": "Tea (small, low sugar)",
-      "alternative": "Tea (small, low sugar)",
-      "reasoning": "Your current tea is fine. Consider adding a small portion of sprouts or a spoon of curd to your breakfast to boost protein.",
+      "current": "poha",
+      "alternative": "Poha with curd (Poha aur dahi)",
+      "reasoning": "Poha with curd provides added protein and probiotics from the curd, which can be beneficial for gut health.",
       "hasRecipe": true,
-      "hasRecipeReason": "Common home beverage.",
+      "hasRecipeReason": "Poha is a common breakfast dish with many home recipes.",
       "tags": [
-        "small",
-        "low",
-        "sugar",
-        "tea small low sugar",
-        "tea"
-      ]
-    },
-    {
-      "mealType": "breakfast",
-      "current": "Poha (small)",
-      "alternative": "Sprouted moong poha",
-      "reasoning": "Sprouted moong poha is a great choice as it offers more protein and fiber, aiding your fitness goals and keeping you full longer.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Can be easily prepared at home with poha and sprouts.",
-      "tags": [
-        "sprouted moong poha",
-        "moong",
         "poha",
-        "sprouted"
+        "dahi",
+        "aur",
+        "with",
+        "curd",
+        "poha with curd poha aur dahi"
       ]
-    },
-    {
-      "mealType": "lunch",
-      "current": "Dal (light)",
-      "alternative": "Dal dhokli",
-      "reasoning": "Dal dhokli is a wholesome meal that can be made even healthier by using whole wheat flour and adding more vegetables.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Traditional Gujarati home-cooked dish.",
-      "tags": [
-        "dhokli",
-        "dal",
-        "dal dhokli"
-      ]
-    },
-    {
-      "mealType": "lunch",
-      "current": "Seasonal sabzi (soft-cooked, less oil)",
-      "alternative": "Seasonal sabzi (soft-cooked, less oil)",
-      "reasoning": "Your sabzi is a good choice. Continue with this preparation, perhaps adding a lentil or paneer side for extra protein.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Refers to a cooked vegetable dish, easily made at home.",
-      "tags": [
-        "sabzi",
-        "less",
-        "seasonal",
-        "seasonal sabzi softcooked less oil",
-        "softcooked",
-        "oil"
-      ]
-    },
-    {
-      "mealType": "snacks",
-      "current": "Roasted chana",
-      "alternative": "Roasted chana",
-      "reasoning": "Roasted chana is an excellent protein-rich snack. You could pair it with a small portion of banana for a balanced snack.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Can be easily roasted at home.",
-      "tags": [
-        "chana",
-        "roasted chana",
-        "roasted"
-      ]
-    },
-    {
-      "mealType": "snacks",
-      "current": "a small banana",
-      "alternative": "a small banana",
-      "reasoning": "Bananas are good for quick energy. Consider pairing it with roasted chana for a more balanced snack with protein.",
-      "hasRecipe": false,
-      "hasRecipeReason": "A whole fruit, not a prepared dish."
-    },
-    {
-      "mealType": "snacks",
-      "current": "Buttermilk (chaas)",
-      "alternative": "Buttermilk (chaas)",
-      "reasoning": "Buttermilk is hydrating and good for digestion, especially in monsoon. You can enhance its protein by adding a pinch of roasted cumin powder.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Simple to make at home by whisking yogurt and water.",
-      "tags": [
-        "chaas",
-        "buttermilk",
-        "buttermilk chaas"
-      ]
-    },
-    {
-      "mealType": "dinner",
-      "current": "Khichdi",
-      "alternative": "Spinach khichri (Palak khichri/khichdi)",
-      "reasoning": "Spinach khichri is a nutrient-dense option that provides vitamins and minerals along with carbohydrates.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Common Indian comfort food, easily prepared at home.",
-      "tags": [
-        "khichri",
-        "khichrikhichdi",
-        "spinach khichri palak khichrikhichdi",
-        "spinach",
-        "palak"
-      ]
-    },
-    {
-      "mealType": "dinner",
-      "current": "Curd (small)",
-      "alternative": "Curd (small)",
-      "reasoning": "Curd is a good source of protein and probiotics. You can add a sprinkle of roasted seeds like chia or flax for added fiber and healthy fats.",
-      "hasRecipe": false,
-      "hasRecipeReason": "A dairy product, typically not home-cooked in this context."
     }
   ],
   "general_summary": [
-    "Hamdan, start your day with the sprouted moong poha as a nutritious breakfast option.",
-    "For lunch, enjoy your lightly prepared dal with a side of nutrient-rich spinach khichdi.",
-    "Keep roasted chana and a banana handy for a balanced afternoon snack, especially if your work keeps you on the move.",
-    "For dinner, the spinach khichdi and a small portion of curd with seeds will provide sustained energy and protein.",
-    "Stay hydrated with buttermilk throughout the day, especially during the monsoon season."
+    "Good morning, Aaron! Start your day with 'Sprouted moong poha' or 'Poha with curd' for a balanced breakfast, as these offer more protein and fiber than plain poha.",
+    "For lunch, consider a meal with 'aar maach (fish) rohu katla fish (cut steaks)' and basmati rice, ensuring it's a portion-controlled and nutritious meal.",
+    "Keep your snacks light and healthy, perhaps some fruit or yogurt, to maintain energy levels throughout your day.",
+    "Listen to your body and try to incorporate some form of daily movement, even a short walk, to complement your healthy eating habits.",
+    "As you navigate the monsoon season, aim for warm and comforting meals that provide sustained energy and nourishment."
   ]
 }

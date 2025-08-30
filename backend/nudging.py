@@ -25,8 +25,12 @@ class UserInfoModel(BaseModel):
 class EnvironmentContextModel(BaseModel):
     environmentContext: dict
 
+class MealLogModel(BaseModel):
+    mealLog: dict
+
 USER_DATA_FILE = os.path.join(os.path.dirname(__file__), "user_data.json")
 ENVIRONMENT_CONTEXT_FILE = os.path.join(os.path.dirname(__file__), "environment_context.json")
+MEAL_LOG_FILE = os.path.join(os.path.dirname(__file__), "meal_log.json")
 
 def load_user_info():
     if os.path.exists(USER_DATA_FILE):
@@ -65,6 +69,20 @@ def load_environment_context():
         "season": "Autumn",
     }
 
+def load_meal_log():
+    if os.path.exists(MEAL_LOG_FILE):
+        try:
+            with open(MEAL_LOG_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning(f"Failed to load meal_log.json: {e}. Using fallback.")
+    return {
+        "breakfast": {"foods": []},
+        "lunch": {"foods": []},
+        "snacks": {"foods": []},
+        "dinner": {"foods": []}
+    }
+
 def generate_tags(recipe_name):
     """Generate an array of tags from the recipe name for unique identification."""
     if not recipe_name:
@@ -84,32 +102,7 @@ userInfo = load_user_info()
 
 environmentContext = load_environment_context()
 
-mealLog = {
-    "breakfast": {
-        "foods": [
-            "Tea (small, low sugar)",
-            "Poha (small)"
-        ]
-    },
-    "lunch": {
-        "foods": [
-            "Dal (light)",
-            "Seasonal sabzi (soft-cooked, less oil)"
-        ]
-    },
-    "snacks": {
-        "foods": [
-            "Roasted chana or a small banana",
-            "Buttermilk (chaas)"
-        ]
-    },
-    "dinner": {
-        "foods": [
-            "Khichdi",
-            "Curd (small)"
-        ]
-    }
-}
+mealLog = load_meal_log()
 
 
 # Load local food data for context
@@ -832,9 +825,12 @@ except Exception:
 @app.post("/store_user_info")
 async def store_user_info(data: UserInfoModel):
     try:
+        print(f"__file__: {__file__}")
         user_info = data.userInfo
+        print(f"USER_DATA_FILE: {USER_DATA_FILE}")
         with open(USER_DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(user_info, f, ensure_ascii=False, indent=2)
+        print(f"User info saved to {USER_DATA_FILE}: {user_info}")
         logger.info("userInfo stored successfully.")
         return {"message": "userInfo stored successfully"}
     except Exception as e:
@@ -853,6 +849,18 @@ async def store_environment_context(data: EnvironmentContextModel):
         return {"message": "environmentContext stored successfully"}
     except Exception as e:
         logger.error(f"Error storing environmentContext: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+@app.post("/store_meal_log")
+async def store_meal_log(data: MealLogModel):
+    try:
+        meal_log = data.mealLog
+        with open(MEAL_LOG_FILE, "w", encoding="utf-8") as f:
+            json.dump(meal_log, f, ensure_ascii=False, indent=2)
+        logger.info("mealLog stored successfully.")
+        return {"message": "mealLog stored successfully"}
+    except Exception as e:
+        logger.error(f"Error storing mealLog: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
 

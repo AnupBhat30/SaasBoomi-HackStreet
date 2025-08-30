@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "aaron",
   "age": 25,
   "height": 170,
   "weight": 70,
@@ -11,9 +11,9 @@
   "health_goals": [],
   "medication_details": [],
   "budget_for_food": 1000,
-  "occupation_type": "",
+  "occupation_type": [],
   "work_schedule": "",
   "access_to_kitchen": "",
   "stress_level": "moderate",
-  "meal_source": ""
+  "meal_source": []
 }

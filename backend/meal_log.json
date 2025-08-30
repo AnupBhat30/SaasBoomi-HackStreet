@@ -1,0 +1,16 @@
+{
+  "breakfast": {
+    "foods": [
+      "poha"
+    ]
+  },
+  "lunch": {
+    "foods": []
+  },
+  "snacks": {
+    "foods": []
+  },
+  "dinner": {
+    "foods": []
+  }
+}
