@@ -1,30 +1,13 @@
 {
-  "key_insight": "Hello Aaron, your breakfast of poha is a common Indian meal. While it provides carbohydrates for energy, it can be low in protein and fiber, which are important for satiety and muscle maintenance. Considering your age and BMI, focusing on nutrient-dense meals can support your overall health. For the monsoon season, ensuring meals are warming and satisfying is also a good consideration.",
-  "modern_approach": "To enhance your energy levels and support your goals, consider incorporating more protein and fiber into your breakfast. As suggested in the posts, a meal with a good balance of macronutrients, like yogurt with fruit and nuts, can be beneficial. Remember that managing caloric intake is key for weight management, as highlighted in the posts.",
-  "heritage_alternative": "For a nutritious breakfast, Aaron, try 'Sprouted moong poha'. This heritage alternative offers a good balance of protein and complex carbohydrates. Alternatively, besan ka cheela (gram flour pancake) or sattu parantha (roasted gram flour flatbread) are excellent sources of protein and can be prepared with minimal oil.",
-  "simple_swap": [
-    {
-      "mealType": "breakfast",
-      "current": "poha",
-      "alternative": "Poha with curd (Poha aur dahi)",
-      "reasoning": "Poha with curd provides added protein and probiotics from the curd, which can be beneficial for gut health.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Poha is a common breakfast dish with many home recipes.",
-      "tags": [
-        "poha",
-        "dahi",
-        "aur",
-        "with",
-        "curd",
-        "poha with curd poha aur dahi"
-      ]
-    }
-  ],
+  "key_insight": "Aaron, your current breakfast is a decent start but could be more nutrient-dense. Focusing on lean protein and whole grains can help sustain your energy levels throughout the day. Given your moderate stress, incorporating satisfying meals will be beneficial for overall well-being.",
+  "modern_approach": "To enhance your breakfast, consider adding a source of lean protein like Greek yogurt or a scoop of protein powder to your poha. This will help keep you feeling fuller for longer and support muscle maintenance.",
+  "heritage_alternative": "For an energy-boosting heritage breakfast, try 'Sprouted Moong Dal Cheela' (savory pancakes made from sprouted lentils). This option is packed with protein and fiber, providing sustained energy, and is suitable for the monsoon season.",
+  "simple_swap": [],
   "general_summary": [
-    "Good morning, Aaron! Start your day with 'Sprouted moong poha' or 'Poha with curd' for a balanced breakfast, as these offer more protein and fiber than plain poha.",
-    "For lunch, consider a meal with 'aar maach (fish) rohu katla fish (cut steaks)' and basmati rice, ensuring it's a portion-controlled and nutritious meal.",
-    "Keep your snacks light and healthy, perhaps some fruit or yogurt, to maintain energy levels throughout your day.",
-    "Listen to your body and try to incorporate some form of daily movement, even a short walk, to complement your healthy eating habits.",
-    "As you navigate the monsoon season, aim for warm and comforting meals that provide sustained energy and nourishment."
+    "Aaron, start your day with a protein-rich breakfast like Sprouted Moong Dal Cheela for sustained energy.",
+    "For lunch, opt for the available Aar Maach (fish) with basmati rice, providing lean protein.",
+    "Carry a portable snack like roasted chickpeas or sprouts to manage hunger between meals.",
+    "Enjoy a warm and comforting dinner like lentil soup (dal) with roti or rice, ideal for the monsoon.",
+    "Stay hydrated by drinking plenty of water throughout the day, especially with moderate stress levels."
   ]
 }
