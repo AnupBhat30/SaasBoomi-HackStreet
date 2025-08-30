@@ -137,7 +137,7 @@ const LogMeal = () => {
         throw new Error('Search request failed');
       }
       const results = await response.json();
-      
+
       setSearchResults(prev => ({ ...prev, [meal]: results }));
       setShowSuggestions(prev => ({ ...prev, [meal]: true }));
     } catch (error) {
@@ -319,11 +319,11 @@ const LogMeal = () => {
   };
 
   return (
-    <KeyboardAvoidingView 
-      style={[styles.container, { backgroundColor: '#F6F7F9' }]} 
+    <KeyboardAvoidingView
+      style={[styles.container, { backgroundColor: '#F6F7F9' }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -410,7 +410,7 @@ const LogMeal = () => {
                       transition={{ type: 'timing', duration: 200 }}
                       style={styles.suggestionsDropdown}
                     >
-                      <ScrollView 
+                      <ScrollView
                         style={styles.suggestionsList}
                         keyboardShouldPersistTaps="handled"
                         showsVerticalScrollIndicator={false}
@@ -649,29 +649,6 @@ const LogMeal = () => {
         </Modal>
       </Portal>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <View style={{ marginTop: 20, alignItems: 'center' }}>
         <Button
           mode="contained"
@@ -695,7 +672,7 @@ const LogMeal = () => {
               .then(result => {
                 console.log('Meal log stored:', result);
                 Alert.alert('Success', 'Meal log sent to backend!');
-                
+
                 // Fetch insights
                 fetch('http://10.20.2.95:5000/insights')
                   .then(response => response.json())
