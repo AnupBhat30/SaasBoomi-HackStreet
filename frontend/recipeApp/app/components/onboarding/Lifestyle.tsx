@@ -2,11 +2,11 @@ import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-na
 import React from 'react'
 
 interface LifestyleData {
-  occupation: string;
-  workSchedule: string;
-  kitchenAccess: string;
-  stressLevel: number;
-  mealSource: string;
+  occupation_type: string;
+  work_schedule: string;
+  access_to_kitchen: string;
+  stress_level: string;
+  meal_source: string;
 }
 
 interface Props {
@@ -19,9 +19,9 @@ const workSchedules = ['9-5', 'Shift work', 'Flexible', 'Irregular', 'No work'];
 const kitchenAccesses = ['Always', 'Often', 'Sometimes', 'Rarely', 'Never'];
 const mealSources = ['Home cooked', 'Fast food', 'Roadside', 'Canteen', 'Restaurant', 'Delivery'];
 const stressLevels = [
-  { level: 1, label: 'Low' },
-  { level: 2, label: 'Moderate' },
-  { level: 3, label: 'High' }
+  { level: 'low', label: 'Low' },
+  { level: 'moderate', label: 'Moderate' },
+  { level: 'high', label: 'High' }
 ];
 
 const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
@@ -41,17 +41,17 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
           {occupations.map((occ) => (
             <TouchableOpacity
               key={occ}
-              onPress={() => select('occupation', occ)}
+              onPress={() => select('occupation_type', occ)}
               style={{
                 padding: 10,
                 margin: 5,
-                backgroundColor: data.occupation === occ ? '#FF6B00' : '#FFFFFF',
+                backgroundColor: data.occupation_type === occ ? '#FF6B00' : '#FFFFFF',
                 borderRadius: 20,
                 borderWidth: 1,
                 borderColor: '#E5E7EB'
               }}
             >
-              <Text style={{ color: data.occupation === occ ? 'white' : '#1F2933', fontSize: 14 }}>{occ}</Text>
+              <Text style={{ color: data.occupation_type === occ ? 'white' : '#1F2933', fontSize: 14 }}>{occ}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -63,17 +63,17 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
           {workSchedules.map((ws) => (
             <TouchableOpacity
               key={ws}
-              onPress={() => select('workSchedule', ws)}
+              onPress={() => select('work_schedule', ws)}
               style={{
                 padding: 10,
                 margin: 5,
-                backgroundColor: data.workSchedule === ws ? '#FF6B00' : '#FFFFFF',
+                backgroundColor: data.work_schedule === ws ? '#FF6B00' : '#FFFFFF',
                 borderRadius: 20,
                 borderWidth: 1,
                 borderColor: '#E5E7EB'
               }}
             >
-              <Text style={{ color: data.workSchedule === ws ? 'white' : '#1F2933', fontSize: 14 }}>{ws}</Text>
+              <Text style={{ color: data.work_schedule === ws ? 'white' : '#1F2933', fontSize: 14 }}>{ws}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -85,17 +85,17 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
           {kitchenAccesses.map((ka) => (
             <TouchableOpacity
               key={ka}
-              onPress={() => select('kitchenAccess', ka)}
+              onPress={() => select('access_to_kitchen', ka)}
               style={{
                 padding: 10,
                 margin: 5,
-                backgroundColor: data.kitchenAccess === ka ? '#FF6B00' : '#FFFFFF',
+                backgroundColor: data.access_to_kitchen === ka ? '#FF6B00' : '#FFFFFF',
                 borderRadius: 20,
                 borderWidth: 1,
                 borderColor: '#E5E7EB'
               }}
             >
-              <Text style={{ color: data.kitchenAccess === ka ? 'white' : '#1F2933', fontSize: 14 }}>{ka}</Text>
+              <Text style={{ color: data.access_to_kitchen === ka ? 'white' : '#1F2933', fontSize: 14 }}>{ka}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -103,21 +103,21 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
 
       <View style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 18, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Typical Stress Level</Text>
-        <View style={{ flexDirection: 'row', borderRadius: 16, overflow: 'hidden', borderWidth: 1, borderColor: '#E5E7EB' }}>
-          {stressLevels.map((sl, index) => (
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          {stressLevels.map((sl) => (
             <TouchableOpacity
               key={sl.level}
-              onPress={() => select('stressLevel', sl.level)}
+              onPress={() => select('stress_level', sl.level)}
               style={{
-                flex: 1,
-                padding: 15,
-                backgroundColor: data.stressLevel === sl.level ? '#FF6B00' : '#FFFFFF',
-                alignItems: 'center',
-                borderRightWidth: index < 2 ? 1 : 0,
-                borderRightColor: '#E5E7EB'
+                padding: 10,
+                margin: 5,
+                backgroundColor: data.stress_level === sl.level ? '#FF6B00' : '#FFFFFF',
+                borderRadius: 20,
+                borderWidth: 1,
+                borderColor: '#E5E7EB'
               }}
             >
-              <Text style={{ color: data.stressLevel === sl.level ? 'white' : '#1F2933', fontSize: 16 }}>{sl.label}</Text>
+              <Text style={{ color: data.stress_level === sl.level ? 'white' : '#1F2933', fontSize: 14 }}>{sl.label}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -129,17 +129,17 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
           {mealSources.map((ms) => (
             <TouchableOpacity
               key={ms}
-              onPress={() => select('mealSource', ms)}
+              onPress={() => select('meal_source', ms)}
               style={{
                 padding: 10,
                 margin: 5,
-                backgroundColor: data.mealSource === ms ? '#FF6B00' : '#FFFFFF',
+                backgroundColor: data.meal_source === ms ? '#FF6B00' : '#FFFFFF',
                 borderRadius: 20,
                 borderWidth: 1,
                 borderColor: '#E5E7EB'
               }}
             >
-              <Text style={{ color: data.mealSource === ms ? 'white' : '#1F2933', fontSize: 14 }}>{ms}</Text>
+              <Text style={{ color: data.meal_source === ms ? 'white' : '#1F2933', fontSize: 14 }}>{ms}</Text>
             </TouchableOpacity>
           ))}
         </View>

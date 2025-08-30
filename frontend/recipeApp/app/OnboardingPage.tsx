@@ -5,39 +5,44 @@ import Health from './components/onboarding/Health'
 import Goals from './components/onboarding/Goals'
 import Lifestyle from './components/onboarding/Lifestyle'
 
-interface OnboardingData {
-  personal: {
-    age: number;
-    height: number;
-    weight: number;
-    gender: 'Male' | 'Female' | 'Other';
-  };
-  health: {
-    conditions: string[];
-    allergies: string[];
-    medication: string;
-  };
-  goals: {
-    goals: string[];
-    budget: number;
-    preferences: string[];
-  };
-  lifestyle: {
-    occupation: string;
-    workSchedule: string;
-    kitchenAccess: string;
-    stressLevel: number;
-    mealSource: string;
-  };
+interface userInfo {
+  name: string;
+  age: number;
+  height: number;
+  weight: number;
+  BMI: number;
+  gender: 'Male' | 'Female' | 'Other';
+  health_conditions: string[];
+  allergies: string[];
+  health_goals: string[];
+  medication_details: string[];
+  budget_for_food: number;
+  occupation_type: string;
+  work_schedule: string;
+  access_to_kitchen: string;
+  stress_level: string;
+  meal_source: string;
 }
 
 const OnboardingPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [data, setData] = useState<OnboardingData>({
-    personal: { age: 25, height: 170, weight: 70, gender: 'Male' },
-    health: { conditions: [], allergies: [], medication: '' },
-    goals: { goals: [], budget: 1000, preferences: [] },
-    lifestyle: { occupation: '', workSchedule: '', kitchenAccess: '', stressLevel: 3, mealSource: '' }
+  const [data, setData] = useState<userInfo>({
+    name: '',
+    age: 25,
+    height: 170,
+    weight: 70,
+    BMI: 24.2,
+    gender: 'Male',
+    health_conditions: [],
+    allergies: [],
+    health_goals: [],
+    medication_details: [],
+    budget_for_food: 1000,
+    occupation_type: '',
+    work_schedule: '',
+    access_to_kitchen: '',
+    stress_level: 'moderate',
+    meal_source: ''
   });
 
   const { width } = Dimensions.get('window');
@@ -68,7 +73,7 @@ const OnboardingPage = () => {
       });
     } else {
       // Finish onboarding
-      console.log('Onboarding complete:', data);
+      console.log('userInfo:', data);
       // Here you can navigate to the next screen or save data
     }
   };
@@ -76,13 +81,13 @@ const OnboardingPage = () => {
   const renderComponent = (step: number) => {
     switch (step) {
       case 0:
-        return <Personal data={data.personal} onChange={(d) => setData({ ...data, personal: d })} />;
+        return <Personal data={data} onChange={(d) => setData({ ...data, ...d })} />;
       case 1:
-        return <Health data={data.health} onChange={(d) => setData({ ...data, health: d })} />;
+        return <Health data={data} onChange={(d) => setData({ ...data, ...d })} />;
       case 2:
-        return <Goals data={data.goals} onChange={(d) => setData({ ...data, goals: d })} />;
+        return <Goals data={data} onChange={(d) => setData({ ...data, ...d })} />;
       case 3:
-        return <Lifestyle data={data.lifestyle} onChange={(d) => setData({ ...data, lifestyle: d })} />;
+        return <Lifestyle data={data} onChange={(d) => setData({ ...data, ...d })} />;
       default:
         return null;
     }

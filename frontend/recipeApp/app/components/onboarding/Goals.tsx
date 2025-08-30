@@ -3,9 +3,8 @@ import React from 'react'
 import { Feather } from '@expo/vector-icons'
 
 interface GoalsData {
-  goals: string[];
-  budget: number;
-  preferences: string[];
+  health_goals: string[];
+  budget_for_food: number;
 }
 
 interface Props {
@@ -25,13 +24,13 @@ const preferencesList = ['Vegan', 'Vegetarian', 'Jain', 'Low-sodium', 'Gluten-fr
 
 const Goals: React.FC<Props> = ({ data, onChange }) => {
   const toggleGoal = (goal: string) => {
-    const newGoals = data.goals.includes(goal) ? data.goals.filter(g => g !== goal) : [...data.goals, goal];
-    onChange({ ...data, goals: newGoals });
+    const newGoals = data.health_goals.includes(goal) ? data.health_goals.filter(g => g !== goal) : [...data.health_goals, goal];
+    onChange({ ...data, health_goals: newGoals });
   };
 
   const togglePreference = (pref: string) => {
-    const newPreferences = data.preferences.includes(pref) ? data.preferences.filter(p => p !== pref) : [...data.preferences, pref];
-    onChange({ ...data, preferences: newPreferences });
+    const newPreferences = data.health_goals.includes(pref) ? data.health_goals.filter(p => p !== pref) : [...data.health_goals, pref];
+    onChange({ ...data, health_goals: newPreferences });
   };
 
   return (
@@ -50,7 +49,7 @@ const Goals: React.FC<Props> = ({ data, onChange }) => {
               style={{
                 padding: 10,
                 margin: 5,
-                backgroundColor: data.goals.includes(goal.name) ? '#FF6B00' : '#FFFFFF',
+                backgroundColor: data.health_goals.includes(goal.name) ? '#FF6B00' : '#FFFFFF',
                 borderRadius: 20,
                 borderWidth: 1,
                 borderColor: '#E5E7EB',
@@ -58,8 +57,8 @@ const Goals: React.FC<Props> = ({ data, onChange }) => {
                 alignItems: 'center'
               }}
             >
-              <Feather name={goal.icon as any} size={16} color={data.goals.includes(goal.name) ? 'white' : '#1F2933'} style={{ marginRight: 5 }} />
-              <Text style={{ color: data.goals.includes(goal.name) ? 'white' : '#1F2933', fontSize: 14 }}>{goal.name}</Text>
+              <Feather name={goal.icon as any} size={16} color={data.health_goals.includes(goal.name) ? 'white' : '#1F2933'} style={{ marginRight: 5 }} />
+              <Text style={{ color: data.health_goals.includes(goal.name) ? 'white' : '#1F2933', fontSize: 14 }}>{goal.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -68,8 +67,8 @@ const Goals: React.FC<Props> = ({ data, onChange }) => {
       <View style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Weekly Food Budget (₹)</Text>
         <TextInput
-          value={data.budget.toString()}
-          onChangeText={(text) => onChange({ ...data, budget: parseInt(text) || 0 })}
+          value={data.budget_for_food.toString()}
+          onChangeText={(text) => onChange({ ...data, budget_for_food: parseInt(text) || 0 })}
           keyboardType='numeric'
           placeholder="Enter your weekly budget..."
           style={{ borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 8, padding: 10, fontSize: 16 }}
@@ -87,13 +86,13 @@ const Goals: React.FC<Props> = ({ data, onChange }) => {
               style={{
                 padding: 10,
                 margin: 5,
-                backgroundColor: data.preferences.includes(pref) ? '#FF6B00' : '#FFFFFF',
+                backgroundColor: data.health_goals.includes(pref) ? '#FF6B00' : '#FFFFFF',
                 borderRadius: 20,
                 borderWidth: 1,
                 borderColor: '#E5E7EB'
               }}
             >
-              <Text style={{ color: data.preferences.includes(pref) ? 'white' : '#1F2933', fontSize: 14 }}>{pref}</Text>
+              <Text style={{ color: data.health_goals.includes(pref) ? 'white' : '#1F2933', fontSize: 14 }}>{pref}</Text>
             </TouchableOpacity>
           ))}
         </View>

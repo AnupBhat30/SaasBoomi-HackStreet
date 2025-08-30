@@ -2,10 +2,12 @@ import { View, Text, TextInput, TouchableOpacity, SafeAreaView } from 'react-nat
 import React, { useState, useEffect } from 'react'
 
 interface PersonalData {
+  name: string;
   age: number;
   height: number;
   weight: number;
   gender: 'Male' | 'Female' | 'Other';
+  BMI: number;
 }
 
 interface Props {
@@ -17,12 +19,8 @@ const Personal: React.FC<Props> = ({ data, onChange }) => {
   const [bmi, setBmi] = useState(0);
 
   useEffect(() => {
-    if (data.height && data.weight && data.height > 0) {
-      const h = data.height / 100;
-      const b = data.weight / (h * h);
-      setBmi(b);
-    }
-  }, [data.height, data.weight]);
+    setBmi(data.BMI);
+  }, [data.BMI]);
 
   const getBmiColor = () => {
     if (bmi < 18.5) return '#F59E0B'; // warning
@@ -39,7 +37,14 @@ const Personal: React.FC<Props> = ({ data, onChange }) => {
   };
 
   const updateField = (field: keyof PersonalData, value: any) => {
-    onChange({ ...data, [field]: value });
+    if (field === 'height' || field === 'weight') {
+      const newData = { ...data, [field]: value };
+      const h = newData.height / 100;
+      const b = newData.weight / (h * h);
+      onChange({ ...newData, BMI: b });
+    } else {
+      onChange({ ...data, [field]: value });
+    }
   };
 
   const increment = (field: 'age' | 'height' | 'weight') => {
@@ -55,6 +60,16 @@ const Personal: React.FC<Props> = ({ data, onChange }) => {
       <View style={{ flex: 1, borderRadius: 24, padding: 20 }}>
       <Text style={{ fontSize: 32, fontWeight: '700', color: '#1F2933', marginBottom: 8 }}>Tell Us About Yourself</Text>
       <Text style={{ fontSize: 14, fontWeight: '400', color: '#6B7280', marginBottom: 20 }}>This helps us calculate your nutritional baseline.</Text>
+
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Name</Text>
+        <TextInput
+          value={data.name}
+          onChangeText={(text) => updateField('name', text)}
+          placeholder="Enter your name"
+          style={{ borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 8, padding: 10, fontSize: 16 }}
+        />
+      </View>
 
       <View style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Age</Text>
@@ -132,11 +147,11 @@ const Personal: React.FC<Props> = ({ data, onChange }) => {
         </View>
       </View>
 
-      {bmi > 0 && (
+      {data.BMI > 0 && (
         <View style={{ marginTop: 20 }}>
-          <Text style={{ fontSize: 18, fontWeight: '600', color: '#1F2933' }}>BMI: {bmi.toFixed(1)} - {getBmiLabel()}</Text>
+          <Text style={{ fontSize: 18, fontWeight: '600', color: '#1F2933' }}>BMI: {data.BMI.toFixed(1)} - {getBmiLabel()}</Text>
           <View style={{ height: 10, backgroundColor: '#E5E7EB', borderRadius: 5, marginTop: 10, overflow: 'hidden' }}>
-            <View style={{ height: 10, width: `${Math.min((bmi / 40) * 100, 100)}%`, backgroundColor: getBmiColor(), borderRadius: 5 }} />
+            <View style={{ height: 10, width: `${Math.min((data.BMI / 40) * 100, 100)}%`, backgroundColor: getBmiColor(), borderRadius: 5 }} />
           </View>
         </View>
       )}

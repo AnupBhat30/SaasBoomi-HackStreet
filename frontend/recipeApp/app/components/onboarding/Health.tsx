@@ -3,9 +3,9 @@ import React from 'react'
 import { Feather } from '@expo/vector-icons'
 
 interface HealthData {
-  conditions: string[];
+  health_conditions: string[];
   allergies: string[];
-  medication: string;
+  medication_details: string[];
 }
 
 interface Props {
@@ -34,8 +34,8 @@ const allergiesList = [
 
 const Health: React.FC<Props> = ({ data, onChange }) => {
   const toggleCondition = (cond: string) => {
-    const newConditions = data.conditions.includes(cond) ? data.conditions.filter(c => c !== cond) : [...data.conditions, cond];
-    onChange({ ...data, conditions: newConditions });
+    const newConditions = data.health_conditions.includes(cond) ? data.health_conditions.filter(c => c !== cond) : [...data.health_conditions, cond];
+    onChange({ ...data, health_conditions: newConditions });
   };
 
   const toggleAllergy = (allergy: string) => {
@@ -59,7 +59,7 @@ const Health: React.FC<Props> = ({ data, onChange }) => {
               style={{
                 padding: 10,
                 margin: 5,
-                backgroundColor: data.conditions.includes(cond.name) ? '#FF6B00' : '#FFFFFF',
+                backgroundColor: data.health_conditions.includes(cond.name) ? '#FF6B00' : '#FFFFFF',
                 borderRadius: 20,
                 borderWidth: 1,
                 borderColor: '#E5E7EB',
@@ -67,8 +67,8 @@ const Health: React.FC<Props> = ({ data, onChange }) => {
                 alignItems: 'center'
               }}
             >
-              <Feather name={cond.icon as any} size={16} color={data.conditions.includes(cond.name) ? 'white' : '#1F2933'} style={{ marginRight: 5 }} />
-              <Text style={{ color: data.conditions.includes(cond.name) ? 'white' : '#1F2933', fontSize: 14 }}>{cond.name}</Text>
+              <Feather name={cond.icon as any} size={16} color={data.health_conditions.includes(cond.name) ? 'white' : '#1F2933'} style={{ marginRight: 5 }} />
+              <Text style={{ color: data.health_conditions.includes(cond.name) ? 'white' : '#1F2933', fontSize: 14 }}>{cond.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -102,10 +102,10 @@ const Health: React.FC<Props> = ({ data, onChange }) => {
       <View style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Medication Details</Text>
         <TextInput
-          value={data.medication}
-          onChangeText={(text) => onChange({ ...data, medication: text })}
+          value={data.medication_details.join(', ')}
+          onChangeText={(text) => onChange({ ...data, medication_details: text.split(',').map(s => s.trim()).filter(s => s) })}
           multiline
-          placeholder="Enter any medications or details..."
+          placeholder="Enter medications separated by comma"
           style={{ borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 8, padding: 10, height: 100, fontSize: 16, textAlignVertical: 'top' }}
         />
       </View>

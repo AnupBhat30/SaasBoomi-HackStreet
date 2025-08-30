@@ -44,7 +44,6 @@ userInfo = {
     "access_to_kitchen": "shared_community_kitchen",  # shared or limited personal kitchen
     "stress_level": "moderate",
     "meal_source": "home_cooked",  # primarily at-home / community meals
-    "preferred_interface": {"font_size": "large", "simplicity": "very_simple", "guided_tours": True}
 }
 
 environmentContext = {
