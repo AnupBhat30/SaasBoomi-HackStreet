@@ -1,0 +1,1292 @@
+[
+  {
+    "title": "Dietary Guidelines for Indians",
+    "text": "The document provides evidence-based recommendations for Indians to make informed food choices for good health and to prevent malnutrition in all its forms. It emphasizes a food-based approach, considering diverse cultural and regional dietary practices.",
+    "comments": [
+      "Guidelines are flexible and practical.",
+      "Focuses on food groups rather than specific nutrients.",
+      "Covers various age groups and vulnerable segments."
+    ],
+    "queries": [
+      "What are the key dietary recommendations for Indians?",
+      "How can these guidelines help prevent malnutrition?"
+    ],
+    "tags": [
+      "dietary guidelines",
+      "India",
+      "nutrition",
+      "malnutrition prevention",
+      "food choices"
+    ]
+  },
+  {
+    "title": "Current Diet and Nutrition Scenario in India",
+    "text": "India faces a dual burden of malnutrition, with persistent undernutrition and rising overweight/obesity. Unhealthy diets contribute significantly to the disease burden, including non-communicable diseases (NCDs).",
+    "comments": [
+      "56.4% of India's disease burden is due to unhealthy diets.",
+      "Healthy diets and physical activity can prevent 80% of type 2 diabetes.",
+      "Processed foods, sugars, and fats are increasingly consumed."
+    ],
+    "queries": [
+      "What is the current nutritional status in India?",
+      "What are the main causes of NCDs related to diet?"
+    ],
+    "tags": [
+      "malnutrition",
+      "obesity",
+      "NCDs",
+      "unhealthy diet",
+      "India"
+    ]
+  },
+  {
+    "title": "Guideline 1: Eat a variety of foods for a balanced diet",
+    "text": "A balanced diet requires consuming a variety of foods from different food groups to ensure adequate intake of calories, proteins, vitamins, minerals, and fiber.",
+    "comments": [
+      "No single food provides all essential nutrients.",
+      "Healthy meals include plenty of vegetables, whole grains, pulses, and moderate amounts of nuts/seeds.",
+      "Healthy snacks can be fruit/vegetable salads with seeds/nuts or roasted/boiled legumes."
+    ],
+    "queries": [
+      "What constitutes a healthy meal or snack?",
+      "Why is dietary variety important?"
+    ],
+    "tags": [
+      "balanced diet",
+      "food variety",
+      "healthy eating",
+      "nutrients",
+      "food groups"
+    ]
+  },
+  {
+    "title": "Guideline 2: Ensure extra food and healthcare during pregnancy and lactation",
+    "text": "Pregnancy and lactation are demanding periods requiring additional nutritious food and healthcare to support the mother and fetal/infant development. The first 1000 days (conception to 2 years) are crucial.",
+    "comments": [
+      "Extra 350 calories and protein are needed in the second and third trimesters.",
+      "Special attention to iron, folic acid, B12, iodine, and LCn-3PUFAs is required.",
+      "Adequate weight gain (10-12 kg for normal BMI) is recommended during pregnancy."
+    ],
+    "queries": [
+      "What are the specific nutritional needs during pregnancy and lactation?",
+      "What is the importance of the first 1000 days?"
+    ],
+    "tags": [
+      "pregnancy nutrition",
+      "lactation nutrition",
+      "first 1000 days",
+      "micronutrients",
+      "weight gain"
+    ]
+  },
+  {
+    "title": "Guideline 3: Ensure exclusive breastfeeding for the first six months and continue till two years and beyond",
+    "text": "Breast milk is the ideal food for infants, providing complete nutrition and protection against infections. Exclusive breastfeeding for the first six months is recommended, followed by continued breastfeeding along with complementary foods up to two years or beyond.",
+    "comments": [
+      "Initiate breastfeeding within one hour of birth.",
+      "Colostrum is vital and should not be discarded.",
+      "Avoid honey, glucose, water, or formula before 6 months."
+    ],
+    "queries": [
+      "What are the benefits of breastfeeding?",
+      "How long should breastfeeding continue?"
+    ],
+    "tags": [
+      "breastfeeding",
+      "infant nutrition",
+      "colostrum",
+      "exclusive breastfeeding",
+      "complementary feeding"
+    ]
+  },
+  {
+    "title": "Guideline 4: Start feeding homemade semi-solid complementary foods soon after six months of age",
+    "text": "Breast milk alone is insufficient after six months. Timely introduction of nutrient-dense, homemade complementary foods is essential for optimal infant growth and development.",
+    "comments": [
+      "Complementary foods should be introduced alongside breastfeeding.",
+      "Avoid added sugar and limit salt in complementary foods.",
+      "Hygiene practices are crucial during food preparation and feeding."
+    ],
+    "queries": [
+      "What are suitable complementary foods for infants?",
+      "How to ensure hygiene during infant feeding?"
+    ],
+    "tags": [
+      "complementary feeding",
+      "infant diet",
+      "homemade food",
+      "hygiene",
+      "weaning"
+    ]
+  },
+  {
+    "title": "Guideline 5: Ensure adequate and appropriate diets for children and adolescents",
+    "text": "Children and adolescents require adequate and appropriate diets to support rapid growth, maturation, cognitive development, and bone health, and to prevent malnutrition and chronic diseases later in life.",
+    "comments": [
+      "Adolescence is a period of accelerated growth and requires more nutrients.",
+      "Calcium intake is crucial for bone development.",
+      "Discourage packaged foods with excess oil, salt, sugar, and additives."
+    ],
+    "queries": [
+      "Why do children and adolescents need more food?",
+      "What are the key nutritional considerations for this age group?"
+    ],
+    "tags": [
+      "child nutrition",
+      "adolescent nutrition",
+      "growth",
+      "bone health",
+      "healthy eating"
+    ]
+  },
+  {
+    "title": "Guideline 6: Eat plenty of vegetables and legumes",
+    "text": "Vegetables and legumes are vital sources of vitamins, minerals, phytonutrients, and fiber, offering protection against micronutrient deficiencies and chronic diseases.",
+    "comments": [
+      "Recommended intake is at least 400g vegetables and 100g fruits daily.",
+      "Fresh fruits are nutritionally superior to juices.",
+      "Include a variety of colorful vegetables and fruits."
+    ],
+    "queries": [
+      "What are the benefits of eating vegetables and legumes?",
+      "How much vegetables and fruits should be consumed daily?"
+    ],
+    "tags": [
+      "vegetables",
+      "legumes",
+      "micronutrients",
+      "phytonutrients",
+      "fiber"
+    ]
+  },
+  {
+    "title": "Guideline 7: Use oils/fats in moderation; choose a variety of oil seeds, nuts, nutricereals, and legumes",
+    "text": "Fats are essential for physiological functions. Moderate intake of fats, prioritizing unsaturated fats from oilseeds, nuts, and whole grains, is recommended. Avoid trans fats.",
+    "comments": [
+      "Visible fats (cooking oils) should be limited to 20-50g per day.",
+      "Trans fats (from partially hydrogenated oils like vanaspati) are harmful and should be avoided.",
+      "Repeated heating of oils generates harmful compounds."
+    ],
+    "queries": [
+      "What is the recommended daily intake of fats?",
+      "Which fats should be prioritized and which avoided?"
+    ],
+    "tags": [
+      "fats",
+      "oils",
+      "essential fatty acids",
+      "unsaturated fats",
+      "trans fats"
+    ]
+  },
+  {
+    "title": "Guideline 8: Obtain good quality proteins and essential amino acids (EAA) through appropriate food combinations",
+    "text": "Good quality protein is crucial for muscle mass and overall health. Combining different food sources, especially cereals and pulses, ensures adequate intake of all essential amino acids.",
+    "comments": [
+      "Combining cereals and pulses in a 3:1 ratio provides complete protein.",
+      "Protein supplements are generally unnecessary for normal healthy life.",
+      "Adequate energy from carbohydrates and fats is needed for protein utilization."
+    ],
+    "queries": [
+      "How can vegetarians obtain complete protein?",
+      "Are protein supplements necessary?"
+    ],
+    "tags": [
+      "protein",
+      "essential amino acids",
+      "muscle mass",
+      "vegetarian protein",
+      "food combinations"
+    ]
+  },
+  {
+    "title": "Guideline 9: Adopt a healthy lifestyle to prevent abdominal obesity, overweight, and overall obesity",
+    "text": "Preventing obesity, particularly abdominal obesity, is vital for reducing the risk of lifestyle diseases like type 2 diabetes, hypertension, and cardiovascular diseases.",
+    "comments": [
+      "Asian cut-offs for BMI: normal (18.5-23), overweight (23-27.5), obesity (>27.5).",
+      "Waist circumference >90cm (men) or >80cm (women) indicates central obesity.",
+      "Combine healthy eating with regular physical activity."
+    ],
+    "queries": [
+      "What are the health risks associated with obesity?",
+      "How to measure and prevent abdominal obesity?"
+    ],
+    "tags": [
+      "obesity prevention",
+      "abdominal obesity",
+      "healthy lifestyle",
+      "BMI",
+      "NCD prevention"
+    ]
+  },
+  {
+    "title": "Guideline 10: Be physically active and exercise regularly",
+    "text": "Regular physical activity, including moderate-intensity aerobic activity and muscle-strengthening exercises, is essential for maintaining good health, preventing chronic diseases, and managing weight.",
+    "comments": [
+      "Children (>5-19 years): Minimum 60 minutes/day of moderate-to-vigorous activity.",
+      "Adults (>19-60 years): Minimum 30-60 minutes/day of moderate-intensity aerobic activity.",
+      "Elderly (>60 years): Similar to adults, with added balance and strength activities."
+    ],
+    "queries": [
+      "What is the recommended duration and intensity of physical activity?",
+      "What are the benefits of regular exercise?"
+    ],
+    "tags": [
+      "physical activity",
+      "exercise",
+      "health benefits",
+      "children",
+      "adults",
+      "elderly"
+    ]
+  },
+  {
+    "title": "Guideline 11: Restrict salt intake",
+    "text": "Excessive salt intake is linked to hypertension, heart diseases, and stroke. Limiting added salt to a maximum of 5g per day is recommended.",
+    "comments": [
+      "The sodium-to-potassium ratio is important for blood pressure.",
+      "Increase potassium intake by consuming more fruits and vegetables.",
+      "Limit processed and preserved foods high in salt."
+    ],
+    "queries": [
+      "What is the recommended daily salt intake?",
+      "How does salt intake affect blood pressure?"
+    ],
+    "tags": [
+      "salt intake",
+      "sodium",
+      "potassium",
+      "hypertension",
+      "processed foods"
+    ]
+  },
+  {
+    "title": "Guideline 12: Consume safe and clean foods",
+    "text": "Ensuring food safety by preventing microbial, chemical contamination, and adulteration is crucial for maintaining good health and preventing food-borne illnesses.",
+    "comments": [
+      "Buy food from reliable sources and examine for quality.",
+      "Wash fruits and vegetables thoroughly before use.",
+      "Practice good personal hygiene while handling food."
+    ],
+    "queries": [
+      "How to ensure food safety?",
+      "What are common food adulterants?"
+    ],
+    "tags": [
+      "food safety",
+      "hygiene",
+      "contamination",
+      "adulteration",
+      "food-borne illness"
+    ]
+  },
+  {
+    "title": "Guideline 13: Adopt appropriate pre-cooking and cooking methods",
+    "text": "Proper pre-cooking (washing, sprouting) and cooking methods (steaming, boiling) help retain nutrients, improve digestibility, and destroy harmful germs.",
+    "comments": [
+      "Steaming is better than blanching for retaining nutrients.",
+      "Avoid repeated washing of food grains and repeated heating of oils.",
+      "Closed-lid cooking retains more nutrients than open-lid cooking."
+    ],
+    "queries": [
+      "What are the best cooking methods for retaining nutrients?",
+      "How do pre-cooking methods affect nutrient bioavailability?"
+    ],
+    "tags": [
+      "cooking methods",
+      "pre-cooking",
+      "nutrient retention",
+      "food preparation",
+      "digestibility"
+    ]
+  },
+  {
+    "title": "Guideline 14: Drink adequate quantity of water",
+    "text": "Adequate water intake is essential for bodily functions, including waste elimination and temperature regulation. Aim for about eight glasses (two liters) of safe water daily.",
+    "comments": [
+      "Boiling is an effective method to render water safe.",
+      "Tender coconut water and buttermilk are good hydrating beverages.",
+      "Avoid synthetic soft drinks and carbonated beverages."
+    ],
+    "queries": [
+      "How much water should be consumed daily?",
+      "How to ensure drinking water is safe?"
+    ],
+    "tags": [
+      "hydration",
+      "water intake",
+      "safe water",
+      "beverages",
+      "dehydration"
+    ]
+  },
+  {
+    "title": "Guideline 15: Minimize the consumption of high fat, sugar, salt (HFSS) and ultra-processed foods (UPFs)",
+    "text": "Minimizing HFSS and UPFs is crucial as they are linked to increased risks of NCDs like diabetes, hypertension, and cardiovascular diseases.",
+    "comments": [
+      "HFSS foods contain excessive cooking oils/fats, added sugar, or salt.",
+      "UPFs undergo extensive industrial processing with many additives.",
+      "Fortifying UPFs does not make them healthy."
+    ],
+    "queries": [
+      "What defines HFSS and UPF foods?",
+      "Why should HFSS and UPF foods be minimized?"
+    ],
+    "tags": [
+      "HFSS foods",
+      "ultra-processed foods",
+      "NCD risk",
+      "added sugar",
+      "added fat",
+      "added salt"
+    ]
+  },
+  {
+    "title": "Guideline 16: Include nutrient-rich foods in the diets of the elderly",
+    "text": "Elderly individuals (60+ years) require nutrient-dense foods rich in vitamins, minerals, quality proteins, fiber, and adequate water to maintain health and quality of life.",
+    "comments": [
+      "Metabolism slows with age, decreasing energy requirements but increasing micronutrient needs.",
+      "Minimize or avoid highly ultra-processed and HFSS foods.",
+      "Regular physical activity is important for healthy aging."
+    ],
+    "queries": [
+      "What are the specific nutritional needs of the elderly?",
+      "How can healthy aging be promoted through diet?"
+    ],
+    "tags": [
+      "elderly nutrition",
+      "healthy aging",
+      "nutrient-dense foods",
+      "physical activity",
+      "micronutrients"
+    ]
+  },
+  {
+    "title": "Guideline 17: Read information on food labels to make informed and healthy food choices",
+    "text": "Food labels provide essential information about ingredients, nutritional content, and safety, enabling consumers to make informed choices.",
+    "comments": [
+      "Check serving size, calories, fat (saturated, trans), sugar, sodium, and fiber content.",
+      "Understand various logos (FSSAI, AGMARK, ISI, Vegan, Fortified).",
+      "Be cautious of misleading claims like 'all natural' or 'low fat'."
+    ],
+    "queries": [
+      "What information should be checked on food labels?",
+      "How can food labels help in making healthy choices?"
+    ],
+    "tags": [
+      "food labels",
+      "informed choices",
+      "nutrition facts",
+      "ingredients",
+      "food safety"
+    ]
+  },
+  {
+    "title": "Importance of variety within food groups",
+    "text": "Consuming a variety of foods within each food group ensures a wider range of nutrients and phytonutrients, contributing to overall health.",
+    "comments": [
+      "Different cereals and pulses have varying nutrient profiles.",
+      "Include diverse oilseeds and nuts for good quality fats and proteins.",
+      "Eat a variety of fruits and vegetables for vitamins, minerals, and antioxidants."
+    ],
+    "queries": [
+      "Why is variety important within food groups?",
+      "What are examples of diverse food choices within groups?"
+    ],
+    "tags": [
+      "dietary diversity",
+      "food groups",
+      "nutrients",
+      "phytonutrients",
+      "variety"
+    ]
+  },
+  {
+    "title": "Nutrient requirements vary",
+    "text": "Nutrient needs differ based on age, gender, physiological status (e.g., pregnancy), and physical activity levels.",
+    "comments": [
+      "Dietary intake should match body requirements to prevent malnutrition or obesity.",
+      "Critical periods like infancy, childhood, pregnancy, and lactation have higher demands.",
+      "Physical activity is essential for nutrient utilization."
+    ],
+    "queries": [
+      "How do nutrient requirements change throughout life?",
+      "What factors influence daily nutrient needs?"
+    ],
+    "tags": [
+      "nutrient requirements",
+      "RDA",
+      "age",
+      "gender",
+      "physical activity"
+    ]
+  },
+  {
+    "title": "Role of Macronutrients and Micronutrients",
+    "text": "Macronutrients (carbohydrates, fats, proteins) provide energy and building blocks, while micronutrients (vitamins, minerals) are essential for various bodily processes.",
+    "comments": [
+      "Carbohydrates are the primary energy source.",
+      "Proteins are vital for structure, function, and growth.",
+      "Fats aid in absorbing fat-soluble vitamins and provide energy."
+    ],
+    "queries": [
+      "What are the functions of macronutrients?",
+      "Why are micronutrients important?"
+    ],
+    "tags": [
+      "macronutrients",
+      "micronutrients",
+      "carbohydrates",
+      "proteins",
+      "fats",
+      "vitamins",
+      "minerals"
+    ]
+  },
+  {
+    "title": "Importance of Fiber, Antioxidants, and Phytonutrients",
+    "text": "Dietary fiber, antioxidants, and phytonutrients found in fruits, vegetables, and whole grains offer significant health benefits, including protection against chronic diseases.",
+    "comments": [
+      "Fiber aids digestion and reduces the risk of heart disease, diabetes, and obesity.",
+      "Antioxidants protect cells from damage.",
+      "Phytonutrients contribute to disease prevention."
+    ],
+    "queries": [
+      "What are the benefits of dietary fiber?",
+      "How do antioxidants and phytonutrients protect health?"
+    ],
+    "tags": [
+      "dietary fiber",
+      "antioxidants",
+      "phytonutrients",
+      "health benefits",
+      "disease prevention"
+    ]
+  },
+  {
+    "title": "My Plate for the Day",
+    "text": "The 'My Plate for the Day' model visually guides the proportion of different food groups needed for a balanced 2000 Kcal Indian diet.",
+    "comments": [
+      "Half the plate should consist of vegetables, fruits, and green leafy vegetables.",
+      "Cereals and millets should form a significant portion.",
+      "Pulses, flesh foods, eggs, nuts, oilseeds, and milk/curd contribute to the remaining parts."
+    ],
+    "queries": [
+      "What is the 'My Plate for the Day' recommendation?",
+      "How should meals be balanced according to this model?"
+    ],
+    "tags": [
+      "my plate",
+      "balanced diet",
+      "food portions",
+      "visual guide",
+      "Indian diet"
+    ]
+  },
+  {
+    "title": "Nutrient Requirements and RDAs",
+    "text": "Nutrient requirements define the quantities needed for health, with Estimated Average Requirements (EAR) and Recommended Dietary Allowances (RDA) used for assessment and planning.",
+    "comments": [
+      "EAR is the mean requirement; RDA is the 97.5th percentile.",
+      "Tolerable Upper Limit (TUL) prevents excessive intake.",
+      "Bioavailability affects nutrient absorption and utilization."
+    ],
+    "queries": [
+      "What are EAR and RDA?",
+      "What is bioavailability?"
+    ],
+    "tags": [
+      "nutrient requirements",
+      "RDA",
+      "EAR",
+      "TUL",
+      "bioavailability"
+    ]
+  },
+  {
+    "title": "Carbohydrates: Sources and Types",
+    "text": "Carbohydrates, found in cereals, millets, pulses, fruits, and vegetables, are a major energy source. They exist as simple (sugars) and complex (starches, fiber) forms.",
+    "comments": [
+      "Dietary fiber aids digestion, improves insulin sensitivity, and increases satiety.",
+      "Complex carbohydrates provide sustained energy.",
+      "Limit intake of simple sugars."
+    ],
+    "queries": [
+      "What are the different types of carbohydrates?",
+      "What is the role of dietary fiber?"
+    ],
+    "tags": [
+      "carbohydrates",
+      "fiber",
+      "sugars",
+      "energy",
+      "insulin sensitivity"
+    ]
+  },
+  {
+    "title": "Proteins: Essential Amino Acids (EAA)",
+    "text": "Proteins are crucial for body structure and function. Nine essential amino acids (EAA) must be obtained from the diet as the body cannot synthesize them.",
+    "comments": [
+      "Animal proteins are generally of higher quality (contain all EAAs).",
+      "Plant proteins can provide EAAs when combined appropriately (e.g., cereals with pulses).",
+      "Protein needs increase during growth, pregnancy, lactation, and illness."
+    ],
+    "queries": [
+      "What are essential amino acids?",
+      "How to ensure adequate protein intake from plant-based diets?"
+    ],
+    "tags": [
+      "proteins",
+      "essential amino acids",
+      "plant protein",
+      "animal protein",
+      "muscle growth"
+    ]
+  },
+  {
+    "title": "Fats: Types and Health Implications",
+    "text": "Dietary fats provide energy, aid vitamin absorption, and are components of hormones and cell membranes. They include saturated (SFA), monounsaturated (MUFA), and polyunsaturated (PUFA) fatty acids.",
+    "comments": [
+      "PUFAs (n-3 and n-6) are essential fatty acids.",
+      "SFAs can increase LDL cholesterol; trans fats are particularly harmful.",
+      "Moderate intake of MUFAs and PUFAs is beneficial."
+    ],
+    "queries": [
+      "What are the different types of fats?",
+      "What are the health effects of different fats?"
+    ],
+    "tags": [
+      "fats",
+      "fatty acids",
+      "SFA",
+      "MUFA",
+      "PUFA",
+      "cholesterol",
+      "trans fats"
+    ]
+  },
+  {
+    "title": "Vitamins and Minerals",
+    "text": "Vitamins (fat-soluble and water-soluble) and minerals (macro and micro) are essential micronutrients required in small amounts for numerous bodily processes.",
+    "comments": [
+      "Vitamins A, D, E, K are fat-soluble; B vitamins and C are water-soluble.",
+      "Minerals are crucial for tissue integrity, nerve function, and fluid balance.",
+      "Cooking methods can affect vitamin content."
+    ],
+    "queries": [
+      "What are the functions of key vitamins and minerals?",
+      "How does cooking affect vitamin content?"
+    ],
+    "tags": [
+      "vitamins",
+      "minerals",
+      "micronutrients",
+      "fat-soluble vitamins",
+      "water-soluble vitamins"
+    ]
+  },
+  {
+    "title": "Iron and Folic Acid Supplementation",
+    "text": "Iron and folic acid supplementation is recommended during pregnancy to prevent anemia and support fetal development.",
+    "comments": [
+      "Iron is essential for hemoglobin synthesis and brain development.",
+      "Folic acid prevents anemia and neural tube defects.",
+      "Vitamin C enhances iron absorption from plant foods."
+    ],
+    "queries": [
+      "Why are iron and folic acid supplements important during pregnancy?",
+      "How to improve iron absorption?"
+    ],
+    "tags": [
+      "iron",
+      "folic acid",
+      "supplementation",
+      "anemia",
+      "pregnancy"
+    ]
+  },
+  {
+    "title": "Breastfeeding Practices",
+    "text": "Exclusive breastfeeding for six months, early initiation, and continued breastfeeding up to two years or beyond are crucial for infant health and maternal well-being.",
+    "comments": [
+      "Breast milk provides complete nutrition and antibodies.",
+      "Frequent suckling ensures adequate milk production.",
+      "Breastfeeding reduces risks of infections and chronic diseases for both mother and child."
+    ],
+    "queries": [
+      "What are the key practices for successful breastfeeding?",
+      "What are the benefits of breastfeeding for mothers?"
+    ],
+    "tags": [
+      "breastfeeding",
+      "infant health",
+      "maternal health",
+      "antibodies",
+      "milk production"
+    ]
+  },
+  {
+    "title": "Complementary Feeding",
+    "text": "Introducing complementary foods after six months alongside breastfeeding is vital. These foods should be nutrient-dense, hygienically prepared, and free from added sugar and excessive salt.",
+    "comments": [
+      "Breast milk alone is insufficient after six months.",
+      "Homemade complementary foods are economical and safe.",
+      "Minimum dietary diversity includes cereals, pulses/meat, nuts/oilseeds, milk, and fruits/vegetables."
+    ],
+    "queries": [
+      "What is complementary feeding and why is it important?",
+      "What constitutes a minimum acceptable diet for infants?"
+    ],
+    "tags": [
+      "complementary feeding",
+      "infant nutrition",
+      "nutrient density",
+      "hygiene",
+      "dietary diversity"
+    ]
+  },
+  {
+    "title": "Diet for Children and Adolescents",
+    "text": "Children and adolescents need balanced diets rich in calcium, iron, and other essential nutrients to support growth, development, and bone health.",
+    "comments": [
+      "Calcium-rich foods include milk, milk products, ragi, and sesame seeds.",
+      "Adequate protein, nuts, oilseeds, and fish are important.",
+      "Avoid packaged foods high in fat, salt, and sugar."
+    ],
+    "queries": [
+      "What are the key nutrients for children and adolescents?",
+      "What foods should be included for bone health?"
+    ],
+    "tags": [
+      "child nutrition",
+      "adolescent nutrition",
+      "calcium",
+      "iron",
+      "bone health"
+    ]
+  },
+  {
+    "title": "Benefits of Vegetables and Legumes",
+    "text": "Vegetables and legumes provide essential vitamins, minerals, phytonutrients, and fiber, protecting against deficiencies and chronic diseases like hypertension, heart disease, and cancer.",
+    "comments": [
+      "Intake of vegetables and fruits is often low in India.",
+      "Vitamin C enhances iron absorption.",
+      "Fiber promotes gut health and reduces cholesterol."
+    ],
+    "queries": [
+      "What are the health benefits of consuming vegetables and legumes?",
+      "How do vegetables and fruits protect against chronic diseases?"
+    ],
+    "tags": [
+      "vegetables",
+      "legumes",
+      "phytonutrients",
+      "fiber",
+      "chronic disease prevention"
+    ]
+  },
+  {
+    "title": "Fats and Oils: Moderation and Variety",
+    "text": "Use oils and fats in moderation, choosing a variety of oilseeds, nuts, and nutricereals to meet daily fat and essential fatty acid needs.",
+    "comments": [
+      "Prioritize unsaturated fats (MUFA, PUFA).",
+      "Limit saturated fats (ghee, butter, coconut oil).",
+      "Avoid trans fats found in vanaspati and processed foods."
+    ],
+    "queries": [
+      "What are the best sources of healthy fats?",
+      "How to moderate fat intake?"
+    ],
+    "tags": [
+      "fats",
+      "oils",
+      "oilseeds",
+      "nuts",
+      "unsaturated fats",
+      "trans fats"
+    ]
+  },
+  {
+    "title": "Protein Quality and Combinations",
+    "text": "Obtain good quality proteins and essential amino acids (EAA) through appropriate food combinations, avoiding unnecessary protein supplements.",
+    "comments": [
+      "Combining cereals and pulses provides complete protein.",
+      "Non-vegetarian sources like fish, poultry, and eggs offer high-quality protein.",
+      "Adequate energy intake is necessary for protein utilization."
+    ],
+    "queries": [
+      "How to ensure good quality protein intake?",
+      "What is the role of food combinations in protein quality?"
+    ],
+    "tags": [
+      "protein quality",
+      "essential amino acids",
+      "food combinations",
+      "vegetarian protein",
+      "muscle building"
+    ]
+  },
+  {
+    "title": "Preventing Obesity and Lifestyle Diseases",
+    "text": "Adopting a healthy lifestyle, including a balanced diet and regular physical activity, is key to preventing abdominal obesity, overweight, and associated lifestyle diseases.",
+    "comments": [
+      "Excess calorie intake and reduced physical activity lead to obesity.",
+      "Obesity increases the risk of diabetes, hypertension, heart disease, and certain cancers.",
+      "Maintain a healthy BMI and waist circumference."
+    ],
+    "queries": [
+      "What lifestyle changes help prevent obesity?",
+      "What are the consequences of obesity?"
+    ],
+    "tags": [
+      "obesity prevention",
+      "healthy lifestyle",
+      "physical activity",
+      "NCDs",
+      "weight management"
+    ]
+  },
+  {
+    "title": "Physical Activity Guidelines",
+    "text": "Regular physical activity is crucial for overall health. Guidelines vary by age group, emphasizing a combination of aerobic, muscle-strengthening, balance, and flexibility exercises.",
+    "comments": [
+      "Children need 60 minutes of daily activity.",
+      "Adults require 30-60 minutes of moderate-intensity activity most days.",
+      "Elderly should include activities for strength and balance."
+    ],
+    "queries": [
+      "What are the recommended physical activity levels for different age groups?",
+      "What types of physical activity are beneficial?"
+    ],
+    "tags": [
+      "physical activity",
+      "exercise",
+      "aerobic activity",
+      "strength training",
+      "age-specific guidelines"
+    ]
+  },
+  {
+    "title": "Salt Intake and Hypertension",
+    "text": "Restricting salt intake to 5g per day is vital for managing blood pressure and reducing the risk of hypertension, heart disease, and stroke.",
+    "comments": [
+      "High sodium and low potassium intake increase hypertension risk.",
+      "Processed foods are major sources of hidden salt.",
+      "Develop a taste for low-salt foods from an early age."
+    ],
+    "queries": [
+      "What is the recommended daily salt intake?",
+      "How can salt intake be reduced?"
+    ],
+    "tags": [
+      "salt",
+      "sodium",
+      "hypertension",
+      "blood pressure",
+      "processed foods"
+    ]
+  },
+  {
+    "title": "Food Safety Practices",
+    "text": "Consuming safe and clean foods prevents food-borne illnesses. Key practices include proper washing, storage, and handling of food items.",
+    "comments": [
+      "Wash hands thoroughly before and during food preparation.",
+      "Store raw and cooked foods separately.",
+      "Refrigerate perishable foods promptly."
+    ],
+    "queries": [
+      "What are essential food safety practices?",
+      "How to prevent cross-contamination?"
+    ],
+    "tags": [
+      "food safety",
+      "hygiene",
+      "food handling",
+      "storage",
+      "cross-contamination"
+    ]
+  },
+  {
+    "title": "Cooking Methods and Nutrient Preservation",
+    "text": "Appropriate cooking methods like steaming and boiling help preserve nutrients and improve digestibility, while methods like deep-frying can lead to nutrient loss and increased fat intake.",
+    "comments": [
+      "Steaming retains more water-soluble vitamins than blanching.",
+      "Avoid repeated heating of cooking oils.",
+      "Microwave cooking is efficient and preserves nutrients well."
+    ],
+    "queries": [
+      "Which cooking methods are best for nutrient retention?",
+      "What are the drawbacks of deep-frying?"
+    ],
+    "tags": [
+      "cooking methods",
+      "nutrient preservation",
+      "steaming",
+      "boiling",
+      "frying",
+      "microwave cooking"
+    ]
+  },
+  {
+    "title": "Hydration and Beverage Choices",
+    "text": "Adequate fluid intake is crucial. Water is the best choice, supplemented by options like tender coconut water and buttermilk. Avoid sugary and carbonated drinks.",
+    "comments": [
+      "Aim for approximately 2 liters of fluids daily.",
+      "Sugary drinks contribute to excess calorie intake and health risks.",
+      "Tea and coffee should be consumed in moderation due to caffeine and tannin."
+    ],
+    "queries": [
+      "What are the best beverage choices for hydration?",
+      "Why should sugary drinks be avoided?"
+    ],
+    "tags": [
+      "hydration",
+      "water",
+      "beverages",
+      "sugary drinks",
+      "tea",
+      "coffee"
+    ]
+  },
+  {
+    "title": "Minimizing HFSS and UPF Consumption",
+    "text": "Reducing intake of High Fat, Sugar, and Salt (HFSS) foods and Ultra-Processed Foods (UPFs) is essential for preventing NCDs.",
+    "comments": [
+      "HFSS foods often have >15% energy from added fats, sugars, or salt.",
+      "UPFs contain numerous additives and are often low in fiber and micronutrients.",
+      "Prioritize fresh, minimally processed foods."
+    ],
+    "queries": [
+      "What are the characteristics of HFSS and UPF foods?",
+      "What are healthier alternatives to UPFs?"
+    ],
+    "tags": [
+      "HFSS",
+      "UPF",
+      "processed foods",
+      "NCDs",
+      "healthy alternatives"
+    ]
+  },
+  {
+    "title": "Nutrient-Rich Diets for the Elderly",
+    "text": "Elderly individuals need nutrient-rich foods, adequate hydration, and regular physical activity to maintain health, mobility, and cognitive function.",
+    "comments": [
+      "Focus on protein, calcium, vitamins, minerals, and fiber.",
+      "Soft, well-cooked foods with less salt are preferable.",
+      "Minimize ultra-processed and HFSS foods."
+    ],
+    "queries": [
+      "What dietary adjustments are needed for the elderly?",
+      "How can physical activity support healthy aging?"
+    ],
+    "tags": [
+      "elderly nutrition",
+      "healthy aging",
+      "nutrient-rich",
+      "hydration",
+      "physical activity"
+    ]
+  },
+  {
+    "title": "Reading Food Labels for Informed Choices",
+    "text": "Understanding food labels helps consumers assess nutritional quality, safety, and make informed choices about packaged foods.",
+    "comments": [
+      "Check ingredient lists, serving sizes, and nutrient information.",
+      "Pay attention to mandatory declarations like 'Nutrition Facts'.",
+      "Be aware of misleading claims and certifications."
+    ],
+    "queries": [
+      "How to effectively read and interpret food labels?",
+      "What are common misleading claims on food products?"
+    ],
+    "tags": [
+      "food labels",
+      "nutrition information",
+      "informed choices",
+      "misleading claims",
+      "FSSAI"
+    ]
+  },
+  {
+    "title": "Food Groups for a Balanced Diet",
+    "text": "The document categorizes foods into ten groups, emphasizing the consumption of adequate quantities from at least 5-7 groups daily for nutrient adequacy.",
+    "comments": [
+      "Groups include cereals/millets, pulses, vegetables, nuts/oilseeds/fats, fruits, roots/tubers, flesh foods, milk/curd, and spices/herbs.",
+      "Diversify within food groups for better nutrient intake.",
+      "Spices and herbs offer antioxidants."
+    ],
+    "queries": [
+      "What are the ten food groups recommended?",
+      "How to ensure variety within food groups?"
+    ],
+    "tags": [
+      "food groups",
+      "balanced diet",
+      "nutrient adequacy",
+      "dietary diversity",
+      "spices"
+    ]
+  },
+  {
+    "title": "Glycemic Index (GI) and Glycemic Load (GL)",
+    "text": "Understanding the GI and GL of foods helps in managing blood sugar levels, particularly for individuals with diabetes or at risk.",
+    "comments": [
+      "Foods with lower GI/GL are generally preferred.",
+      "Combinations of cereals and pulses can lower the overall GI/GL.",
+      "Breakfast foods like idli and dosa can have varying GI/GL depending on preparation."
+    ],
+    "queries": [
+      "What are Glycemic Index and Glycemic Load?",
+      "How do GI and GL affect blood sugar?"
+    ],
+    "tags": [
+      "glycemic index",
+      "glycemic load",
+      "blood sugar",
+      "diabetes management",
+      "carbohydrates"
+    ]
+  },
+  {
+    "title": "Household Measures for Food Items",
+    "text": "Annexures provide suggested household measures (katoris, spoons) and raw food item quantities for various age groups to aid in diet planning.",
+    "comments": [
+      "Standardized measures help in accurate portioning.",
+      "Flexibility is allowed for item selection within food groups.",
+      "Focus on consistent measurement for dietary assessment."
+    ],
+    "queries": [
+      "How to measure food portions accurately at home?",
+      "What are the standard household measures mentioned?"
+    ],
+    "tags": [
+      "household measures",
+      "portion sizes",
+      "diet planning",
+      "food measurement",
+      "annexures"
+    ]
+  },
+  {
+    "title": "Importance of Physical Activity for Children",
+    "text": "Children and adolescents require at least 60 minutes of daily moderate-to-vigorous physical activity, including strength training three days a week, to prevent overweight and maintain overall health.",
+    "comments": [
+      "Physical activity is crucial for bone development and muscle strength.",
+      "Sedentary lifestyles should be avoided.",
+      "Encourage participation in games and sports."
+    ],
+    "queries": [
+      "What are the physical activity recommendations for children?",
+      "How does physical activity impact child health?"
+    ],
+    "tags": [
+      "child physical activity",
+      "adolescent activity",
+      "sedentary lifestyle",
+      "bone strength",
+      "overweight prevention"
+    ]
+  },
+  {
+    "title": "Dietary Considerations During Illness",
+    "text": "During illness, children need nutrient-dense, easily digestible foods at frequent intervals. Adequate fluid intake is essential, and dietary restrictions should be avoided.",
+    "comments": [
+      "Focus on calorie-rich, soft foods during recovery.",
+      "Oral Rehydration Solution (ORS) is crucial for diarrhea management.",
+      "Catch-up growth requires increased feeding after illness subsides."
+    ],
+    "queries": [
+      "How should children be fed during illness?",
+      "What are the dietary recommendations for diarrhea?"
+    ],
+    "tags": [
+      "illness nutrition",
+      "child illness",
+      "diarrhea",
+      "ORS",
+      "catch-up growth"
+    ]
+  },
+  {
+    "title": "Iron-Rich Foods and Absorption",
+    "text": "Include iron-rich foods like green leafy vegetables, pulses, dry fruits, meat, and fish. Enhance iron absorption by consuming Vitamin C-rich foods with meals and avoiding tea/coffee around meal times.",
+    "comments": [
+      "Iron deficiency leads to anemia and impaired cognitive function.",
+      "Plant-based iron absorption is improved by Vitamin C.",
+      "Beverages like tea interfere with iron absorption."
+    ],
+    "queries": [
+      "What are good sources of dietary iron?",
+      "How to improve iron absorption from plant-based foods?"
+    ],
+    "tags": [
+      "iron",
+      "anemia",
+      "iron absorption",
+      "vitamin C",
+      "plant-based diet"
+    ]
+  },
+  {
+    "title": "Calcium-Rich Foods and Bone Health",
+    "text": "Adequate calcium intake, along with Vitamin D and regular exercise, is crucial for strong bones, especially during childhood, adolescence, and old age.",
+    "comments": [
+      "Sources include milk, milk products, ragi, sesame seeds, and green leafy vegetables.",
+      "Sunlight exposure helps in Vitamin D synthesis for calcium absorption.",
+      "Regular exercise reduces calcium loss and strengthens bones."
+    ],
+    "queries": [
+      "What are the best sources of calcium?",
+      "How does Vitamin D contribute to bone health?"
+    ],
+    "tags": [
+      "calcium",
+      "bone health",
+      "vitamin D",
+      "exercise",
+      "osteoporosis prevention"
+    ]
+  },
+  {
+    "title": "Healthy Snacks for Infants",
+    "text": "Healthy snacks for infants can include pureed or boiled cowpeas, green peas, papaya, banana, curd, boiled eggs, and mashed fish.",
+    "comments": [
+      "Focus on nutrient-dense options.",
+      "Avoid added sugar and excessive salt.",
+      "Continue breastfeeding alongside snacks."
+    ],
+    "queries": [
+      "What are healthy snack options for infants?",
+      "What ingredients should be avoided in infant snacks?"
+    ],
+    "tags": [
+      "infant snacks",
+      "healthy snacks",
+      "nutrient-dense",
+      "complementary feeding",
+      "breastfeeding"
+    ]
+  },
+  {
+    "title": "Dietary Guidelines for Elderly Men and Women",
+    "text": "Suggested diet charts provide specific food group quantities for elderly men and women to meet their nutritional needs, focusing on nutrient density and ease of digestion.",
+    "comments": [
+      "Elderly men (65kg): ~1710 kcal, 62g protein.",
+      "Elderly women (55kg): ~1500 kcal, 56g protein.",
+      "Include milk, vegetables, fruits, pulses, and nuts."
+    ],
+    "queries": [
+      "What are the recommended daily calorie and protein intakes for the elderly?",
+      "What specific foods should be included in the elderly diet?"
+    ],
+    "tags": [
+      "elderly diet",
+      "calorie intake",
+      "protein intake",
+      "food groups",
+      "dietary charts"
+    ]
+  },
+  {
+    "title": "Food Label Information and Claims",
+    "text": "Food labels provide crucial information for making healthy choices. Understanding nutrient claims, ingredient lists, and logos is important.",
+    "comments": [
+      "Mandatory information includes energy, protein, carbohydrates (sugar), and fat (saturated, trans).",
+      "Claims like 'low fat' or 'natural' can sometimes be misleading.",
+      "Check 'Use-by' or 'Expiry' dates for safety."
+    ],
+    "queries": [
+      "How to interpret nutrition claims on food labels?",
+      "What are the key elements to check on a food label?"
+    ],
+    "tags": [
+      "food labels",
+      "nutrition claims",
+      "ingredients",
+      "safety dates",
+      "consumer awareness"
+    ]
+  },
+  {
+    "title": "Food Categorization by Processing Level",
+    "text": "Foods are categorized based on processing level (minimal, moderate, ultra-processed) and nutrients of concern (HFSS), guiding healthier food choices.",
+    "comments": [
+      "Category A: Minimal processing (whole grains, fresh produce).",
+      "Category B: Moderate processing (dried, frozen, canned foods).",
+      "Category C: Ultra-processed foods (UPFs) with additives, low fiber/nutrients."
+    ],
+    "queries": [
+      "What are the different categories of food processing?",
+      "How does processing affect food's healthiness?"
+    ],
+    "tags": [
+      "food processing",
+      "ultra-processed foods",
+      "minimal processing",
+      "HFSS",
+      "food categorization"
+    ]
+  },
+  {
+    "title": "Safe Use of Cookware",
+    "text": "Using safe cookware materials like stainless steel and earthen pots is important. Avoid overheating non-stick pans and prolonged storage of acidic foods in reactive metals.",
+    "comments": [
+      "Stainless steel and earthen pots are generally safe.",
+      "Non-stick coatings can release fumes if overheated.",
+      "Avoid reactive metals (aluminum, brass, copper) for acidic food storage."
+    ],
+    "queries": [
+      "What are the safest types of cookware?",
+      "Are there risks associated with non-stick pans?"
+    ],
+    "tags": [
+      "cookware",
+      "food safety",
+      "non-stick pans",
+      "stainless steel",
+      "earthen pots"
+    ]
+  },
+  {
+    "title": "Glycemic Carbohydrates in Foods",
+    "text": "The document provides estimates of glycemic carbohydrates in commonly consumed cereals, legumes, and breakfast foods, aiding in understanding their impact on blood sugar.",
+    "comments": [
+      "Glycemic carbohydrates contribute to blood glucose response.",
+      "Lower glycemic carbohydrate content is generally preferred for blood sugar control.",
+      "Food preparation methods can influence glycemic values."
+    ],
+    "queries": [
+      "What are glycemic carbohydrates?",
+      "How do different foods impact blood sugar levels?"
+    ],
+    "tags": [
+      "glycemic carbohydrates",
+      "blood sugar control",
+      "diabetes",
+      "cereals",
+      "legumes"
+    ]
+  },
+  {
+    "title": "Dietary Guidelines for Infants (6-12 months)",
+    "text": "Specific diet charts provide guidance on complementary foods, quantities, and timings for infants aged 6-12 months, emphasizing variety and hygiene.",
+    "comments": [
+      "Introduce foods one at a time to check for allergies.",
+      "Include cereals, pulses, vegetables, fruits, and optionally egg/fish.",
+      "Avoid added sugar and limit salt."
+    ],
+    "queries": [
+      "What is a suitable diet for infants aged 6-12 months?",
+      "How to introduce new foods to infants?"
+    ],
+    "tags": [
+      "infant diet",
+      "complementary feeding",
+      "6-12 months",
+      "diet charts",
+      "hygiene"
+    ]
+  },
+  {
+    "title": "Dietary Guidelines for Children (1-3 years)",
+    "text": "Sample diet charts offer daily meal plans for children aged 1-3 years, focusing on nutrient-rich foods, appropriate portion sizes, and healthy eating habits.",
+    "comments": [
+      "Ensure adequate intake of milk, cereals, pulses, vegetables, and fruits.",
+      "Encourage self-feeding and positive mealtime experiences.",
+      "Limit screen time during meals."
+    ],
+    "queries": [
+      "What are the dietary recommendations for toddlers (1-3 years)?",
+      "How to encourage healthy eating habits in young children?"
+    ],
+    "tags": [
+      "child diet",
+      "toddler nutrition",
+      "1-3 years",
+      "meal plans",
+      "healthy habits"
+    ]
+  },
+  {
+    "title": "Dietary Guidelines for Children (4-9 years)",
+    "text": "Sample diet charts provide balanced meal suggestions for physically active children aged 4-9 years, emphasizing whole grains, pulses, vegetables, and moderate fat intake.",
+    "comments": [
+      "Ensure adequate calories and protein for growth and activity.",
+      "Include milk, nuts, and seeds for essential nutrients.",
+      "Restrict foods high in fat, sugar, and salt."
+    ],
+    "queries": [
+      "What is a balanced diet for school-aged children?",
+      "How to ensure adequate nutrition for active children?"
+    ],
+    "tags": [
+      "child nutrition",
+      "school-aged children",
+      "4-9 years",
+      "balanced diet",
+      "physical activity"
+    ]
+  },
+  {
+    "title": "Dietary Guidelines for Adolescents (16-18 years)",
+    "text": "Sample diet charts are provided for physically active adolescent girls (16-18 years), highlighting the need for adequate energy, protein, and micronutrients during this growth phase.",
+    "comments": [
+      "Adolescence is a critical period for growth and development.",
+      "Nutrient needs are high, especially for calcium and iron.",
+      "Promote healthy food choices and lifestyle practices."
+    ],
+    "queries": [
+      "What are the specific nutritional needs of adolescent girls?",
+      "How can healthy eating habits be promoted during adolescence?"
+    ],
+    "tags": [
+      "adolescent nutrition",
+      "teenagers",
+      "growth spurt",
+      "calcium",
+      "iron",
+      "healthy habits"
+    ]
+  },
+  {
+    "title": "Dietary Guidelines for Sedentary Adults",
+    "text": "Sample diet charts offer balanced meal suggestions for sedentary men and women, emphasizing moderate calorie intake, adequate protein, and nutrient-rich foods.",
+    "comments": [
+      "Sedentary individuals require fewer calories but sufficient micronutrients.",
+      "Focus on whole grains, pulses, vegetables, and fruits.",
+      "Limit intake of HFSS and ultra-processed foods."
+    ],
+    "queries": [
+      "What is a suitable diet for sedentary adults?",
+      "How to manage calorie intake for a sedentary lifestyle?"
+    ],
+    "tags": [
+      "adult nutrition",
+      "sedentary lifestyle",
+      "calorie management",
+      "balanced diet",
+      "nutrient intake"
+    ]
+  },
+  {
+    "title": "Dietary Guidelines for Pregnant Women",
+    "text": "Sample diet charts are provided for normal pregnant women, emphasizing nutrient-rich foods, adequate calories, and essential micronutrients for maternal and fetal health.",
+    "comments": [
+      "Additional calories and protein are needed, especially in the second and third trimesters.",
+      "Include iron, folic acid, calcium, and vitamin D-rich foods.",
+      "Avoid HFSS foods and ensure adequate hydration."
+    ],
+    "queries": [
+      "What are the dietary recommendations for pregnant women?",
+      "Which nutrients are particularly important during pregnancy?"
+    ],
+    "tags": [
+      "pregnancy diet",
+      "maternal nutrition",
+      "fetal health",
+      "micronutrients",
+      "calories"
+    ]
+  }
+]
