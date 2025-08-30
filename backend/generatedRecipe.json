@@ -1,0 +1,90 @@
+{
+  "recipeName": "Hearty Vegetable Casserole",
+  "description": "A comforting and nutritious casserole packed with a variety of colorful vegetables, baked in a creamy sauce and topped with a golden crust.",
+  "prepTime": "20 minutes",
+  "cookTime": "35-40 minutes",
+  "servings": "6-8",
+  "ingredients": [
+    {
+      "name": "Broccoli florets",
+      "quantity": "3",
+      "unit": "cups"
+    },
+    {
+      "name": "Carrots",
+      "quantity": "2",
+      "unit": "cups",
+      "preparation": "sliced"
+    },
+    {
+      "name": "Green beans",
+      "quantity": "2",
+      "unit": "cups",
+      "preparation": "trimmed and halved"
+    },
+    {
+      "name": "Corn kernels",
+      "quantity": "1",
+      "unit": "cup",
+      "preparation": "frozen or fresh"
+    },
+    {
+      "name": "Cream of mushroom soup",
+      "quantity": "1",
+      "unit": "can (10.5 oz)"
+    },
+    {
+      "name": "Milk",
+      "quantity": "0.5",
+      "unit": "cup"
+    },
+    {
+      "name": "Shredded cheddar cheese",
+      "quantity": "1.5",
+      "unit": "cups",
+      "preparation": "divided"
+    },
+    {
+      "name": "Salt",
+      "quantity": "0.5",
+      "unit": "teaspoon"
+    },
+    {
+      "name": "Black pepper",
+      "quantity": "0.25",
+      "unit": "teaspoon"
+    },
+    {
+      "name": "Breadcrumbs",
+      "quantity": "0.5",
+      "unit": "cup",
+      "preparation": "optional, for topping"
+    },
+    {
+      "name": "Butter",
+      "quantity": "2",
+      "unit": "tablespoons",
+      "preparation": "melted, for topping (if using breadcrumbs)"
+    }
+  ],
+  "instructions": [
+    "Preheat oven to 375°F (190°C). Grease a 9x13 inch baking dish.",
+    "In a large bowl, combine the broccoli florets, sliced carrots, green beans, and corn kernels.",
+    "In a separate bowl, whisk together the cream of mushroom soup and milk.",
+    "Pour the soup mixture over the vegetables. Add 1 cup of the shredded cheddar cheese, salt, and pepper. Stir gently to combine.",
+    "Pour the vegetable mixture into the prepared baking dish.",
+    "Bake for 25 minutes, or until the vegetables are tender and the casserole is bubbly.",
+    "Remove from oven. Sprinkle the remaining 0.5 cup of cheddar cheese over the top. If using breadcrumbs, toss them with melted butter and sprinkle over the cheese.",
+    "Return to the oven and bake for another 10-15 minutes, or until the cheese is melted and golden brown, and the topping is crispy.",
+    "Let stand for a few minutes before serving."
+  ],
+  "tags": [
+    "Vegetable",
+    "Casserole",
+    "Vegetable Casserole",
+    "VegetableCasserole",
+    "Comfort Food",
+    "Side Dish",
+    "Easy"
+  ]
+}

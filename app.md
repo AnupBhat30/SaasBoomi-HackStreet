@@ -36,25 +36,10 @@ Manages and optimizes nutritional recommendations for entire families by analyzi
 
 ---
 
-### 3. Leftover & Waste Reduction Agent
-
-**Purpose:**  
-Helps users creatively repurpose leftovers and minimize food waste, maintaining nutritional balance and cultural relevance.
-
-**Key Responsibilities:**  
-- Detects leftovers and commonly wasted items from meal logs and pantry data.  
-- Suggests quick, simple recipes to reuse food (e.g., “Khichdi vada” from leftover khichdi).  
-- Offers tips on food storage and shelf-life extension based on seasonality.  
-- Nudges portion control and sustainable eating habits rooted in Indian culinary traditions.  
-- Supports cost savings and environmental consciousness in meal planning.
-
----
-
 ## Summary
 
 Together, these agents create a powerful, intelligent ecosystem that:  
 - Personalizes nutrition and behavioral advice with cultural nuance (Contextual Nudging Agent).  
 - Harmonizes family-wide nutritional needs into cohesive meal plans (Family Network Agent).  
-- Encourages sustainability and resourcefulness through waste reduction (Leftover & Waste Reduction Agent).
 
 This triad ensures the platform is a trusted daily companion for Indian families striving for health, heritage, and harmony around the dining table.
