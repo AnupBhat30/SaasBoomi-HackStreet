@@ -14,6 +14,20 @@ client = genai.Client(api_key=key)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
+def generate_tags(recipe_name):
+    """Generate an array of tags from the recipe name for unique identification."""
+    if not recipe_name:
+        return []
+    # Clean the recipe name: remove punctuation, convert to lower case
+    cleaned = re.sub(r'[^\w\s]', '', recipe_name.lower())
+    # Split into words
+    words = cleaned.split()
+    # Include individual words and the full name
+    tags = words + [cleaned.strip()]
+    # Remove duplicates and empty strings
+    tags = list(set(tag for tag in tags if tag))
+    return tags
+
 # --- user info and meal log to be embedded into the system instruction ---
 userInfo = {
     "name": "Mr. Sharma",
@@ -935,6 +949,10 @@ try:
                             # preserve a short reason if provided
                             if 'reason' in item and item.get('reason'):
                                 swaps[idx]['hasRecipeReason'] = str(item.get('reason'))
+                            # Generate tags if hasRecipe is true
+                            if swaps[idx]['hasRecipe']:
+                                alt = swaps[idx].get('alternative', '')
+                                swaps[idx]['tags'] = generate_tags(alt)
                     except Exception:
                         continue
             else:
@@ -956,8 +974,14 @@ try:
                             else:
                                 has_recipe = True
                         s['hasRecipe'] = has_recipe
+                        # Generate tags if hasRecipe is true
+                        if s['hasRecipe']:
+                            s['tags'] = generate_tags(alt)
                     except Exception:
                         s['hasRecipe'] = True
+                        # Generate tags since defaulting to hasRecipe=True
+                        alt = s.get('alternative', '')
+                        s['tags'] = generate_tags(alt)
         except Exception:
             # don't let augmentation break the main flow
             return

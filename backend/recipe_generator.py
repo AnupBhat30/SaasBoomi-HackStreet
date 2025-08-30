@@ -13,13 +13,70 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 # Input object: recipe name and tags (tags are derived from the recipe name, avoid basic commodities)
 input_recipe = {
-    "recipeName": "Vegetable Casserole Recipe",
+    "recipeName": "Chicken Biryani",
     "tags": [
-        "Vegetable",
-        "Casserole",
-        "Vegetable Casserole",
-        "VegetableCasserole",
+        "Chicken",
+        "Biryani",
+        "Rice",
+        "Meat",
+        "Indian",
+        "Non-Vegetarian",
+        "Aromatic"
     ]
+}
+
+
+userInfo = {
+    "name": "Mr. Sharma",
+    "age": 68,
+    "BMI": 26,
+    "gender": "Male",
+    "health_conditions": ["hypertension", "arthritis", "social_isolation"],
+    "allergies": [],
+    "health_goals": ["reduce loneliness", "maintain mobility", "manage blood pressure", "improve digital literacy"],
+    "medication_details": [],
+    "budget_for_food": 1000,  # Weekly budget for food in ₹ (reasonable for a Tier-2 retiree)
+    "occupation_type": "retired",
+    "work_schedule": "none",
+    "access_to_kitchen": "shared_community_kitchen",  # shared or limited personal kitchen
+    "stress_level": "moderate",
+    "meal_source": "home_cooked",  # primarily at-home / community meals
+    "preferred_interface": {"font_size": "large", "simplicity": "very_simple", "guided_tours": True}
+}
+
+environmentContext = {
+    "location": "Jaipur",
+    "availability": [
+        "rice",
+        "dal",
+        "chapati_flour",
+        "basic_spices",
+        "curd",
+        "banana",
+        "roasted_chana",
+        "cooking_oil"
+    ],
+    "season": "Autumn",
+    "cultural_event": "local_fairs_and_meets"
+}
+
+# Ingredient mapping for consistent matching
+INGREDIENT_MAPPINGS = {
+    # Available ingredients and their synonyms/variations
+    "rice": ["rice", "basmati rice", "white rice", "cooked rice"],
+    "dal": ["dal", "lentils", "toor dal", "moong dal", "masoor dal", "chana dal"],
+    "chapati_flour": ["chapati flour", "wheat flour", "atta", "flour", "whole wheat flour"],
+    "basic_spices": ["basic spices", "spices", "turmeric", "cumin", "coriander", "garam masala", 
+                    "red chili powder", "cumin powder", "coriander powder", "spice powder", "masala"],
+    "curd": ["curd", "yogurt", "dahi", "greek yogurt", "hung curd"],
+    "banana": ["banana", "bananas", "ripe banana"],
+    "roasted_chana": ["roasted chana", "chana", "chickpeas", "roasted chickpeas", "bhuna chana"],
+    "cooking_oil": ["cooking oil", "oil", "vegetable oil", "sunflower oil", "mustard oil", "ghee"],
+    # Categories that can include multiple items
+    "seasonal_vegetables": ["onion", "onions", "tomato", "tomatoes", "bell pepper", "capsicum", 
+                           "cauliflower", "cabbage", "carrots", "beans", "spinach", "seasonal vegetables", "vegetables"],
+    "basic_aromatics": ["ginger", "garlic", "green chili", "curry leaves"],
+    "common_condiments": ["lemon juice", "lime juice", "salt", "sugar"],
 }
 
 # If the API key is not set, write the prompt locally and exit so the script is safe to run without credentials.
@@ -68,6 +125,7 @@ class Recipe(BaseModel):
     meal_type: str
     cultural_context: str
     source: str
+    ingredients_to_buy: List[str]
 
 
 # Small verification schema used to ask the LLM whether the found recipes match the search intent
@@ -75,6 +133,19 @@ class Verification(BaseModel):
     match: bool
     use_context: bool
     reason: str
+
+
+# Schema for ingredient matching analysis
+class IngredientMatch(BaseModel):
+    recipe_ingredient: str
+    available_match: str  # empty string if no match found
+    is_available: bool
+    reason: str
+
+
+class IngredientAnalysis(BaseModel):
+    matches: List[IngredientMatch]
+    ingredients_to_buy: List[str]
 
 
 # ---------- Generate Recipe ----------
@@ -104,6 +175,86 @@ def find_matches(tags, recipes, top_k=3):
             candidates.append({"score": score, "recipe": r, "snippet": " ".join(text_fields)[:800]})
     candidates.sort(key=lambda x: x["score"], reverse=True)
     return candidates[:top_k]
+
+
+def check_ingredient_availability(ingredient_name: str, available_items: List[str], mappings: dict) -> tuple[bool, str]:
+    """
+    Consistently check if an ingredient is available using predefined mappings.
+    Returns (is_available, matched_category).
+    """
+    ingredient_lower = ingredient_name.lower().strip()
+    
+    # Direct match in available items
+    available_lower = [item.lower() for item in available_items]
+    if ingredient_lower in available_lower:
+        return True, ingredient_lower
+    
+    # Check if ingredient matches available items through mappings
+    for available_item in available_items:
+        available_item_lower = available_item.lower()
+        if available_item_lower in mappings:
+            synonyms = mappings[available_item_lower]
+            for synonym in synonyms:
+                if synonym.lower() == ingredient_lower or ingredient_lower in synonym.lower() or synonym.lower() in ingredient_lower:
+                    return True, available_item_lower
+    
+    # Special cases for common variations
+    if any(word in ingredient_lower for word in ['powder', 'paste']) and 'basic_spices' in available_lower:
+        return True, 'basic_spices'
+    
+    # Check if ingredient is a basic essential (always available)
+    basic_essentials = ['water', 'salt']
+    if ingredient_lower in basic_essentials:
+        return True, 'basic_essential'
+    
+    return False, ""
+
+
+def get_consistent_ingredients_to_buy(recipe_ingredients: List[dict], available_items: List[str]) -> List[str]:
+    """
+    Consistently determine which ingredients need to be bought using deterministic logic.
+    """
+    ingredients_to_buy = []
+    
+    print(f"  📋 Analyzing {len(recipe_ingredients)} recipe ingredients against {len(available_items)} available items")
+    
+    for ingredient in recipe_ingredients:
+        # Extract ingredient name from different possible formats
+        ingredient_name = ""
+        if isinstance(ingredient, dict):
+            ingredient_name = (ingredient.get("name") or 
+                             ingredient.get("ingredient") or 
+                             ingredient.get("ingredientName") or 
+                             ingredient.get("ingredient_name") or
+                             ingredient.get("item") or "").strip()
+        elif isinstance(ingredient, str):
+            ingredient_name = ingredient.strip()
+        
+        if not ingredient_name:
+            continue
+            
+        # Clean ingredient name (remove quantities, parentheses, etc.)
+        original_name = ingredient_name
+        ingredient_name = re.sub(r'\([^)]*\)', '', ingredient_name)  # Remove parentheses
+        ingredient_name = re.sub(r'\d+.*?(tsp|tbsp|cup|g|kg|ml|l|inch|clove|piece)s?\b', '', ingredient_name, flags=re.IGNORECASE)
+        ingredient_name = ingredient_name.strip()
+        
+        is_available, matched_category = check_ingredient_availability(ingredient_name, available_items, INGREDIENT_MAPPINGS)
+        
+        if not is_available:
+            # Standardize the name for consistency
+            standardized_name = ingredient_name.title()
+            if standardized_name not in ingredients_to_buy:
+                ingredients_to_buy.append(standardized_name)
+                
+        status_icon = "✅ Available" if is_available else "❌ Need to buy"
+        match_info = f" (matches: {matched_category})" if matched_category else ""
+        print(f"    {status_icon}: '{original_name}' -> '{ingredient_name}'{match_info}")
+    
+    # Sort for consistency
+    ingredients_to_buy.sort()
+    print(f"  🛒 Final shopping list: {ingredients_to_buy}")
+    return ingredients_to_buy
 
 
 # Load recipes and find candidates
@@ -156,22 +307,54 @@ if use_context:
             "ingredients": context.get("Cleaned-Ingredients"),
             "instructions": context.get("TranslatedInstructions"),
             "cuisine": context.get("Cuisine")
-        }
+        },
+        "userInfo": userInfo,
+        "environmentContext": environmentContext
     }
 else:
-    prompt_payload = {"input_recipe": input_recipe}
+    prompt_payload = {
+        "input_recipe": input_recipe,
+        "userInfo": userInfo,
+        "environmentContext": environmentContext
+    }
 
 # Final generation prompt asks the model to produce the Recipe schema JSON, using context when available
-prompt = (
-    "Generate a recipe using the following input. If a 'context' field is present, use it to inform ingredients, instructions and cultural details. Return JSON that matches the Recipe Pydantic schema.\n"
-    + json.dumps(prompt_payload, ensure_ascii=False)
-)
+# Modified prompt to center recipe around available ingredients with deterministic matching
+available_ingredients_str = ", ".join(environmentContext["availability"])
+ingredient_mappings_str = json.dumps(INGREDIENT_MAPPINGS, indent=2)
+
+prompt = f"""
+Generate a recipe for {input_recipe['recipeName']} using ONLY the available ingredients listed below:
+
+STRICTLY AVAILABLE INGREDIENTS: {available_ingredients_str}
+
+INGREDIENT SUBSTITUTION RULES:
+- 'basic_spices' can substitute for: turmeric, cumin, coriander, garam masala, red chili powder, spice powders
+- 'curd' can substitute for: yogurt, greek yogurt, hung curd
+- 'cooking_oil' can substitute for: any cooking oil, ghee
+- 'dal' can substitute for: any lentils (toor, moong, masoor, chana dal)
+- 'chapati_flour' can substitute for: wheat flour, atta
+- 'roasted_chana' can substitute for: chickpeas, roasted chickpeas
+
+STRICT CONSTRAINTS:
+- Use ONLY ingredients from the available list or their valid substitutes
+- Do NOT use seasonal_vegetables, basic_aromatics, or common_condiments unless they are in the available list
+- If you absolutely need onions, tomatoes, ginger, garlic, or other fresh items, add them to 'ingredients_to_buy'
+- Prefer simple recipes that work with the limited available ingredients
+
+USER CONTEXT: {json.dumps(userInfo, ensure_ascii=False)}
+ENVIRONMENT: {json.dumps(environmentContext, ensure_ascii=False)}
+{"RECIPE CONTEXT: " + json.dumps(prompt_payload.get("context", {}), ensure_ascii=False) if use_context else ""}
+
+Return JSON matching the Recipe schema. Keep ingredients_to_buy minimal and realistic.
+"""
 
 response = client.models.generate_content(
     model="gemini-2.5-flash-lite",
     config=types.GenerateContentConfig(
-        system_instruction="Generate a recipe in the given schema",
-        response_schema=Recipe
+        system_instruction="Generate a recipe in the given schema, centered around the user's available ingredients. Prioritize using available items, considering synonyms and categories. Be deterministic and consistent in ingredient selection. Populate ingredients_to_buy only with absolutely essential items not available.",
+        response_schema=Recipe,
+        temperature=0.1  # Lower temperature for more consistency
     ),
     contents=prompt
 )
@@ -185,9 +368,25 @@ def write_json(obj, path="generatedRecipe.json"):
 if hasattr(response, "parsed") and response.parsed is not None:
     # Response parsed directly into the Pydantic model
     recipe_obj: Recipe = response.parsed
+    
+    # Use consistent ingredient matching instead of fallback logic
+    print("🔍 Analyzing ingredient availability with consistent matching:")
+    consistent_to_buy = get_consistent_ingredients_to_buy(
+        [{"name": ing.name} for ing in recipe_obj.ingredients], 
+        environmentContext["availability"]
+    )
+    
+    # Override the AI's ingredients_to_buy with our consistent analysis
+    recipe_obj.ingredients_to_buy = consistent_to_buy
+    
+    # Convert to dict and save
     json_recipe = recipe_obj.dict()
     write_json(json_recipe)
-    print("✅ Recipe generated and saved to generatedRecipe.json")
+    
+    print(f"\n✅ Recipe generated and saved to generatedRecipe.json")
+    print(f"📝 Ingredients needed: {len(recipe_obj.ingredients)} total")
+    print(f"🛒 Items to buy: {len(recipe_obj.ingredients_to_buy)} ({', '.join(recipe_obj.ingredients_to_buy) if recipe_obj.ingredients_to_buy else 'None - all ingredients available!'})")
+    
 else:
     # Fallback: try to extract JSON from response.text (strip markdown fences)
     raw = getattr(response, "text", None) or str(response)
@@ -203,8 +402,25 @@ else:
         candidate = raw[start:end+1]
         try:
             parsed = json.loads(candidate)
+            
+            # Use consistent ingredient matching for fallback case too
+            print("🔍 Analyzing ingredient availability with consistent matching (fallback):")
+            recipe_ingredients = []
+            for ing in parsed.get("ingredients", []):
+                if isinstance(ing, dict):
+                    name = (ing.get("name") or ing.get("ingredient") or 
+                           ing.get("ingredientName") or ing.get("ingredient_name") or 
+                           ing.get("item") or "").strip()
+                    if name:
+                        recipe_ingredients.append({"name": name})
+            
+            consistent_to_buy = get_consistent_ingredients_to_buy(recipe_ingredients, environmentContext["availability"])
+            parsed["ingredients_to_buy"] = consistent_to_buy
+            
             write_json(parsed)
             print("✅ Parsed JSON from raw response and saved to generatedRecipe.json")
+            print(f"🛒 Items to buy: {len(consistent_to_buy)} ({', '.join(consistent_to_buy) if consistent_to_buy else 'None - all ingredients available!'})")
+                
         except Exception as e:
             debug_path = "generatedRecipe.raw.txt"
             with open(debug_path, "w", encoding="utf-8") as f:
