@@ -5,6 +5,17 @@ from typing import List, Dict, Optional, Any
 import json
 import os
 from datetime import datetime
+from pymongo import MongoClient
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# MongoDB Atlas connection details
+MONGO_URI = os.getenv("MONGO_URI")
+DATABASE_NAME = "FoodData"
+COLLECTION_NAME = "food_collection"
+
 from family import (
     FamilyHealthReport,
     CoordinatedPlan,
@@ -52,6 +63,87 @@ class DeviationLog(BaseModel):
 family_profiles = {}
 meal_logs = []
 deviation_logs = []
+
+def connect_to_mongodb():
+    """
+    Establish connection to MongoDB Atlas.
+    Returns: (client, database, collection) or (None, None, None) if failed
+    """
+    try:
+        client = MongoClient(MONGO_URI)
+        client.admin.command('ping')
+        database = client[DATABASE_NAME]
+        collection = database[COLLECTION_NAME]
+        return client, database, collection
+    except Exception as e:
+        print(f"❌ Failed to connect to MongoDB Atlas: {e}")
+        return None, None, None
+
+def run_atlas_search_with_fallback(collection, query, search_path="dish_name", index_name="default", limit=10):
+    """
+    Run Atlas Search with regex fallback if Atlas Search fails.
+    """
+    try:
+        # First, try Atlas Search
+        pipeline = [
+            {
+                "$search": {
+                    "index": index_name,
+                    "text": {
+                        "query": query,
+                        "path": search_path
+                    }
+                }
+            },
+            {
+                "$limit": limit
+            },
+            {
+                "$project": {
+                    "_id": 0,
+                    "dish_name": 1,
+                    "ingredients": 1,
+                    "calories_kcal": 1,
+                    "protein_g": 1,
+                    "cuisine": 1,
+                    "meal_type": 1,
+                    "score": {"$meta": "searchScore"}
+                }
+            }
+        ]
+        
+        results = list(collection.aggregate(pipeline))
+        if results:
+            print(f"🔍 Atlas Search found {len(results)} results for query: '{query}'")
+            return results
+            
+    except Exception as e:
+        print(f"❌ Atlas Search failed: {e}")
+    
+    # Fallback to regex search
+    try:
+        print(f"🔄 Using regex fallback for query: '{query}'")
+        regex_pattern = {"$regex": query, "$options": "i"}
+        cursor = collection.find(
+            {search_path: regex_pattern},
+            {
+                "_id": 0,
+                "dish_name": 1,
+                "ingredients": 1,
+                "calories_kcal": 1,
+                "protein_g": 1,
+                "cuisine": 1,
+                "meal_type": 1
+            }
+        ).limit(limit)
+        
+        results = list(cursor)
+        print(f"🔍 Regex fallback found {len(results)} results for query: '{query}'")
+        return results
+        
+    except Exception as e:
+        print(f"❌ Regex fallback also failed: {e}")
+        return []
 
 @app.get("/")
 async def root():
@@ -246,6 +338,86 @@ def generate_adaptive_nudge(deviation_description: str):
             ]
         }
 
+@app.get("/search_foods")
+async def search_foods(query: str = "", limit: int = 10):
+    """Search for foods using MongoDB Atlas search"""
+    try:
+        # Connect to MongoDB
+        client, database, collection = connect_to_mongodb()
+        if collection is None:
+            raise HTTPException(status_code=500, detail="Database connection failed")
+        
+        if not query:
+            # Return some random samples if no query provided
+            try:
+                pipeline = [
+                    {"$sample": {"size": limit}},
+                    {"$project": {
+                        "_id": 0,
+                        "dish_name": 1,
+                        "calories_kcal": 1,
+                        "protein_g": 1,
+                        "cuisine": 1,
+                        "meal_type": 1
+                    }}
+                ]
+                results = list(collection.aggregate(pipeline))
+            except:
+                # Fallback to find if aggregation fails
+                results = list(collection.find({}, {
+                    "_id": 0,
+                    "dish_name": 1,
+                    "calories_kcal": 1,
+                    "protein_g": 1,
+                    "cuisine": 1,
+                    "meal_type": 1
+                }).limit(limit))
+        else:
+            # Search using Atlas Search with fallback
+            results = run_atlas_search_with_fallback(collection, query, limit=limit)
+        
+        # Close connection
+        if client:
+            client.close()
+        
+        # Transform results to match frontend expectations
+        formatted_results = []
+        for result in results:
+            formatted_food = {
+                "name": result.get("dish_name", "Unknown"),
+                "calories": round(result.get("calories_kcal", 0)),
+                "protein": round(result.get("protein_g", 0), 1),
+                "carbs": 0,  # Not available in current MongoDB schema
+                "fat": 0,    # Not available in current MongoDB schema
+                "unit": "serving"
+            }
+            formatted_results.append(formatted_food)
+        
+        print(f"✅ Search completed: found {len(formatted_results)} results for query: '{query}'")
+        return formatted_results
+        
+    except Exception as e:
+        print(f"❌ Search failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
+
+@app.post("/store_meal_log")
+async def store_meal_log(data: dict):
+    """Store meal log data"""
+    try:
+        meal_log = data.get("mealLog", {})
+        
+        # Store to file
+        meal_log_file = "meal_log.json"
+        with open(meal_log_file, "w", encoding="utf-8") as f:
+            json.dump(meal_log, f, ensure_ascii=False, indent=2)
+        
+        print("Meal log stored successfully:", meal_log)
+        return {"message": "Meal log stored successfully"}
+        
+    except Exception as e:
+        print(f"Error storing meal log: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to store meal log: {str(e)}")
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=5000)

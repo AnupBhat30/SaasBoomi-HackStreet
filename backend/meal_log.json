@@ -1,15 +1,9 @@
 {
   "breakfast": [
-    "ice tea",
-    "poha",
-    "hi"
+    "Iced tea",
+    "Hot tea (Garam Chai)"
   ],
-  "lunch": [
-    "rice dal",
-    "water"
-  ],
-  "snacks": [
-    "shawarma"
-  ],
+  "lunch": [],
+  "snacks": [],
   "dinner": []
 }

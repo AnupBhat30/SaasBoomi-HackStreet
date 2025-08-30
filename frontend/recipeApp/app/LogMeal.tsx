@@ -1,6 +1,6 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform, FlatList, Animated, Dimensions } from 'react-native';
-import { Card, Button, IconButton, ProgressBar, TextInput, Modal, Portal, Chip, Divider, Surface } from 'react-native-paper';
+import React, { useState, useCallback } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { Card, Button, IconButton, ProgressBar, TextInput, Modal, Portal, Chip } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import { useRouter } from 'expo-router';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
@@ -52,7 +52,7 @@ const mockFoodData = [
 
 const LogMeal = () => {
   const router = useRouter();
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate] = useState<Date>(new Date());
   const [meals, setMeals] = useState<Record<MealType, MealData>>({
     breakfast: { items: [], totalCalories: 0, totalProtein: 0, totalCarbs: 0, totalFat: 0 },
     lunch: { items: [], totalCalories: 0, totalProtein: 0, totalCarbs: 0, totalFat: 0 },
@@ -78,7 +78,6 @@ const LogMeal = () => {
     snacks: false,
     dinner: false
   });
-  const slideAnim = useRef(new Animated.Value(0)).current;
 
   // Atlas Search functionality state
   const [atlasSearchQuery, setAtlasSearchQuery] = useState<string>('');
@@ -133,7 +132,7 @@ const LogMeal = () => {
     }
 
     try {
-      const response = await fetch(`http://10.20.1.20:5000/search_foods?query=${encodeURIComponent(query)}&limit=5`);
+      const response = await fetch(`http://10.20.2.95:5000/search_foods?query=${encodeURIComponent(query)}&limit=5`);
       if (!response.ok) {
         throw new Error('Search request failed');
       }
@@ -269,7 +268,7 @@ const LogMeal = () => {
 
     setIsAtlasSearching(true);
     try {
-      const response = await fetch(`http://localhost:8000/api/search/recipes?q=${encodeURIComponent(query)}&limit=10`);
+      const response = await fetch(`http://10.20.2.95:8000/api/search/recipes?q=${encodeURIComponent(query)}&limit=10`);
       const data = await response.json();
 
       if (data.results) {
@@ -448,7 +447,7 @@ const LogMeal = () => {
                     style={styles.noResultsContainer}
                   >
                     <Text style={[styles.noResultsText, { color: '#6B7280' }]}>
-                      No matching foods found. Press Enter to add "{searchQueries[meal]}" as custom item.
+                      No matching foods found. Press Enter to add &quot;{searchQueries[meal]}&quot; as custom item.
                     </Text>
                   </MotiView>
                 )}
@@ -685,7 +684,7 @@ const LogMeal = () => {
               dinner: meals.dinner.items.map(item => item.name)
             };
 
-            fetch('http://10.20.1.20:5000/store_meal_log', {
+            fetch('http://10.20.2.95:5000/store_meal_log', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -698,7 +697,7 @@ const LogMeal = () => {
                 Alert.alert('Success', 'Meal log sent to backend!');
                 
                 // Fetch insights
-                fetch('http://10.20.1.20:5000/insights')
+                fetch('http://10.20.2.95:5000/insights')
                   .then(response => response.json())
                   .then(insights => {
                     console.log('Insights:', insights);

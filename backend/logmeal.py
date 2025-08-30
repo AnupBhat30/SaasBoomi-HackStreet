@@ -19,24 +19,24 @@ COLLECTION_NAME = "food_collection"  # Replace with your collection name
 # FastAPI app
 app = FastAPI(title="Recipe Search API", version="1.0.0")
 
-# Add CORS middleware
+# Add CORS middleware with specific mobile-friendly settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify your frontend URL
+    allow_origins=["*"],  # Allow all origins for development
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
 # Pydantic models
 class SearchResult(BaseModel):
-    dish_name: Optional[str]
-    ingredients: Optional[List[str]]
-    calories_kcal: Optional[float]
-    protein_g: Optional[float]
-    cuisine: Optional[str]
-    meal_type: Optional[str]
-    score: Optional[float]
+    dish_name: Optional[str] = None
+    ingredients: Optional[List[str]] = []
+    calories_kcal: Optional[float] = None
+    protein_g: Optional[float] = None
+    cuisine: Optional[str] = None
+    meal_type: Optional[str] = None
+    score: Optional[float] = None
 
 class SearchResponse(BaseModel):
     query: str
@@ -237,7 +237,32 @@ def search_recipes_by_ingredients(collection, ingredients_list, index_name="defa
 # FastAPI Endpoints
 @app.get("/")
 async def root():
-    return {"message": "Recipe Search API", "version": "1.0.0"}
+    return {"message": "Recipe Search API", "version": "1.0.0", "status": "running"}
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for mobile app connectivity"""
+    try:
+        # Test MongoDB connection
+        client, database, collection = connect_to_mongodb()
+        if client:
+            client.close()
+            return {
+                "status": "healthy",
+                "database": "connected",
+                "timestamp": "2025-08-31"
+            }
+        else:
+            return {
+                "status": "unhealthy",
+                "database": "disconnected",
+                "error": "MongoDB connection failed"
+            }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "error": str(e)
+        }
 
 @app.get("/api/search/recipes", response_model=SearchResponse)
 async def search_recipes(
@@ -249,9 +274,12 @@ async def search_recipes(
     Search for recipes using MongoDB Atlas Search
     """
     try:
+        print(f"🔍 Search request: q='{q}', limit={limit}, type='{search_type}'")
+
         # Connect to MongoDB
         client, database, collection = connect_to_mongodb()
         if collection is None:
+            print("❌ Database connection failed")
             raise HTTPException(status_code=500, detail="Database connection failed")
 
         # Perform search based on type
@@ -269,6 +297,8 @@ async def search_recipes(
         for result in results:
             formatted_results.append(SearchResult(**result))
 
+        print(f"✅ Search completed: found {len(formatted_results)} results")
+
         return SearchResponse(
             query=q,
             results=formatted_results,
@@ -277,6 +307,7 @@ async def search_recipes(
         )
 
     except Exception as e:
+        print(f"❌ Search failed: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
 
 @app.get("/api/search/ingredients")
@@ -468,7 +499,18 @@ def main():
         print("\n🔌 MongoDB connection closed.")
 
 if __name__ == "__main__":
+    import socket
+
+    # Get the local IP address
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+
     print("🚀 Starting Recipe Search API Server...")
-    print("📡 API will be available at: http://localhost:8000")
-    print("📚 API Documentation: http://localhost:8000/docs")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    print(f"📡 API will be available at:")
+    print(f"   - Local: http://localhost:8000")
+    print(f"   - Network: http://{local_ip}:8000")
+    print(f"📚 API Documentation: http://localhost:8000/docs")
+    print(f"🔍 Health Check: http://localhost:8000/health")
+    print(f"📱 Mobile apps should use: http://{local_ip}:8000")
+
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")

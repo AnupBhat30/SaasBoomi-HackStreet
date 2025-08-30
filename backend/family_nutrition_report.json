@@ -1,0 +1,87 @@
+{
+  "health_snapshot": "The family exhibits a range of health concerns, including vitamin D deficiency, anemia, hypertension, and prediabetes.  Current dietary habits are high in processed foods and low in nutrient-rich options, contributing to these conditions and hindering weight management goals.",
+  "today_s_focus": "Increase fruit and vegetable intake and reduce processed food consumption.",
+  "condition_specific_advice": {
+    "Vitamin D deficiency": "Increase sun exposure (safely) and consume vitamin D-rich foods like milk and eggs. Consider a vitamin D supplement after consulting a doctor.",
+    "Anemia": "Incorporate iron-rich foods like spinach, lentils, and beans into the diet. Pair with Vitamin C-rich foods to enhance iron absorption.",
+    "Hypertension": "Reduce sodium intake, increase potassium-rich foods (bananas, potatoes), and focus on a diet rich in fruits, vegetables, and whole grains.",
+    "Prediabetes": "Prioritize whole grains, lean proteins, and plenty of non-starchy vegetables. Control portion sizes and limit added sugars and refined carbohydrates."
+  },
+  "coordinated_plan": {
+    "nutritional_targets": {
+      "calories_target": "Priya: 1800-2000, Rajesh: 1800-2200, Sunita: 1600-1800",
+      "protein_target": "Priya: 50g, Rajesh: 70g, Sunita: 60g",
+      "key_nutrients": [
+        "Iron",
+        "Vitamin D",
+        "Fiber",
+        "Potassium"
+      ]
+    },
+    "meal_plan": {
+      "breakfast": {
+        "meal_name": "Poha with nuts and seeds",
+        "ingredients": [
+          "Poha",
+          "Nuts (almonds, cashews)",
+          "Seeds (flax, chia)",
+          "Milk/Curd"
+        ],
+        "nutritional_highlights": "Provides complex carbohydrates, healthy fats, protein, and essential nutrients.",
+        "prep_time": "10 minutes",
+        "calories": "250"
+      },
+      "lunch": {
+        "meal_name": "Dal, brown rice, and seasonal vegetables",
+        "ingredients": [
+          "Dal",
+          "Brown rice",
+          "Seasonal vegetables (e.g., spinach, bottle gourd)",
+          "Spices"
+        ],
+        "nutritional_highlights": "High in protein, fiber, and essential vitamins and minerals.",
+        "prep_time": "30 minutes",
+        "calories": "400"
+      },
+      "dinner": {
+        "meal_name": "Vegetable Chapati with curd and salad",
+        "ingredients": [
+          "Chapati flour",
+          "Mixed vegetables",
+          "Curd",
+          "Salad (cucumber, tomato)",
+          "Spices"
+        ],
+        "nutritional_highlights": "Good source of fiber, probiotics, and vitamins.",
+        "prep_time": "35 minutes",
+        "calories": "350"
+      },
+      "snacks": [
+        "Roasted chana",
+        "Banana",
+        "Buttermilk"
+      ]
+    },
+    "shopping_list": [
+      "Poha",
+      "Nuts",
+      "Seeds",
+      "Milk/Curd",
+      "Dal",
+      "Brown rice",
+      "Seasonal vegetables",
+      "Chapati flour",
+      "Spices",
+      "Cucumber",
+      "Tomato",
+      "Bananas",
+      "Roasted chana",
+      "Buttermilk"
+    ],
+    "prep_tips": [
+      "Prepare large batches of dal and rice on weekends for quick meals during the week.",
+      "Involve the family in meal preparation to make it more enjoyable and sustainable.",
+      "Utilize the community kitchen or senior living community kitchen for support when needed."
+    ]
+  }
+}
