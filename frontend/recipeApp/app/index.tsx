@@ -6,10 +6,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as SplashScreen from 'expo-splash-screen';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import LottieView from 'lottie-react-native';
+import { useRouter } from 'expo-router';
 
-const index = () => {
+const Index = () => {
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [isReady, setIsReady] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     async function prepare() {
@@ -17,15 +19,15 @@ const index = () => {
       // Check if onboarding is completed
       const userInfo = await AsyncStorage.getItem('userInfo');
       if (userInfo) {
-        setShowOnboarding(false);
+        router.replace('/HomePage');
       } else {
-        setShowOnboarding(true);
+        setShowOnboarding(false);
       }
       setIsReady(true);
       await SplashScreen.hideAsync();
     }
     prepare();
-  }, []);
+  }, [router]);
 
   if (!isReady) {
     return (
@@ -70,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default index
+export default Index

@@ -1,11 +1,11 @@
-import { View, Text, TouchableOpacity, Image, SafeAreaView } from 'react-native'
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import LottieView from 'lottie-react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withRepeat, withTiming, Easing } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 
-const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
+const LandingPage = ({ onGetStarted }: { onGetStarted?: () => void }) => {
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -18,11 +18,15 @@ const LandingPage = ({ onGetStarted }: { onGetStarted: () => void }) => {
       -1,
       true
     );
-  }, []);
+  }, [scale]);
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    onGetStarted();
+    if (onGetStarted) {
+      onGetStarted();
+    } else {
+      console.warn('onGetStarted is not defined');
+    }
   };
 
   return (
