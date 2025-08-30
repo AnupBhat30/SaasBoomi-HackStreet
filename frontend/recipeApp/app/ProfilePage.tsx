@@ -415,6 +415,21 @@ const ProfilePage = () => {
             onPress={async () => {
               // Remove userInfo from localStorage
               await AsyncStorage.removeItem('userInfo');
+              // Clear backend data
+              fetch('http://10.20.1.20:5000/store_user_info', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userInfo: {} }),
+              })
+                .then(response => response.json())
+                .then(result => {
+                  console.log('Backend cleared:', result);
+                })
+                .catch(error => {
+                  console.error('Error clearing backend:', error);
+                });
               // Navigate to index page which will show LandingPage
               router.replace('/');
             }}
