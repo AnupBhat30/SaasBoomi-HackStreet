@@ -8,9 +8,7 @@ import Animated, { FadeInUp, FadeInDown, SlideInRight } from 'react-native-reani
 import { LinearGradient } from 'expo-linear-gradient';
 import { MotiView } from 'moti';
 import * as Haptics from 'expo-haptics';
-import { ProgressBar } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
-import LottieView from 'lottie-react-native';
 import { Bar } from 'react-native-progress';
 
 interface userInfo {
@@ -26,11 +24,11 @@ interface userInfo {
   health_goals: string[];
   medication_details: string[];
   budget_for_food: number;
-  occupation_type: string;
+  occupation_type: string[];
   work_schedule: string;
   access_to_kitchen: string;
   stress_level: string;
-  meal_source: string;
+  meal_source: string[];
 }
 
 const { width } = Dimensions.get('window');
@@ -96,7 +94,6 @@ const HomePage = () => {
   const quickActions = [
     { icon: 'restaurant', label: 'Log Meal', route: '/LogMeal' as any, color: '#FF6B00', isPrimary: true },
     { icon: 'kitchen', label: 'Pantry', route: '/Pantry' as any, color: '#E8F5E9', textColor: '#4CAF50', isPrimary: false },
-    { icon: 'search', label: 'Explore', route: '/(tabs)/explore' as any, color: '#E3F2FD', textColor: '#2196F3', isPrimary: false },
     { icon: 'analytics', label: 'Insights', route: '/ProfilePage' as any, color: '#F3E5F5', textColor: '#9C27B0', isPrimary: false },
   ];
 

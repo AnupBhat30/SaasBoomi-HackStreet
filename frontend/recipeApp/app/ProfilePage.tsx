@@ -415,8 +415,8 @@ const ProfilePage = () => {
             onPress={async () => {
               // Remove userInfo from localStorage
               await AsyncStorage.removeItem('userInfo');
-              // Navigate to LandingPage
-              router.push('/LandingPage');
+              // Navigate to index page which will show LandingPage
+              router.replace('/');
             }}
             style={{
               backgroundColor: '#EF4444',

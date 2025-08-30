@@ -65,7 +65,7 @@ const OnboardingPage = () => {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep < 3 && !animating) {
       setAnimating(true);
       setTimeout(() => {
@@ -76,25 +76,46 @@ const OnboardingPage = () => {
       // Finish onboarding
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       console.log('userInfo:', data);
-      // Send data to backend
-      fetch('http://10.20.1.20:5000/store_user_info', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userInfo: data }),
-      })
-        .then(response => response.json())
-        .then(result => {
+      
+      try {
+        // Save to localStorage first (most important)
+        await AsyncStorage.setItem('userInfo', JSON.stringify(data));
+        console.log('User data saved to AsyncStorage');
+        
+        // Send data to backend (optional, can fail)
+        try {
+          const response = await fetch('http://10.20.1.20:5000/store_user_info', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userInfo: data }),
+          });
+          const result = await response.json();
           console.log('Storage result:', result);
-          // Save to localStorage
-          AsyncStorage.setItem('userInfo', JSON.stringify(data));
-          // Navigate to HomePage
-          router.push('/HomePage');
-        })
-        .catch(error => {
-          console.error('Error storing userInfo:', error);
-        });
+        } catch (backendError) {
+          console.warn('Backend storage failed, but proceeding anyway:', backendError);
+        }
+        
+        // Add a delay to ensure AsyncStorage operation is complete
+        setTimeout(async () => {
+          console.log('Attempting to navigate to HomePage...');
+          // Verify the data was saved
+          const savedData = await AsyncStorage.getItem('userInfo');
+          console.log('Verified saved data:', savedData ? 'Data exists' : 'No data found');
+          
+          // Try direct navigation to HomePage
+          router.replace('/HomePage');
+        }, 500);
+        
+      } catch (error) {
+        console.error('Error during onboarding completion:', error);
+        // Even if there's an error, try to navigate anyway
+        setTimeout(() => {
+          console.log('Error occurred, but attempting navigation to HomePage anyway...');
+          router.replace('/HomePage');
+        }, 500);
+      }
     }
   };
 
@@ -126,7 +147,7 @@ const OnboardingPage = () => {
 
         {/* Skip Button */}
         <View style={{ alignItems: 'flex-end', paddingHorizontal: 20, paddingBottom: 10 }}>
-          <TouchableOpacity onPress={() => router.push('/HomePage')}>
+          <TouchableOpacity onPress={() => router.replace('/HomePage')}>
             <Text style={{ color: '#FF6B00', fontSize: 16 }}>Skip</Text>
           </TouchableOpacity>
         </View>

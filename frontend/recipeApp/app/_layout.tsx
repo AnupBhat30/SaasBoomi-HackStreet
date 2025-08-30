@@ -20,11 +20,11 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
          <Stack.Screen name="HomePage" options={{ headerShown: false }} />
          <Stack.Screen name="ProfilePage" options={{ headerShown: false }} />
          <Stack.Screen name="LandingPage" options={{ headerShown: false }} />
+         <Stack.Screen name="OnboardingPage" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
         <Stack.Screen name="Pantry" options={{ headerShown: false }} />
         <Stack.Screen name="LogMeal" options={{ headerShown: false }} />
