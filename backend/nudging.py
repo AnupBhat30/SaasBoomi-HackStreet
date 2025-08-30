@@ -44,7 +44,11 @@ def load_user_info():
     if os.path.exists(USER_DATA_FILE):
         try:
             with open(USER_DATA_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                data = json.load(f)
+                if data:  # Check if not empty
+                    return data
+                else:
+                    logger.warning("user_data.json is empty. Using fallback.")
         except Exception as e:
             logger.warning(f"Failed to load user_data.json: {e}. Using fallback.")
     return {
@@ -971,6 +975,10 @@ async def store_meal_log(data: MealLogModel):
         # Generate insights after storing meal log
         insights = generate_insights()
         
+        # Save insights to file
+        with open("insights.json", "w", encoding="utf-8") as f:
+            json.dump(insights, f, ensure_ascii=False, indent=2)
+        
         return {"message": "mealLog stored successfully", "insights": insights}
     except Exception as e:
         logger.error(f"Error storing mealLog: {e}")
@@ -1007,7 +1015,10 @@ def generate_insights():
     
     # Populate meal_items_list from mealLog
     for meal_type, data in mealLog.items():
-        foods = data.get('foods', [])
+        if isinstance(data, list):
+            foods = data
+        else:
+            foods = data.get('foods', [])
         for it in foods:
             meal_items_list.append({"mealType": meal_type, "current": it})
     
@@ -1046,7 +1057,7 @@ def generate_insights():
 
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash-lite",
+            model="gemini-1.5-flash",
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction
             ),
@@ -1116,7 +1127,7 @@ def generate_insights():
                 model_result = None
                 try:
                     resp = client.models.generate_content(
-                        model="gemini-2.5-flash-lite",
+                        model="gemini-1.5-flash",
                         config=types.GenerateContentConfig(system_instruction=system_prompt),
                         contents=contents
                     )
@@ -1237,7 +1248,7 @@ contents = (
 
 try:
     response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
+        model="gemini-1.5-flash",
         config=types.GenerateContentConfig(
             system_instruction=system_instruction
         ),
@@ -1245,18 +1256,24 @@ try:
     )
 
     raw = (response.text or "")
+    print("Raw LLM response:", raw)  # Debug print
     insights = None
     try:
         insights = json.loads(raw)
-    except Exception:
+        print("Parsed insights:", insights)  # Debug print
+    except Exception as e:
+        print("JSON parse error:", e)  # Debug print
         import re
         m = re.search(r"(\{.*\})", raw, re.S)
         if m:
             try:
                 insights = json.loads(m.group(1))
-            except Exception:
+                print("Parsed from regex:", insights)  # Debug print
+            except Exception as e2:
+                print("Regex parse error:", e2)  # Debug print
                 insights = {"error": "could not parse extracted JSON", "raw": raw}
         else:
+            print("No JSON found in response")  # Debug print
             insights = {"error": "no json found in model output", "raw": raw}
 
     # Post-process simple_swap to ensure one entry per food item
@@ -1307,7 +1324,7 @@ try:
             model_result = None
             try:
                 resp = client.models.generate_content(
-                    model="gemini-2.5-flash-lite",
+                    model="gemini-1.5-flash",
                     config=types.GenerateContentConfig(system_instruction=system_prompt),
                     contents=contents
                 )

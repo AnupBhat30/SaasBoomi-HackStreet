@@ -1,15 +1,12 @@
 {
   "breakfast": [
-    "ice tea",
-    "poha",
-    "hi"
+    "ice tea"
   ],
   "lunch": [
-    "rice dal",
-    "water"
+    "curry"
   ],
   "snacks": [
-    "shawarma"
+    "chips"
   ],
   "dinner": []
 }
