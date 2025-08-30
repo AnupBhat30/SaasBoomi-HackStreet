@@ -94,7 +94,7 @@ const HomePage = () => {
   const quickActions = [
     { icon: 'restaurant', label: 'Log Meal', route: '/LogMeal' as any, color: '#FF6B00', isPrimary: true },
     { icon: 'kitchen', label: 'Pantry', route: '/Pantry' as any, color: '#E8F5E9', textColor: '#4CAF50', isPrimary: false },
-    { icon: 'analytics', label: 'Insights', route: '/ProfilePage' as any, color: '#F3E5F5', textColor: '#9C27B0', isPrimary: false },
+    { icon: 'analytics', label: 'Insights', route: '/Insights' as any, color: '#F3E5F5', textColor: '#9C27B0', isPrimary: false },
   ];
 
   if (!userInfo) {

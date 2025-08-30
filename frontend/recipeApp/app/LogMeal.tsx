@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { Card, Button, IconButton, ProgressBar, TextInput, Modal, Portal } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
+import { useRouter } from 'expo-router';
 
 type MealType = 'breakfast' | 'lunch' | 'snacks' | 'dinner';
 
 const LogMeal = () => {
+  const router = useRouter();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [meals, setMeals] = useState<Record<MealType, string[]>>({
     breakfast: [],
@@ -192,6 +194,19 @@ const LogMeal = () => {
               .then(result => {
                 console.log('Meal log stored:', result);
                 Alert.alert('Success', 'Meal log sent to backend!');
+                
+                // Fetch insights
+                fetch('http://10.20.1.20:5000/insights')
+                  .then(response => response.json())
+                  .then(insights => {
+                    console.log('Insights:', insights);
+                    // Navigate to Insights
+                    router.push('/Insights' as any);
+                  })
+                  .catch(error => {
+                    console.error('Error fetching insights:', error);
+                    Alert.alert('Error', 'Failed to fetch insights.');
+                  });
               })
               .catch(error => {
                 console.error('Error storing meal log:', error);
