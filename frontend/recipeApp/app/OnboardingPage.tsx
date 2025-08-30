@@ -16,11 +16,12 @@ interface userInfo {
   height: number;
   weight: number;
   BMI: number;
-  gender: 'Male' | 'Female' | 'Other';
+  gender: 'Male' | 'Female';
   location: string;
   health_conditions: string[];
   allergies: string[];
   health_goals: string[];
+  dietary_preferences: string[];
   medication_details: string[];
   budget_for_food: number;
   occupation_type: string[];
@@ -44,6 +45,7 @@ const OnboardingPage = () => {
     health_conditions: [],
     allergies: [],
     health_goals: [],
+    dietary_preferences: [],
     medication_details: [],
     budget_for_food: 1000,
     occupation_type: [],
@@ -122,7 +124,7 @@ const OnboardingPage = () => {
   const renderComponent = (step: number) => {
     switch (step) {
       case 0:
-        return <Personal data={data} onChange={(d) => setData({ ...data, ...d })} />;
+        return <Personal data={data} onChange={(d) => setData({ ...data, ...d })} onNext={() => setCurrentStep(step + 1)} />;
       case 1:
         return <Health data={data} onChange={(d) => setData({ ...data, ...d })} />;
       case 2:

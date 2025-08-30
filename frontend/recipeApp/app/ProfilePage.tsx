@@ -13,7 +13,7 @@ interface userInfo {
   height: number;
   weight: number;
   BMI: number;
-  gender: 'Male' | 'Female' | 'Other';
+  gender: 'Male' | 'Female';
   location: string;
   health_conditions: string[];
   allergies: string[];

@@ -8,7 +8,6 @@ import * as Haptics from 'expo-haptics';
 interface HealthData {
   health_conditions: string[];
   allergies: string[];
-  medication_details: string[];
 }
 
 interface Props {
@@ -181,6 +180,8 @@ const Health: React.FC<Props> = ({ data, onChange }) => {
         )}
       </Animated.View>
 
+      <Text style={{ fontSize: 12, color: '#6B7280', marginBottom: 10 }}>This helps us tailor recipes to your health needs.</Text>
+
       <Animated.View entering={FadeInUp.delay(600)} style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Allergies</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
@@ -268,16 +269,7 @@ const Health: React.FC<Props> = ({ data, onChange }) => {
         )}
       </Animated.View>
 
-      <Animated.View entering={FadeInUp.delay(900)} style={{ marginBottom: 20 }}>
-        <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Medication Details</Text>
-        <TextInput
-          value={data.medication_details.join(', ')}
-          onChangeText={(text) => onChange({ ...data, medication_details: text.split(',').map(s => s.trim()).filter(s => s) })}
-          multiline
-          placeholder="Enter medications separated by comma"
-          style={{ borderWidth: 1, borderColor: '#E5E7EB', borderRadius: 8, padding: 10, height: 100, fontSize: 16, textAlignVertical: 'top' }}
-        />
-      </Animated.View>
+      <Text style={{ fontSize: 12, color: '#6B7280', marginBottom: 20 }}>This ensures recipes avoid allergens for your safety.</Text>
     </ScrollView>
     </SafeAreaView>
   )

@@ -94,6 +94,7 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
 
       <Animated.View entering={FadeInUp.delay(300)} style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Occupation Type</Text>
+        <Text style={{ fontSize: 12, fontWeight: '400', color: '#6B7280', marginBottom: 10 }}>This helps us understand your daily routine and suggest recipes that fit your lifestyle.</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {occupations.map((occ, index) => (
             <Animated.View key={occ} entering={FadeInUp.delay(400 + index * 100)}>
@@ -176,6 +177,7 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
 
       <Animated.View entering={FadeInUp.delay(600)} style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Work Schedule</Text>
+        <Text style={{ fontSize: 12, fontWeight: '400', color: '#6B7280', marginBottom: 10 }}>Your work hours influence meal timing and preparation complexity.</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {workSchedules.map((ws, index) => (
             <Animated.View key={ws} entering={FadeInUp.delay(700 + index * 100)}>
@@ -199,6 +201,7 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
 
       <Animated.View entering={FadeInUp.delay(900)} style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Access to Kitchen</Text>
+        <Text style={{ fontSize: 12, fontWeight: '400', color: '#6B7280', marginBottom: 10 }}>Knowing your kitchen availability helps recommend appropriate cooking methods.</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {kitchenAccesses.map((ka, index) => (
             <Animated.View key={ka} entering={FadeInUp.delay(1000 + index * 100)}>
@@ -222,6 +225,7 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
 
       <Animated.View entering={FadeInUp.delay(1200)} style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 18, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Typical Stress Level</Text>
+        <Text style={{ fontSize: 12, fontWeight: '400', color: '#6B7280', marginBottom: 10 }}>Stress affects food choices; we'll suggest calming or energizing meals accordingly.</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {stressLevels.map((sl, index) => (
             <Animated.View key={sl.level} entering={FadeInUp.delay(1300 + index * 100)}>
@@ -243,8 +247,9 @@ const Lifestyle: React.FC<Props> = ({ data, onChange }) => {
         </View>
       </Animated.View>
 
-      <Animated.View entering={FadeInUp.delay(1500)} style={{ marginBottom: 20 }}>
+      <Animated.View entering={FadeInUp.delay(1500)} style={{ marginBottom: 100 }}>
         <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933', marginBottom: 10 }}>Meal Source</Text>
+        <Text style={{ fontSize: 12, fontWeight: '400', color: '#6B7280', marginBottom: 10 }}>Understanding your eating habits helps personalize recipe suggestions.</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {mealSources.map((ms, index) => (
             <Animated.View key={ms} entering={FadeInUp.delay(1600 + index * 100)}>
