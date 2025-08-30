@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native';
-import { Card, Button, IconButton, ProgressBar, TextInput, Modal, Portal } from 'react-native-paper';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform, FlatList } from 'react-native';
+import { Card, Button, IconButton, ProgressBar, TextInput, Modal, Portal, Chip, Searchbar } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import { useRouter } from 'expo-router';
 
 type MealType = 'breakfast' | 'lunch' | 'snacks' | 'dinner';
+
+interface SearchResult {
+  dish_name?: string;
+  ingredients?: string[];
+  calories_kcal?: number;
+  protein_g?: number;
+  cuisine?: string;
+  meal_type?: string;
+  score?: number;
+}
 
 const LogMeal = () => {
   const router = useRouter();
@@ -21,6 +31,13 @@ const LogMeal = () => {
   const [foodName, setFoodName] = useState<string>('');
   const [editing, setEditing] = useState<boolean>(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+  // Search functionality state
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [searchModalVisible, setSearchModalVisible] = useState<boolean>(false);
+  const [selectedMealForSearch, setSelectedMealForSearch] = useState<MealType | null>(null);
 
   const mealTypes: MealType[] = ['breakfast', 'lunch', 'snacks', 'dinner'];
 
@@ -45,6 +62,48 @@ const LogMeal = () => {
     const updatedMeals = { ...meals };
     updatedMeals[meal].splice(index, 1);
     setMeals(updatedMeals);
+  };
+
+  // Search functionality functions
+  const performSearch = async (query: string) => {
+    if (!query.trim()) return;
+
+    setIsSearching(true);
+    try {
+      const response = await fetch(`http://localhost:8000/api/search/recipes?q=${encodeURIComponent(query)}&limit=10`);
+      const data = await response.json();
+
+      if (data.results) {
+        setSearchResults(data.results);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+      Alert.alert('Search Error', 'Failed to search recipes. Please try again.');
+      setSearchResults([]);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const openSearchModal = (meal: MealType) => {
+    setSelectedMealForSearch(meal);
+    setSearchModalVisible(true);
+    setSearchQuery('');
+    setSearchResults([]);
+  };
+
+  const addRecipeToMeal = (recipe: SearchResult) => {
+    if (selectedMealForSearch && recipe.dish_name) {
+      setMeals(prev => ({
+        ...prev,
+        [selectedMealForSearch]: [...prev[selectedMealForSearch], recipe.dish_name]
+      }));
+      setSearchModalVisible(false);
+      setSearchQuery('');
+      setSearchResults([]);
+    }
   };
 
   const calculateProgress = (): number => {
@@ -113,14 +172,24 @@ const LogMeal = () => {
                   </View>
                 </View>
               ))}
-              <Button
-                mode="outlined"
-                onPress={() => addFoodItem(meal)}
-                style={[styles.addButton, { borderColor: '#FF6B00' }]}
-                labelStyle={{ color: '#FF6B00' }}
-              >
-                Add Food Item
-              </Button>
+              <View style={styles.buttonContainer}>
+                <Button
+                  mode="outlined"
+                  onPress={() => addFoodItem(meal)}
+                  style={[styles.addButton, { borderColor: '#FF6B00', flex: 1, marginRight: 8 }]}
+                  labelStyle={{ color: '#FF6B00' }}
+                >
+                  Add Food Item
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={() => openSearchModal(meal)}
+                  style={[styles.searchButton, { backgroundColor: '#4CAF50' }]}
+                  labelStyle={{ color: '#FFFFFF' }}
+                >
+                  Search Recipes
+                </Button>
+              </View>
             </View>
           </Collapsible>
         </Card>
@@ -166,6 +235,98 @@ const LogMeal = () => {
                 </Button>
                 <Button onPress={handleAddFood} mode="contained" style={[styles.addButtonModal, { backgroundColor: '#FF6B00' }]}>
                   {editing ? 'Update' : 'Add'}
+                </Button>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </Modal>
+      </Portal>
+
+      {/* Search Modal */}
+      <Portal>
+        <Modal
+          visible={searchModalVisible}
+          onDismiss={() => setSearchModalVisible(false)}
+          contentContainerStyle={[styles.modalContainer, { top: '10%' }]}
+        >
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keyboardAvoid}>
+            <View style={styles.modalContent}>
+              <Text style={[styles.modalTitle, { color: '#1F2933' }]}>
+                Search Recipes for {selectedMealForSearch ? selectedMealForSearch.charAt(0).toUpperCase() + selectedMealForSearch.slice(1) : ''}
+              </Text>
+
+              <Searchbar
+                placeholder="Search for recipes..."
+                onChangeText={setSearchQuery}
+                value={searchQuery}
+                onSubmitEditing={() => performSearch(searchQuery)}
+                loading={isSearching}
+                style={[styles.input, { marginBottom: 10 }]}
+              />
+
+              {searchResults.length > 0 && (
+                <FlatList
+                  data={searchResults}
+                  keyExtractor={(item, index) => `${item.dish_name}-${index}`}
+                  style={{ maxHeight: 300, width: '100%' }}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={{
+                        padding: 12,
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#E5E7EB',
+                        backgroundColor: '#FFFFFF',
+                        borderRadius: 8,
+                        marginBottom: 8,
+                      }}
+                      onPress={() => addRecipeToMeal(item)}
+                    >
+                      <Text style={{ fontSize: 16, fontWeight: '600', color: '#1F2933' }}>
+                        {item.dish_name || 'Unknown Recipe'}
+                      </Text>
+                      {item.cuisine && (
+                        <Text style={{ fontSize: 14, color: '#6B7280', marginTop: 2 }}>
+                          Cuisine: {item.cuisine}
+                        </Text>
+                      )}
+                      <View style={{ flexDirection: 'row', marginTop: 4 }}>
+                        {item.calories_kcal && (
+                          <Chip style={{ marginRight: 8, backgroundColor: '#FFF3CD' }}>
+                            🔥 {item.calories_kcal} kcal
+                          </Chip>
+                        )}
+                        {item.protein_g && (
+                          <Chip style={{ backgroundColor: '#D1ECF1' }}>
+                            💪 {item.protein_g}g protein
+                          </Chip>
+                        )}
+                      </View>
+                      {item.ingredients && item.ingredients.length > 0 && (
+                        <Text style={{ fontSize: 12, color: '#6B7280', marginTop: 4 }}>
+                          Ingredients: {item.ingredients.slice(0, 3).join(', ')}
+                          {item.ingredients.length > 3 ? '...' : ''}
+                        </Text>
+                      )}
+                    </TouchableOpacity>
+                  )}
+                />
+              )}
+
+              <View style={styles.modalButtons}>
+                <Button
+                  onPress={() => setSearchModalVisible(false)}
+                  mode="outlined"
+                  style={styles.cancelButton}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onPress={() => performSearch(searchQuery)}
+                  mode="contained"
+                  style={[styles.addButtonModal, { backgroundColor: '#FF6B00' }]}
+                  disabled={!searchQuery.trim() || isSearching}
+                >
+                  {isSearching ? 'Searching...' : 'Search'}
                 </Button>
               </View>
             </View>
@@ -350,6 +511,16 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  searchButton: {
+    flex: 1,
+    marginLeft: 8,
+    borderRadius: 16,
   },
 });
 
