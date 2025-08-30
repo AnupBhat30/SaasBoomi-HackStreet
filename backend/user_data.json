@@ -1,19 +1,36 @@
 {
-  "name": "aaron",
-  "age": 25,
+  "name": "Hamdan Shaik",
+  "age": 49,
   "height": 170,
   "weight": 70,
-  "BMI": 24.2,
-  "gender": "Male",
-  "location": "",
-  "health_conditions": [],
-  "allergies": [],
-  "health_goals": [],
+  "BMI": 24.221453287197235,
+  "gender": "Female",
+  "location": "USA",
+  "health_conditions": [
+    "Diabetes",
+    "Vitamin D deficiency"
+  ],
+  "allergies": [
+    "Milk",
+    "Wheat"
+  ],
+  "health_goals": [
+    "Weight Loss",
+    "Improve Immunity",
+    "Increase Energy"
+  ],
+  "dietary_preferences": [
+    "Jain"
+  ],
   "medication_details": [],
-  "budget_for_food": 1000,
-  "occupation_type": [],
-  "work_schedule": "",
-  "access_to_kitchen": "",
+  "budget_for_food": 3400,
+  "occupation_type": [
+    "Student"
+  ],
+  "work_schedule": "Shift work",
+  "access_to_kitchen": "Sometimes",
   "stress_level": "moderate",
-  "meal_source": []
+  "meal_source": [
+    "Fast food"
+  ]
 }

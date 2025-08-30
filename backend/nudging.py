@@ -180,8 +180,18 @@ except Exception as e:
 
 meal_foods = set()
 for m in mealLog.values():
-    for food in m.get("foods", []):
-        meal_foods.add(food.lower())
+    # Handle new format: direct array of food names
+    if isinstance(m, list):
+        for food in m:
+            if isinstance(food, str):
+                meal_foods.add(food.lower())
+    # Handle old format: {"foods": [...]}
+    elif isinstance(m, dict) and "foods" in m:
+        for food in m.get("foods", []):
+            if isinstance(food, str):
+                meal_foods.add(food.lower())
+            elif isinstance(food, dict) and "name" in food:
+                meal_foods.add(food["name"].lower())
 
 # Build user-related search terms from profile: goals, conditions, meds, allergies
 user_terms = set()
@@ -678,39 +688,112 @@ def mongo_db_alternatives_block():
         return mongoReasoning
 
     for meal_type, info in (mealLog or {}).items():
-        for food in (info.get("foods") or []):
-            # split combined food entries into separate items (e.g., 'Roasted chana or a small banana')
-            items = _split_food_items(food)
-            for item in items:
-                # find base dish for this single item
-                found = _atlas_search_local(food_col, item, limit=1)
-                base = found[0] if found else {"dish_name": item}
+        # Handle new format: direct array of food names
+        if isinstance(info, list):
+            for food in info:
+                if isinstance(food, str):
+                    # split combined food entries into separate items (e.g., 'Roasted chana or a small banana')
+                    items = _split_food_items(food)
+                    for item in items:
+                        # find base dish for this single item
+                        found = _atlas_search_local(food_col, item, limit=1)
+                        base = found[0] if found else {"dish_name": item}
 
-                alternatives = _find_similar_healthier_candidates(
-                    food_col,
-                    subs_col,
-                    base,
-                    userInfo.get("health_conditions"),
-                    userInfo.get("health_goals"),
-                    meal_type=meal_type,
-                    max_alts=3
-                )
+                        alternatives = _find_similar_healthier_candidates(
+                            food_col,
+                            subs_col,
+                            base,
+                            userInfo.get("health_conditions"),
+                            userInfo.get("health_goals"),
+                            meal_type=meal_type,
+                            max_alts=3
+                        )
 
-                if not alternatives:
-                    # no healthier alternatives found — keep current (item-level)
-                    mongoReasoning.append({
-                        "mealType": meal_type,
-                        "current": item,
-                        "base_doc": base,
-                        "alternatives": [{"name": item, "reasoning": "Kept: no similar healthier alternative found in DB."}]
-                    })
-                else:
-                    mongoReasoning.append({
-                        "mealType": meal_type,
-                        "current": item,
-                        "base_doc": base,
-                        "alternatives": alternatives
-                    })
+                        if not alternatives:
+                            # no healthier alternatives found — keep current (item-level)
+                            mongoReasoning.append({
+                                "mealType": meal_type,
+                                "current": item,
+                                "base_doc": base,
+                                "alternatives": [{"name": item, "reasoning": "Kept: no similar healthier alternative found in DB."}]
+                            })
+                        else:
+                            mongoReasoning.append({
+                                "mealType": meal_type,
+                                "current": item,
+                                "base_doc": base,
+                                "alternatives": alternatives
+                            })
+        # Handle old format: {"foods": [...]}
+        elif isinstance(info, dict) and "foods" in info:
+            for food in (info.get("foods") or []):
+                if isinstance(food, str):
+                    # split combined food entries into separate items (e.g., 'Roasted chana or a small banana')
+                    items = _split_food_items(food)
+                    for item in items:
+                        # find base dish for this single item
+                        found = _atlas_search_local(food_col, item, limit=1)
+                        base = found[0] if found else {"dish_name": item}
+
+                        alternatives = _find_similar_healthier_candidates(
+                            food_col,
+                            subs_col,
+                            base,
+                            userInfo.get("health_conditions"),
+                            userInfo.get("health_goals"),
+                            meal_type=meal_type,
+                            max_alts=3
+                        )
+
+                        if not alternatives:
+                            # no healthier alternatives found — keep current (item-level)
+                            mongoReasoning.append({
+                                "mealType": meal_type,
+                                "current": item,
+                                "base_doc": base,
+                                "alternatives": [{"name": item, "reasoning": "Kept: no similar healthier alternative found in DB."}]
+                            })
+                        else:
+                            mongoReasoning.append({
+                                "mealType": meal_type,
+                                "current": item,
+                                "base_doc": base,
+                                "alternatives": alternatives
+                            })
+                elif isinstance(food, dict) and "name" in food:
+                    # Handle old format with food objects
+                    food_name = food["name"]
+                    items = _split_food_items(food_name)
+                    for item in items:
+                        # find base dish for this single item
+                        found = _atlas_search_local(food_col, item, limit=1)
+                        base = found[0] if found else {"dish_name": item}
+
+                        alternatives = _find_similar_healthier_candidates(
+                            food_col,
+                            subs_col,
+                            base,
+                            userInfo.get("health_conditions"),
+                            userInfo.get("health_goals"),
+                            meal_type=meal_type,
+                            max_alts=3
+                        )
+
+                        if not alternatives:
+                            # no healthier alternatives found — keep current (item-level)
+                            mongoReasoning.append({
+                                "mealType": meal_type,
+                                "current": item,
+                                "base_doc": base,
+                                "alternatives": [{"name": item, "reasoning": "Kept: no similar healthier alternative found in DB."}]
+                            })
+                        else:
+                            mongoReasoning.append({
+                                "mealType": meal_type,
+                                "current": item,
+                                "base_doc": base,
+                                "alternatives": alternatives
+                            })
 
     # do not log detailed mongoReasoning here
 
