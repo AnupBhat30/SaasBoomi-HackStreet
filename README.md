@@ -1,5 +1,5 @@
 
-# Heritage Nutrition AI Platform
+# Heritage Nutrition AI Platform - Aahara
 
 Welcome to the Heritage Nutrition AI Platform, an intelligent system designed to bridge the gap between India’s rich culinary heritage and the rising challenges of modern lifestyle diseases. This platform leverages a suite of AI agents to deliver personalized, culturally-aligned, and practical nutrition guidance, empowering Indian families to eat healthier without sacrificing tradition, flavor, or feasibility.
 
@@ -178,6 +178,14 @@ AnupBhat30-SaasBoomi-HackStreet-9da8dd2/
 5.  Navigate to the **Insights** tab to view your personalized feedback, including simple swaps, heritage alternatives, and modern health tips based on what you ate.
 
 ---
+### ⚠️ Known Limitations & Risks
+As this is a hackathon project, there are several limitations to be aware of:
+Medical Disclaimer: The AI-generated advice is for informational purposes only and is not a substitute for professional medical or dietetic consultation. Users should consult a healthcare provider before making significant dietary changes.
+Nutritional Accuracy: While based on public data, nutritional values are estimates. Actual values can vary based on ingredients, preparation methods, and portion sizes.
+Data Bias: The food_data.json is derived from public forums and may not be fully representative of all regional Indian cuisines or dietary patterns.
+AI Hallucinations: Although we use structured prompting and data validation, the LLM may occasionally generate incorrect or nonsensical information.
+Scalability: The current proof-of-concept uses local JSON files for storing user profiles and meal logs. A production version would require a robust, scalable database solution.
+
 
 ## 🤝 Contribution Guidelines
 
@@ -190,6 +198,10 @@ We welcome contributions to enhance the Heritage Nutrition AI Platform. To contr
 5.  Open a pull request to the main repository, detailing the changes you've made.
 
 Please ensure your code adheres to the existing style and that you run linters before submitting.
+
+## Team Hackstreet
+# Anup Bhat - https://anupbhat.me/
+# Hamdan Shaik - https://hamdans-portfolio.vercel.app/
 
 ## 📄 License
 
