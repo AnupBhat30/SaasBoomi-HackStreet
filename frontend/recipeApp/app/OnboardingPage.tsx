@@ -86,7 +86,8 @@ const OnboardingPage = () => {
         
         // Send data to backend (optional, can fail)
         try {
-          const response = await fetch('http://10.20.1.20:5000/store_user_info', {
+
+          const response = await fetch('http://10.20.2.95:5000/nudging/store_user_info', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

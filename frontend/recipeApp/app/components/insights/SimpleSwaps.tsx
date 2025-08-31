@@ -13,12 +13,45 @@ interface Swap {
 }
 
 interface SimpleSwapsProps {
-  data: Swap[];
+  data: Swap[] | any;
 }
 
 const SimpleSwaps: React.FC<SimpleSwapsProps> = ({ data }) => {
+  // Handle different data types and empty arrays
+  if (!data || (Array.isArray(data) && data.length === 0)) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Simple Swaps</Text>
+        <View style={styles.emptyState}>
+          <Ionicons name="leaf-outline" size={64} color="#ccc" />
+          <Text style={styles.emptyTitle}>No Swaps Available</Text>
+          <Text style={styles.emptySubtitle}>
+            We&apos;ll provide personalized food swaps based on your meal logs soon!
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
+  // If data is a string, convert it to meaningful swaps
+  let swapsArray: Swap[] = [];
+  if (typeof data === 'string' && data.trim() !== '') {
+    // Parse string data into meaningful swaps
+    swapsArray = [
+      {
+        mealType: 'General',
+        current: 'Current Foods',
+        alternative: 'Healthier Options',
+        reasoning: data,
+        hasRecipe: false
+      }
+    ];
+  } else if (Array.isArray(data)) {
+    swapsArray = data;
+  }
+
   // Group swaps by meal type
-  const grouped = data.reduce((acc, swap) => {
+  const grouped = swapsArray.reduce((acc, swap) => {
     if (!acc[swap.mealType]) acc[swap.mealType] = [];
     acc[swap.mealType].push(swap);
     return acc;
@@ -106,21 +139,32 @@ const SimpleSwaps: React.FC<SimpleSwapsProps> = ({ data }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Simple Swaps</Text>
-      {Object.keys(grouped).map((mealType) => (
-        <View key={mealType} style={styles.section}>
-          <View style={styles.header}>
-            <Ionicons
-              name={(mealIcons[mealType] as any) || 'help'}
-              size={24}
-              color="black"
-            />
-            <Text style={styles.headerText}>{mealType.charAt(0).toUpperCase() + mealType.slice(1)}</Text>
+      <Text style={styles.subtitle}>Smart alternatives for healthier eating</Text>
+      {Object.keys(grouped).length > 0 ? (
+        Object.keys(grouped).map((mealType) => (
+          <View key={mealType} style={styles.section}>
+            <View style={styles.header}>
+              <Ionicons
+                name={(mealIcons[mealType] as any) || 'help'}
+                size={24}
+                color="#FF6B00"
+              />
+              <Text style={styles.headerText}>{mealType.charAt(0).toUpperCase() + mealType.slice(1)}</Text>
+            </View>
+            {grouped[mealType].map((swap, index) => (
+              <SwapCard key={index} swap={swap} />
+            ))}
           </View>
-          {grouped[mealType].map((swap, index) => (
-            <SwapCard key={index} swap={swap} />
-          ))}
+        ))
+      ) : (
+        <View style={styles.emptyState}>
+          <Ionicons name="leaf-outline" size={64} color="#ccc" />
+          <Text style={styles.emptyTitle}>No Swaps Available</Text>
+          <Text style={styles.emptySubtitle}>
+            We&apos;ll provide personalized food swaps based on your meal logs soon!
+          </Text>
         </View>
-      ))}
+      )}
     </View>
   );
 };
@@ -129,12 +173,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#F6F7F9',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    fontSize: 28,
+    fontWeight: '700',
+    marginBottom: 8,
     textAlign: 'center',
+    color: '#1F2933',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#6B7280',
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 60,
+  },
+  emptyTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#1F2933',
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  emptySubtitle: {
+    fontSize: 16,
+    color: '#6B7280',
+    textAlign: 'center',
+    lineHeight: 24,
+    paddingHorizontal: 32,
   },
   section: {
     marginBottom: 30,

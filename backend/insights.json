@@ -1,58 +1,35 @@
 {
-  "key_insight": "Mr. Bhat, your meal log shows a reliance on fast food (ice tea, curry, chips), which may not be ideal given your anemia, diabetes, and thyroid conditions.  These meals lack the essential nutrients needed to improve immunity and energy levels, and the high sodium content in processed foods could exacerbate your conditions. Your BMI indicates you are overweight, and the current diet is unlikely to support your weight loss goals. Immediate attention to nutrient-rich choices is recommended.",
-  "modern_approach": "Incorporate more nutrient-dense options like smoothies packed with spinach, berries, and banana (easily available).  Consider adding a handful of almonds or a small serving of Greek yogurt (if not allergic) for added protein and healthy fats.  These help boost energy and immunity without significant calorie increase.",
-  "heritage_alternative": "For breakfast, try a warm, comforting bowl of moong dal cheela (pancakes) with a side of fresh fruit like banana or apple.  For lunch and snacks, focus on a filling and nutritious plate of mixed vegetables with a small serving of dal or other protein like paneer (if dairy is fine).  These are affordable, readily available options to replace fast food and processed snacks.",
+  "key_insight": "Hamdan, at 22 with a healthy BMI of 19.6, aims for Weight Loss, Muscle Gain, and Increased Energy. Today's log only shows Dal Makhani for lunch. While lentils provide protein and fiber beneficial for muscle gain and energy, traditional Dal Makhani is often rich in cream and butter, which can be calorie-dense. This could make managing weight loss challenging if not portion-controlled, and the incomplete log means crucial meal opportunities for balanced nutrition were missed.",
+  "modern_approach": "To support your goals, integrate simple, protein-rich options focusing on lean mass gain and fat loss. As a student with moderate stress, consider quick, budget-friendly choices like grilled paneer or chicken with a vibrant vegetable salad (like with available capsicum) for lunch or dinner. Prioritize whole foods for sustained energy.",
+  "heritage_alternative": "Leverage traditional Indian foods to meet your goals effectively. Opt for lighter lentil preparations such as Moong Dal or Masoor Dal, cooked with minimal oil and a good amount of seasonal vegetables like bhindi, as an alternative to calorie-dense curries. This aligns with promoting healthy, low-calorie Indian dishes rich in fiber and nutrients.",
   "simple_swap": [
     {
-      "mealType": "breakfast",
-      "current": "ice tea",
-      "alternative": "Moong dal cheela with banana",
-      "reasoning": "Provides essential nutrients, protein and fiber for sustained energy; better than just ice tea for anemia, diabetes and energy levels.",
-      "hasRecipe": true,
-      "hasRecipeReason": "Common pancake recipe",
-      "tags": [
-        "moong dal cheela with banana",
-        "with",
-        "moong",
-        "dal",
-        "cheela",
-        "banana"
-      ]
-    },
-    {
       "mealType": "lunch",
-      "current": "curry",
-      "alternative": "Mixed vegetable curry with a small portion of dal",
-      "reasoning": "More balanced nutrition than typical curry; improves weight management. Add baby corn if available.",
+      "current": "Dal makhani",
+      "alternative": "Moong Dal or Masoor Dal with available vegetables (e.g., bhindi, capsicum).",
+      "reasoning": "Dal Makhani is often high in fats; lighter lentil dals with added vegetables boost fiber and nutrients for energy and muscle gain while aiding weight loss.",
       "hasRecipe": true,
-      "hasRecipeReason": "Standard home-cooked curry",
+      "hasRecipeReason": "Common Indian home-cooked meal.",
       "tags": [
-        "a",
-        "with",
-        "mixed vegetable curry with a small portion of dal",
-        "vegetable",
-        "small",
-        "portion",
         "dal",
-        "of",
-        "mixed",
-        "curry"
+        "with",
+        "bhindi",
+        "eg",
+        "moong dal or masoor dal with available vegetables eg bhindi capsicum",
+        "vegetables",
+        "or",
+        "capsicum",
+        "available",
+        "masoor",
+        "moong"
       ]
-    },
-    {
-      "mealType": "snacks",
-      "current": "chips",
-      "alternative": "Banana",
-      "reasoning": "Bananas are a healthy and readily available snack; provides potassium and fiber, a better choice than chips.",
-      "hasRecipe": false,
-      "hasRecipeReason": "Eaten as is"
     }
   ],
   "general_summary": [
-    "Anup, start your day with a nutritious breakfast like moong dal cheela with banana. This helps manage blood sugar and energy levels throughout the day.",
-    "For lunch, aim for a balanced plate of mixed vegetables with dal or paneer, incorporating seasonal vegetables if possible (baby corn for example).",
-    "Swap your usual snacks with readily available fruit like bananas or apples.  These offer more nutrients and fiber than chips.",
-    "Given your flexible schedule, you have time to prepare simple meals. You can make moong dal cheela in advance or look for quick-prep alternatives when needed.",
-    "Remember to keep hydrated; carry a water bottle, especially since you are retired and have more time for self-care."
+    "Aim for protein with every meal (e.g., legumes, paneer) to support muscle gain and satiety.",
+    "Increase your daily vegetable intake, utilizing available options like capsicum and bhindi, to boost fiber and nutrients for energy and weight management.",
+    "As a student, plan affordable, home-cooked lentil dishes with less cream and oil for balanced lunches and dinners.",
+    "Integrate healthy, quick snacks (e.g., fruit, nuts) to maintain energy levels and prevent overeating between your 9-5 schedule.",
+    "Ensure consistent meal timings to optimize energy and metabolic health throughout the day."
   ]
 }

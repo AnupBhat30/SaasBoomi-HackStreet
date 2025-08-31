@@ -6,13 +6,22 @@ interface GeneralSummaryProps {
 }
 
 const GeneralSummary: React.FC<GeneralSummaryProps> = ({ data }) => {
-  const [completed, setCompleted] = useState<boolean[]>(data.map(() => false));
+  const [completed, setCompleted] = useState<boolean[]>(data ? data.map(() => false) : []);
 
   const toggleCompleted = (index: number) => {
     const newCompleted = [...completed];
     newCompleted[index] = !newCompleted[index];
     setCompleted(newCompleted);
   };
+
+  if (!data || !Array.isArray(data)) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>General Summary</Text>
+        <Text style={styles.description}>Loading summary...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

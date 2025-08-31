@@ -36,6 +36,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Import and include routers
+from nudging import router as nudging_router
+from family_api import router as family_router
+from logmeal import router as logmeal_router
+
+app.include_router(nudging_router, prefix="/nudging", tags=["nudging"])
+app.include_router(family_router, prefix="/family", tags=["family"])
+app.include_router(logmeal_router, prefix="/logmeal", tags=["logmeal"])
+
 # Pydantic models for API requests/responses
 class FamilyMember(BaseModel):
     name: str

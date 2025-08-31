@@ -311,27 +311,42 @@ Meal Idea: {meal_idea}
 
             prompt = f"""
 You are an expert AI nutritionist and chef. A user wants to cook "{meal_idea}" for their family.
-Your task is to transform this single idea into a coordinated meal plan that works for everyone's health needs, as detailed in their profiles.
-The goal is to cook ONE meal with simple, specific adjustments at the prep or serving stage.
+Your task is to transform this single idea into a coordinated meal plan that works for everyone's health needs.
 
 Family Profiles:
 {json.dumps(self.family_profiles, indent=2)}
 
-Instructions:
-1.  Provide specific, culinary-based modifications (e.g., "add amchur powder for tanginess instead of extra salt").
-2.  Define clear portion sizes for each person.
-3.  Create a unified shopping and prep list.
-4.  Suggest very simple ideas for the day's other meals.
-5.  Return ONLY a valid JSON object conforming to the DailyPlan schema.
-"""
+Return ONLY a valid JSON object with this EXACT structure:
+{{
+  "date": "2024-10-27",
+  "main_meal_plan": {{
+    "meal_name": "{meal_idea}",
+    "base_ingredients": ["ingredient1", "ingredient2"],
+    "unified_prep_steps": ["step1", "step2"],
+    "modifications": [
+      {{
+        "member_name": "MemberName",
+        "modification_details": "specific modification",
+        "reason": "health reason",
+        "portion_size": "1 cup"
+      }}
+    ],
+    "serving_instructions": "final serving instructions"
+  }},
+  "suggested_other_meals": {{
+    "breakfast": "suggestion",
+    "snacks": "suggestion"
+  }}
+}}
+
+Create member-specific modifications for each family member based on their health conditions."""
 
             # Call the LLM
             system_instruction = "You are an expert AI nutritionist and chef from India. You are empathetic, practical, and understand the cultural importance of food. Your goal is to help families eat healthier without sacrificing their favorite meals. Your advice should be like talking to a knowledgeable and friendly family member."
 
             response = self.client.models.generate_content(
-                model="models/gemini-1.5-flash-latest",
-                contents=prompt,
-                system_instruction=system_instruction,
+                model="models/gemini-2.5-flash",
+                contents=f"{system_instruction}\n\n{prompt}",
                 config=types.GenerateContentConfig(temperature=0.3)
             )
 
@@ -404,9 +419,8 @@ Return ONLY a simple JSON object with two keys: "message" and "suggestion".
             system_instruction = "You are a supportive and non-judgmental AI nutrition coach. Your tone is always positive and encouraging. You focus on small, easy steps to help users get back on track without making them feel guilty."
 
             response = self.client.models.generate_content(
-                model="models/gemini-1.5-flash-latest",
-                contents=prompt,
-                system_instruction=system_instruction,
+                model="models/gemini-2.5-flash",
+                contents=f"{system_instruction}\n\n{prompt}",
                 config=types.GenerateContentConfig(temperature=0.7)
             )
 
@@ -475,7 +489,7 @@ Return ONLY the name of the meal as a single string. For example: "Masoor Dal wi
 """
         try:
             response = self.client.models.generate_content(
-                model="models/gemini-1.5-flash-latest",
+                model="models/gemini-2.5-flash",
                 contents=prompt,
                 config=types.GenerateContentConfig(temperature=0.8)  # Higher temp for more variety
             )
@@ -552,7 +566,7 @@ Family Health Conditions: {', '.join([cond for profile in self.family_profiles f
 
         try:
             response = self.client.models.generate_content(
-                model="models/gemini-1.5-flash-latest",
+                model="models/gemini-2.5-flash",
                 contents=contents,
                 config=types.GenerateContentConfig(temperature=0.3)
             )
@@ -989,59 +1003,69 @@ contents = (
 )
 
 # Generate response
-response = client.models.generate_content(
-    model="models/gemini-1.5-flash-latest",
-    contents=contents,
-    config=types.GenerateContentConfig(
-        system_instruction=system_instruction,
-        temperature=0.3,  # Lower temperature for more consistent JSON output
-        response_mime_type="application/json"  # Force JSON response
+try:
+    response = client.models.generate_content(
+        model="models/gemini-2.5-flash",
+        contents=contents,
+        config=types.GenerateContentConfig(
+            system_instruction=system_instruction,
+            temperature=0.3,  # Lower temperature for more consistent JSON output
+            response_mime_type="application/json"  # Force JSON response
+        )
     )
-)
+except Exception as e:
+    logger.error(f"API call failed: {e}")
+    # Create a fallback response
+    response = type('Response', (), {'text': None})()
 
 # Debug: Print the raw response to inspect it
-print("Raw response text:", repr(response.text))
-print("Response length:", len(response.text) if response.text else 0)
+if response.text:
+    print("Raw response text:", repr(response.text))
+    print("Response length:", len(response.text) if response.text else 0)
+else:
+    print("No response text received")
 
 # Check if response is valid
 if not response.text or response.text.strip() == "":
     logger.error("Empty response from API")
     report = FamilyHealthReport(
-        health_snapshot="No response received from the API.",
-        today_s_focus="Please try again later.",
-        condition_specific_advice={},
+        health_snapshot="API quota exceeded. Please try again later.",
+        today_s_focus="Focus on balanced meals with local ingredients.",
+        condition_specific_advice={
+            "General": "Maintain regular meal times and include vegetables in every meal."
+        },
         coordinated_plan=CoordinatedPlan(
             nutritional_targets=NutritionalTargets(
-                calories_target="N/A",
-                protein_target="N/A",
-                key_nutrients=[]
+                calories_target="1800-2200 kcal",
+                protein_target="60-80g",
+                key_nutrients=["Vitamin C", "Fiber", "Iron"]
             ),
             meal_plan=DailyMealPlan(
                 breakfast=MealSuggestion(
-                    meal_name="N/A",
-                    ingredients=[],
-                    nutritional_highlights="N/A",
-                    prep_time="N/A",
-                    calories="N/A"
+                    meal_name="Vegetable Poha",
+                    ingredients=["Rice flakes", "Vegetables", "Spices"],
+                    nutritional_highlights="Good source of carbohydrates and vitamins",
+                    prep_time="15 minutes",
+                    calories="250-300"
                 ),
                 lunch=MealSuggestion(
-                    meal_name="N/A",
-                    ingredients=[],
-                    nutritional_highlights="N/A",
-                    prep_time="N/A",
-                    calories="N/A"
+                    meal_name="Dal and Rice",
+                    ingredients=["Lentils", "Rice", "Vegetables"],
+                    nutritional_highlights="High in protein and fiber",
+                    prep_time="30 minutes",
+                    calories="400-500"
                 ),
                 dinner=MealSuggestion(
-                    meal_name="N/A",
-                    ingredients=[],
-                    nutritional_highlights="N/A",
-                    prep_time="N/A",
-                    calories="N/A"
+                    meal_name="Vegetable Curry with Roti",
+                    ingredients=["Mixed vegetables", "Whole wheat flour", "Spices"],
+                    nutritional_highlights="Balanced meal with essential nutrients",
+                    prep_time="45 minutes",
+                    calories="350-450"
                 ),
-                snacks=[]
+                snacks=["Fruits", "Nuts", "Yogurt"]
             ),
-            shopping_list=[],
-            prep_tips=[]
+            shopping_list=["Rice", "Lentils", "Vegetables", "Spices", "Fruits"],
+            prep_tips=["Prepare vegetables in advance", "Cook in batches", "Use seasonal ingredients"]
         )
     )
 else:

@@ -30,6 +30,8 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
           <Stack.Screen name="Pantry" options={{ headerShown: false }} />
           <Stack.Screen name="LogMeal" options={{ headerShown: false }} />
+          <Stack.Screen name="Family" options={{ headerShown: false }} />
+          <Stack.Screen name="Recipes" options={{ headerShown: false }} />
           <Stack.Screen name="Insights" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="auto" />

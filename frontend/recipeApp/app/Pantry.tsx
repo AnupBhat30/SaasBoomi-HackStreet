@@ -2,11 +2,11 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { MotiView, AnimatePresence } from 'moti';
-import { Easing } from 'react-native-reanimated';
+
 
 // Load ingredients from JSON file
 const INGREDIENTS_DATA = require('../ingredients.json');
@@ -16,7 +16,7 @@ const Pantry = () => {
   const [searchText, setSearchText] = useState('');
   const [filteredIngredients, setFilteredIngredients] = useState<string[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isInputFocused, setIsInputFocused] = useState(false);
+
   const [bagExpanded, setBagExpanded] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const router = useRouter();
@@ -101,7 +101,7 @@ const Pantry = () => {
       availability: items.map(item => item.name),
       season: 'monsoon'
     };
-    fetch('http://10.20.1.20:5000/store_environment_context', {
+    fetch('http://10.20.2.95:5000/nudging/store_environment_context', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -237,8 +237,8 @@ const Pantry = () => {
               placeholder="Search for ingredients..."
               value={searchText}
               onChangeText={setSearchText}
-              onFocus={() => { setIsInputFocused(true); searchText.length > 0 && setShowDropdown(true); }}
-              onBlur={() => setIsInputFocused(false)}
+              onFocus={() => { searchText.length > 0 && setShowDropdown(true); }}
+              onBlur={() => {}}
             />
 
             {/* Dropdown */}

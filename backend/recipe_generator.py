@@ -9,7 +9,7 @@ from google.genai import types
 
 # Load env vars
 load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = os.getenv("GEMINI_API_KEY_1")
 
 # Input object: recipe name and tags (tags are derived from the recipe name, avoid basic commodities)
 input_recipe = {
@@ -278,7 +278,7 @@ verification_prompt = {
 
 # Ask the model to verify whether the candidates satisfy the search intent (return JSON matching Verification schema)
 verif_resp = client.models.generate_content(
-    model="gemini-2.5-flash-lite",
+    model="models/gemini-2.5-flash-lite",
     config=types.GenerateContentConfig(
         system_instruction="You will be given an input_recipe (with tags) and a list of candidate recipes. Decide whether the candidates match the search intent. Return JSON exactly matching the schema: {match: bool, use_context: bool, reason: str}.",
         response_schema=Verification
@@ -350,7 +350,7 @@ Return JSON matching the Recipe schema. Keep ingredients_to_buy minimal and real
 """
 
 response = client.models.generate_content(
-    model="gemini-2.5-flash-lite",
+    model="models/gemini-2.5-flash",
     config=types.GenerateContentConfig(
         system_instruction="Generate a recipe in the given schema, centered around the user's available ingredients. Prioritize using available items, considering synonyms and categories. Be deterministic and consistent in ingredient selection. Populate ingredients_to_buy only with absolutely essential items not available.",
         response_schema=Recipe,

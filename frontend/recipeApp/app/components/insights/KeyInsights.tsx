@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { MotiView } from 'moti'
 
@@ -21,27 +21,43 @@ interface ProcessedData {
 const KeyInsights: React.FC<KeyInsightsProps> = ({ data }) => {
   const [processedData, setProcessedData] = useState<ProcessedData | null>(null);
 
-  const processText = (text: string): ProcessedData => {
-    const sentences = text.split(/\.(?!\d)/).filter(s => s.trim().length > 0).map(s => s.trim());
-    const insights = sentences.slice(1, 6).map((sentence) => {
-      const words = sentence.split(' ');
-      const isShort = words.length <= 15;
-      const headline = isShort ? (sentence.endsWith('.') ? sentence : sentence + '.') : `Key Insight: ${words.slice(0, 5).join(' ')}.`;
-      const explanation = sentence;
-      const icon = getIcon(headline);
+  const processText = useCallback((text: string): ProcessedData => {
+    if (!text || typeof text !== 'string' || text.trim() === '') {
+      return {
+        primaryMessage: 'No insights available at the moment',
+        insights: []
+      };
+    }
+    
+    // Split by periods but preserve the periods and handle edge cases
+    const sentences = text.split(/\.(?!\d)/)
+      .filter(s => s.trim().length > 0)
+      .map(s => s.trim())
+      .map(s => s.endsWith('.') ? s : s + '.'); // Ensure each sentence ends with a period
+    
+    const insights = sentences.slice(1, 4).map((sentence, index) => {
+      // Use the complete sentence as both headline and explanation
+      // This ensures we don't cut off mid-sentence
+      const completeSentence = sentence.endsWith('.') ? sentence : sentence + '.';
+      const headline = `Insight ${index + 1}`;
+      const explanation = completeSentence;
+      const icon = getIcon(completeSentence);
       return { headline, explanation, icon };
     });
-    const primaryMessage = sentences[0] || 'No primary message';
+    
+    // Primary message is the first sentence
+    const primaryMessage = sentences[0]?.endsWith('.') ? sentences[0] : (sentences[0] || 'No primary message') + '.';
+    
     return { primaryMessage, insights };
-  };
+  }, []);
 
   const highlightText = (text: string): React.ReactElement[] => {
-    const conditions = ['diabetes', 'hypertension', 'obesity', 'heart disease', 'cancer', 'asthma'];
+    const conditions = ['diabetes', 'hypertension', 'obesity', 'heart disease', 'cancer', 'asthma', 'anemia', 'thyroid', 'overweight', 'bmi'];
     const conditionRegex = new RegExp(`(${conditions.join('|')})`, 'gi');
     const parts = text.split(conditionRegex);
     return parts.map((part, index) => {
       if (conditions.some(cond => part.toLowerCase() === cond.toLowerCase())) {
-        return <Text key={index} style={{ color: 'red', fontWeight: 'bold' }}>{part}</Text>;
+        return <Text key={index} style={{ color: '#FF6B00', fontWeight: 'bold' }}>{part}</Text>;
       } else {
         return <Text key={index}>{part}</Text>;
       }
@@ -50,25 +66,35 @@ const KeyInsights: React.FC<KeyInsightsProps> = ({ data }) => {
 
   const getIcon = (headline: string): string => {
     const lower = headline.toLowerCase();
-    if (lower.includes('bmi')) return 'scale-bathroom';
-    if (lower.includes('sodium')) return 'shaker';
+    if (lower.includes('bmi') || lower.includes('weight') || lower.includes('overweight')) return 'scale-bathroom';
+    if (lower.includes('diabetes') || lower.includes('blood sugar')) return 'medical-bag';
+    if (lower.includes('anemia') || lower.includes('iron')) return 'water';
+    if (lower.includes('thyroid')) return 'pill';
+    if (lower.includes('sodium') || lower.includes('salt')) return 'shaker';
     if (lower.includes('protein') || lower.includes('fiber')) return 'food-steak';
-    if (lower.includes('processed')) return 'food-off';
-    if (lower.includes('paneer') || lower.includes('dal')) return 'check-circle';
+    if (lower.includes('processed') || lower.includes('fast food')) return 'food-off';
+    if (lower.includes('paneer') || lower.includes('dal') || lower.includes('chickpeas') || lower.includes('lentil')) return 'check-circle';
+    if (lower.includes('energy') || lower.includes('vitam')) return 'lightning-bolt';
+    if (lower.includes('sugar') || lower.includes('sweet')) return 'candy';
     return 'lightbulb-on';
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && typeof data === 'string' && data.trim() !== '') {
       setProcessedData(processText(data));
+    } else {
+      setProcessedData({
+        primaryMessage: 'No insights available at the moment',
+        insights: []
+      });
     }
-  }, [data]);
+  }, [data, processText]);
 
   if (!processedData) {
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Key Insights</Text>
-        <>{highlightText(data)}</>
+        <Text style={styles.subtitle}>Loading insights...</Text>
       </ScrollView>
     );
   }
@@ -109,7 +135,10 @@ const KeyInsights: React.FC<KeyInsightsProps> = ({ data }) => {
         >
           <MaterialCommunityIcons name={insight.icon as any} size={32} color={colors.primary} />
           <View style={styles.insightText}>
-            <>{highlightText(insight.headline)}</>
+            <Text style={styles.headline}>{insight.headline}</Text>
+            <Text style={styles.content}>
+              {highlightText(insight.explanation)}
+            </Text>
           </View>
         </MotiView>
       ))}

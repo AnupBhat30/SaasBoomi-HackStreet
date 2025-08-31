@@ -76,7 +76,7 @@ const ProfilePage = () => {
       setUserInfo(editedData);
 
       // Send to backend
-      fetch('http://10.20.1.20:5000/store_user_info', {
+      fetch('http://10.20.2.95:5000/nudging/store_user_info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -416,7 +416,7 @@ const ProfilePage = () => {
               // Remove userInfo from localStorage
               await AsyncStorage.removeItem('userInfo');
               // Clear backend data
-              fetch('http://10.20.1.20:5000/store_user_info', {
+              fetch('http://localhost:5000/nudging/store_user_info', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

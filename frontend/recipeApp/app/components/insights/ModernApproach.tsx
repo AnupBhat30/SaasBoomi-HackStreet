@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, Dimensions } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native'
+import React, { useState, useEffect, useCallback } from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { MotiView } from 'moti'
 
@@ -23,7 +23,13 @@ const ModernApproach: React.FC<ModernApproachProps> = ({ data }) => {
   const [processedData, setProcessedData] = useState<ProcessedData | null>(null);
   const [expandedCards, setExpandedCards] = useState<{ [key: number]: boolean }>({});
 
-  const processText = (text: string): ProcessedData => {
+  const processText = useCallback((text: string): ProcessedData => {
+    if (!text || typeof text !== 'string' || text.trim() === '') {
+      return {
+        primaryMessage: 'No modern approach insights available',
+        insights: []
+      };
+    }
     const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).map(s => s.trim());
     const insights = sentences.slice(1, 7).map((sentence) => {
       const words = sentence.split(' ');
@@ -36,7 +42,7 @@ const ModernApproach: React.FC<ModernApproachProps> = ({ data }) => {
     });
     const primaryMessage = sentences[0] || 'No primary message';
     return { primaryMessage, insights };
-  };
+  }, []);
 
   const getIcon = (headline: string): string => {
     const lower = headline.toLowerCase();
@@ -63,10 +69,15 @@ const ModernApproach: React.FC<ModernApproachProps> = ({ data }) => {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && typeof data === 'string' && data.trim() !== '') {
       setProcessedData(processText(data));
+    } else {
+      setProcessedData({
+        primaryMessage: 'No modern approach insights available at the moment',
+        insights: []
+      });
     }
-  }, [data]);
+  }, [data, processText]);
 
   const renderCard = ({ item, index }: { item: Insight; index: number }) => {
     const isExpanded = expandedCards[index];
@@ -109,7 +120,7 @@ const ModernApproach: React.FC<ModernApproachProps> = ({ data }) => {
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Modern Approach</Text>
-        <Text style={styles.content}>{data}</Text>
+        <Text style={styles.subtitle}>Loading modern insights...</Text>
       </ScrollView>
     );
   }
@@ -152,7 +163,7 @@ const ModernApproach: React.FC<ModernApproachProps> = ({ data }) => {
   );
 };
 
-const { width } = Dimensions.get('window');
+
 const modernColors = {
   primary: '#FF8C00',
   secondary: '#FF6B00',

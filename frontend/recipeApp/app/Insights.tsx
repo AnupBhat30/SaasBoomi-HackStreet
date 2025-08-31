@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, Dimensions, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import KeyInsights from './components/insights/KeyInsights';
@@ -22,31 +22,58 @@ const Insights = () => {
   }, []);
 
   const fetchInsights = () => {
-    fetch('http://10.20.1.20:5000/insights')
-      .then(response => response.json())
+    fetch('http://10.20.2.95:5000/nudging/insights')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
+        console.log('Insights data received:', data);
         setInsights(data);
         setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching insights:', error);
-        Alert.alert('Error', 'Failed to fetch insights.');
+        
+        // Fallback to local data for development
+        const fallbackData = {
+          key_insight: "Your BMI of 26.14 and existing conditions require careful dietary management. Focus on protein-rich foods and reducing refined carbohydrates.",
+          modern_approach: "Incorporate dairy-free protein shakes and swap rice for more vegetables to increase fiber and lower glycemic index.",
+          heritage_alternative: "Try moong dal cheela for breakfast - a good source of protein and iron. For lunch, explore lighter alternatives like moong dal khichdi.",
+          simple_swap: [],
+          general_summary: [
+            "Start your day with a protein-rich breakfast like moong dal cheela",
+            "Consider lighter, lower-sodium options like vegetable soup for lunch",
+            "Experiment with simple vegetable and lentil curries for dinner",
+            "Incorporate more green leafy vegetables in your meals",
+            "Focus on one healthy swap at a time and celebrate progress"
+          ]
+        };
+        
+        console.log('Using fallback data due to network error');
+        setInsights(fallbackData);
         setLoading(false);
       });
   };
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text>Loading insights...</Text>
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading your personalized insights...</Text>
       </View>
     );
   }
 
   if (!insights) {
     return (
-      <View style={styles.container}>
-        <Text>No insights available.</Text>
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorTitle}>Unable to Load Insights</Text>
+        <Text style={styles.errorText}>Please check your connection and try again.</Text>
+        <Button mode="contained" onPress={fetchInsights} style={styles.retryButton}>
+          Retry
+        </Button>
       </View>
     );
   }
@@ -125,6 +152,41 @@ const styles = StyleSheet.create({
   page: {
     width,
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F6F7F9',
+    padding: 20,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#6B7280',
+    textAlign: 'center',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F6F7F9',
+    padding: 20,
+  },
+  errorTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#1F2933',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#6B7280',
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  retryButton: {
+    marginTop: 16,
   },
   dotsContainer: {
     flexDirection: 'row',

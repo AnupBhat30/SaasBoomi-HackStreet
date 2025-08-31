@@ -124,7 +124,7 @@ def generate_local_objects(text: str, max_items: int = 40) -> List[dict]:
 if key:
     print("Using Gemini model to generate structured array (key found)")
     response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
+        model="models/gemini-2.5-flash",
         config=types.GenerateContentConfig(
             system_instruction=(
                 "You are a concise health assistant. Read the provided document text and return a JSON array (use only JSON) of up to 40 objects. Each object must have the fields:\n"

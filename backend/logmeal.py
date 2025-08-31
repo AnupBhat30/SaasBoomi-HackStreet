@@ -2,7 +2,7 @@ import os
 import json
 from pymongo import MongoClient
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
@@ -16,17 +16,8 @@ MONGO_URI = os.getenv("MONGO_URI")
 DATABASE_NAME = "FoodData"  # Replace with your database name
 COLLECTION_NAME = "food_collection"  # Replace with your collection name
 
-# FastAPI app
-app = FastAPI(title="Recipe Search API", version="1.0.0")
-
-# Add CORS middleware with specific mobile-friendly settings
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for development
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
-)
+# FastAPI router
+router = APIRouter()
 
 # Pydantic models
 class SearchResult(BaseModel):
@@ -235,11 +226,11 @@ def search_recipes_by_ingredients(collection, ingredients_list, index_name="defa
         return []
 
 # FastAPI Endpoints
-@app.get("/")
+@router.get("/")
 async def root():
     return {"message": "Recipe Search API", "version": "1.0.0", "status": "running"}
 
-@app.get("/health")
+@router.get("/health")
 async def health_check():
     """Health check endpoint for mobile app connectivity"""
     try:
@@ -264,7 +255,7 @@ async def health_check():
             "error": str(e)
         }
 
-@app.get("/api/search/recipes", response_model=SearchResponse)
+@router.get("/api/search/recipes", response_model=SearchResponse)
 async def search_recipes(
     q: str = Query(..., description="Search query for recipes"),
     limit: int = Query(10, description="Maximum number of results", ge=1, le=50),
@@ -310,7 +301,7 @@ async def search_recipes(
         print(f"❌ Search failed: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
 
-@app.get("/api/search/ingredients")
+@router.get("/api/search/ingredients")
 async def search_by_ingredients(
     ingredients: str = Query(..., description="Comma-separated list of ingredients"),
     limit: int = Query(10, description="Maximum number of results", ge=1, le=50)
@@ -352,7 +343,7 @@ async def search_by_ingredients(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ingredient search failed: {str(e)}")
 
-@app.get("/api/recipes/suggestions")
+@router.get("/api/recipes/suggestions")
 async def get_recipe_suggestions(
     meal_type: Optional[str] = Query(None, description="Filter by meal type: breakfast, lunch, dinner, snacks"),
     cuisine: Optional[str] = Query(None, description="Filter by cuisine"),
@@ -498,19 +489,4 @@ def main():
         client.close()
         print("\n🔌 MongoDB connection closed.")
 
-if __name__ == "__main__":
-    import socket
 
-    # Get the local IP address
-    hostname = socket.gethostname()
-    local_ip = socket.gethostbyname(hostname)
-
-    print("🚀 Starting Recipe Search API Server...")
-    print(f"📡 API will be available at:")
-    print(f"   - Local: http://localhost:8000")
-    print(f"   - Network: http://{local_ip}:8000")
-    print(f"📚 API Documentation: http://localhost:8000/docs")
-    print(f"🔍 Health Check: http://localhost:8000/health")
-    print(f"📱 Mobile apps should use: http://{local_ip}:8000")
-
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")

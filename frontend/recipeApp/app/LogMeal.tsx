@@ -85,6 +85,7 @@ const LogMeal = () => {
   const [isAtlasSearching, setIsAtlasSearching] = useState<boolean>(false);
   const [atlasSearchModalVisible, setAtlasSearchModalVisible] = useState<boolean>(false);
   const [selectedMealForAtlasSearch, setSelectedMealForAtlasSearch] = useState<MealType | null>(null);
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState<boolean>(false);
 
   const mealTypes: MealType[] = ['breakfast', 'lunch', 'snacks', 'dinner'];
 
@@ -268,7 +269,7 @@ const LogMeal = () => {
 
     setIsAtlasSearching(true);
     try {
-      const response = await fetch(`http://10.20.2.95:8000/api/search/recipes?q=${encodeURIComponent(query)}&limit=10`);
+      const response = await fetch(`http://10.20.2.95:5000/logmeal/api/search/recipes?q=${encodeURIComponent(query)}&limit=10`);
       const data = await response.json();
 
       if (data.results) {
@@ -652,7 +653,11 @@ const LogMeal = () => {
       <View style={{ marginTop: 20, alignItems: 'center' }}>
         <Button
           mode="contained"
+          loading={isGeneratingPlan}
+          disabled={isGeneratingPlan}
           onPress={() => {
+            setIsGeneratingPlan(true);
+            
             // Transform meals data to match backend expectation
             const mealLog = {
               breakfast: meals.breakfast.items.map(item => item.name),
@@ -661,7 +666,7 @@ const LogMeal = () => {
               dinner: meals.dinner.items.map(item => item.name)
             };
 
-            fetch('http://10.20.2.95:5000/store_meal_log', {
+            fetch('http://10.20.2.95:5000/nudging/store_meal_log', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -674,27 +679,30 @@ const LogMeal = () => {
                 Alert.alert('Success', 'Meal log sent to backend!');
 
                 // Fetch insights
-                fetch('http://10.20.2.95:5000/insights')
+                fetch('http://10.20.2.95:5000/nudging/insights')
                   .then(response => response.json())
                   .then(insights => {
                     console.log('Insights:', insights);
+                    setIsGeneratingPlan(false);
                     // Navigate to Insights
                     router.push('/Insights' as any);
                   })
                   .catch(error => {
                     console.error('Error fetching insights:', error);
+                    setIsGeneratingPlan(false);
                     Alert.alert('Error', 'Failed to fetch insights.');
                   });
               })
               .catch(error => {
                 console.error('Error storing meal log:', error);
+                setIsGeneratingPlan(false);
                 Alert.alert('Error', 'Failed to send meal log.');
               });
           }}
           style={{ backgroundColor: '#FF6B00', borderRadius: 16, paddingHorizontal: 20 }}
           labelStyle={{ color: 'white', fontSize: 16 }}
         >
-          Get Your Nutrition Plan
+          {isGeneratingPlan ? 'Generating Plan...' : 'Get Your Nutrition Plan'}
         </Button>
       </View>
     </ScrollView>

@@ -1,38 +1,32 @@
 {
-  "name": "Anup Bhat",
-  "age": 41,
-  "height": 154,
-  "weight": 62,
-  "BMI": 26.14268848035082,
+  "name": "Hamdan Shaik",
+  "age": 22,
+  "height": 169,
+  "weight": 56,
+  "BMI": 19.607156612163443,
   "gender": "Male",
-  "location": "USA",
-  "health_conditions": [
-    "Anemia",
-    "Diabetes",
-    "Thyroid issues"
-  ],
-  "allergies": [
-    "Milk",
-    "Peanuts"
-  ],
+  "location": "India",
+  "health_conditions": [],
+  "allergies": [],
   "health_goals": [
     "Weight Loss",
-    "Improve Immunity",
-    "Increase Energy"
+    "Increase Energy",
+    "Muscle Gain"
   ],
-  "dietary_preferences": [
-    "Vegetarian"
-  ],
+  "dietary_preferences": [],
   "medication_details": [],
-  "budget_for_food": 2200,
+  "budget_for_food": 800,
   "occupation_type": [
-    "Retired",
-    "Self-employed"
+    "Student"
   ],
-  "work_schedule": "Flexible",
-  "access_to_kitchen": "Often",
+  "work_schedule": "9-5",
+  "access_to_kitchen": "Sometimes",
   "stress_level": "moderate",
   "meal_source": [
-    "Fast food"
+    "Home cooked",
+    "Fast food",
+    "Roadside",
+    "Restaurant",
+    "Delivery"
   ]
 }

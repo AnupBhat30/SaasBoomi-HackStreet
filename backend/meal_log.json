@@ -1,14 +1,8 @@
 {
-  "breakfast": [
-    "Iced tea",
-    "Hot tea (Garam Chai)",
-    "ice tea"
-  ],
+  "breakfast": [],
   "lunch": [
-    "curry"
+    "Dal makhani"
   ],
-  "snacks": [
-    "chips"
-  ],
+  "snacks": [],
   "dinner": []
 }

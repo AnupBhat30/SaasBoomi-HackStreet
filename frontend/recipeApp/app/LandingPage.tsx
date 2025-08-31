@@ -24,7 +24,7 @@ const LandingPage = ({ onGetStarted }: { onGetStarted?: () => void }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const slides = [
-    { image: require('../assets/images/landing1.jpeg'), text: 'Eat healthy, every single day.\nMake better choices with EWET!' },
+    { image: require('../assets/images/landing1.jpeg'), text: 'Eat healthy, every single day.\nMake better choices with Aahara!' },
     { image: require('../assets/images/landing2.jpeg'), text: 'Celebrate Indian food traditions.\nEnjoy heritage with every meal.' },
     { image: require('../assets/images/landing3.jpeg'), text: 'Strong families dine together.\nShare joy and good health at home.' },
   ];
@@ -44,7 +44,7 @@ const LandingPage = ({ onGetStarted }: { onGetStarted?: () => void }) => {
         {/* Header */}
         <View style={{ alignItems: 'center', marginTop: 40, marginBottom: 40 }}>
           <Text style={{ fontSize: 20, color: '#6B7280', fontWeight: '500' }}>Welcome to</Text>
-          <Text style={{ fontSize: 32, color: '#FF6B00', fontWeight: '700' }}>EWET</Text>
+          <Text style={{ fontSize: 32, color: '#FF6B00', fontWeight: '700' }}>Aahara</Text>
         </View>
         {/* Carousel */}
         <ScrollView

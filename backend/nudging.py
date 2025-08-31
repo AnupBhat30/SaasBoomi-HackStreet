@@ -8,16 +8,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-key = os.getenv("GEMINI_API_KEY")
+key = os.getenv("GEMINI_API_KEY_2")
 client = genai.Client(api_key=key)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-app = FastAPI()
+router = APIRouter()
 
 # Global variables
 mongoReasoning = []
@@ -347,7 +347,8 @@ if previous_insights:
             preview = []
             for k, v in previous_insights.items():
                 if isinstance(v, str):
-                    preview.append(f"{k}: {v[:80].replace('\n',' ')}")
+                    cleaned_v = v[:80].replace('\n', ' ')
+                    preview.append(f"{k}: {cleaned_v}")
                 elif isinstance(v, list):
                     preview.append(f"{k}: list(len={len(v)})")
                 else:
@@ -389,9 +390,11 @@ if digi_data:
                 combined_context_lines.append(f"DD:{k} -> {v}")
         elif isinstance(digi_data, list):
             for idx, item in enumerate(digi_data[:4]):
-                combined_context_lines.append(f"DD_ITEM[{idx+1}]: {str(item)[:140].replace('\n',' ')}")
+                item_str = str(item)[:140].replace('\n', ' ')
+                combined_context_lines.append(f"DD_ITEM[{idx+1}]: {item_str}")
         else:
-            combined_context_lines.append(f"DD_PREVIEW: {str(digi_data)[:180].replace('\n',' ')}")
+            preview_str = str(digi_data)[:180].replace('\n', ' ')
+            combined_context_lines.append(f"DD_PREVIEW: {preview_str}")
     except Exception:
         # fallback small preview
         combined_context_lines.append("DD_PREVIEW: (could not extract detailed preview)")
@@ -935,7 +938,7 @@ except Exception:
     mongo_swaps_preview = []
     meal_items_list = []
 
-@app.post("/store_user_info")
+@router.post("/store_user_info")
 async def store_user_info(data: UserInfoModel):
     try:
         print(f"__file__: {__file__}")
@@ -952,7 +955,7 @@ async def store_user_info(data: UserInfoModel):
 
 
 
-@app.post("/store_environment_context")
+@router.post("/store_environment_context")
 async def store_environment_context(data: EnvironmentContextModel):
     try:
         env_ctx = data.environmentContext
@@ -964,7 +967,7 @@ async def store_environment_context(data: EnvironmentContextModel):
         logger.error(f"Error storing environmentContext: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
-@app.post("/store_meal_log")
+@router.post("/store_meal_log")
 async def store_meal_log(data: MealLogModel):
     try:
         meal_log = data.mealLog
@@ -984,7 +987,7 @@ async def store_meal_log(data: MealLogModel):
         logger.error(f"Error storing mealLog: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
-@app.get("/insights")
+@router.get("/insights")
 async def get_insights():
     try:
         if os.path.exists("insights.json"):
@@ -997,7 +1000,7 @@ async def get_insights():
         raise HTTPException(status_code=500, detail="Internal server error")
 
 def generate_insights():
-    # Load necessary data
+    # Load fresh data each time
     userInfo = load_user_info()
     mealLog = load_meal_log()
     environmentContext = load_environment_context()
@@ -1006,14 +1009,190 @@ def generate_insights():
     mongo_db_alternatives_block()
     mongoReasoning = load_mongo_reasoning()
     
-    # For simplicity, use empty for others if not populated
+    # Load local food data for context
+    food_data = []
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "food_data.json"), "r", encoding="utf-8") as f:
+            food_data = json.load(f)
+    except Exception as e:
+        food_data = []
+
+    # Load digi_data.json for additional user/context signals (optional)
+    digi_data = {}
+    try:
+        digi_path = os.path.join(os.path.dirname(__file__), "digi_data.json")
+        if not os.path.exists(digi_path):
+            digi_path = os.path.join(os.getcwd(), "digi_data.json")
+        with open(digi_path, "r", encoding="utf-8") as f:
+            digi_data = json.load(f)
+    except Exception:
+        digi_data = {}
+
+    # Load any previously produced insights to incorporate as context (optional)
+    previous_insights = None
+    insights_path = os.path.join(os.path.dirname(__file__), "insights.json")
+    try:
+        if os.path.exists(insights_path):
+            with open(insights_path, "r", encoding="utf-8") as f:
+                previous_insights = json.load(f)
+    except Exception as e:
+        pass
+
+    # Build meal foods set
+    meal_foods = set()
+    for m in mealLog.values():
+        if isinstance(m, list):
+            for food in m:
+                if isinstance(food, str):
+                    meal_foods.add(food.lower())
+        elif isinstance(m, dict) and "foods" in m:
+            for food in m.get("foods", []):
+                if isinstance(food, str):
+                    meal_foods.add(food.lower())
+                elif isinstance(food, dict) and "name" in food:
+                    meal_foods.add(food["name"].lower())
+
+    # Build user-related search terms from profile
+    user_terms = set()
+    for key_name in ("health_goals", "health_conditions", "medication_details", "allergies"):
+        for t in userInfo.get(key_name, []) or []:
+            if isinstance(t, str):
+                user_terms.add(t.lower())
+
+    # Include BMI as a token if present
+    try:
+        bmi_val = int(userInfo.get("BMI", 0))
+        user_terms.add(str(bmi_val))
+    except Exception:
+        pass
+
+    # Find matching posts from food_data
+    matches = []
+    for post in food_data:
+        keywords = set([k.lower() for k in post.get("search_keywords", []) if isinstance(k, str)])
+        foods = set([f.lower() for f in post.get("foods", []) if isinstance(f, str)])
+        title = (post.get("post_title") or "")
+        description = (post.get("post_description") or post.get("description") or "")
+        title_l = title.lower()
+        desc_l = description.lower()
+
+        matched_terms = set()
+        match_sources = []
+
+        # direct overlaps with meal foods, keywords, and user terms
+        if meal_foods & (keywords | foods):
+            overlap = meal_foods & (keywords | foods)
+            matched_terms.update(overlap)
+            match_sources.append("meal_foods")
+
+        if user_terms & (keywords | foods):
+            overlap = user_terms & (keywords | foods)
+            matched_terms.update(overlap)
+            match_sources.append("user_profile_terms")
+
+        # presence in title/description
+        for term in (meal_foods | user_terms):
+            if term in title_l or term in desc_l:
+                matched_terms.add(term)
+                match_sources.append("title/description")
+
+        if not matched_terms:
+            continue
+
+        # Analyze recommendations and keep only relevant ones
+        relevant_recs = []
+        for rec in post.get("recommendations", []) or []:
+            r_text = (rec.get("text") or "").lower()
+            r_type = (rec.get("type") or "").lower()
+            reasons = []
+            if meal_foods & set(r_text.split()):
+                reasons.append("matches_meal_food_in_text")
+            if user_terms & set(r_text.split()):
+                reasons.append("matches_user_term_in_text")
+            if user_terms & set(r_type.split()):
+                reasons.append("matches_user_term_in_type")
+            if any(t in r_text for t in matched_terms) or any(t in r_type for t in matched_terms) or any(t in r_text for t in keywords):
+                reasons.append("contains_matched_term")
+
+            if reasons:
+                relevant_recs.append({
+                    "type": rec.get("type"),
+                    "text": rec.get("text"),
+                    "reasons": list(set(reasons))
+                })
+
+        matches.append({
+            "id": post.get("id"),
+            "title": title,
+            "matched_terms": sorted(matched_terms),
+            "match_sources": sorted(set(match_sources)),
+            "title_snippet": title[:160],
+            "description_snippet": description[:240],
+            "relevant_recommendations": relevant_recs,
+            "all_recommendations_count": len(post.get("recommendations", []) or [])
+        })
+
+    # Build context summary from matches
     context_summary = []
+    for m in matches[:6]:
+        recs = m.get('relevant_recommendations', [])
+        if recs:
+            hint = (recs[0].get('text') or '')[:120].replace('\n', ' ')
+            context_summary.append(f"{m.get('id')}: {m.get('title')} -> rec: {hint}")
+        else:
+            context_summary.append(f"{m.get('id')}: {m.get('title')} (no directly relevant recs)")
+
+    # Extract substitution/swap-type recommendations from the matched posts
     substitutions_from_posts = []
-    mongo_swaps_preview = []
+    for m in matches:
+        pid = m.get('id')
+        for rec in (m.get('relevant_recommendations') or []):
+            rtext = (rec.get('text') or '')
+            rtype = (rec.get('type') or '')
+            rt = rtext.lower()
+            rt_type = rtype.lower()
+            if any(k in rt_type for k in ('swap', 'substitute', 'replacement')) or any(k in rt for k in ('swap', 'replace', 'substitute', 'instead of', 'instead')):
+                substitutions_from_posts.append({
+                    'post_id': pid,
+                    'text': rtext.strip(),
+                    'type': rtype
+                })
+
+    if substitutions_from_posts:
+        for s in substitutions_from_posts[:6]:
+            context_summary.append(f"POST_SWAP: {s['post_id']} -> {s['text']}")
+
+    # Build digi_data and previous_insights context
+    if digi_data:
+        try:
+            keys = list(digi_data.keys())[:4]
+            context_summary.append("DIGI_DATA_KEYS: " + ", ".join(keys))
+            sample_key = keys[0] if keys else None
+            if sample_key:
+                sample_val = str(digi_data.get(sample_key))[:200].replace('\n', ' ')
+                context_summary.append(f"DIGI_SAMPLE: {sample_key} -> {sample_val}")
+        except Exception:
+            pass
+
+    if previous_insights:
+        try:
+            if isinstance(previous_insights, dict):
+                preview = []
+                for k, v in previous_insights.items():
+                    if isinstance(v, str):
+                        cleaned_v = v[:80].replace('\n', ' ')
+                        preview.append(f"{k}: {cleaned_v}")
+                    elif isinstance(v, list):
+                        preview.append(f"{k}: list(len={len(v)})")
+                    else:
+                        preview.append(f"{k}: {type(v).__name__}")
+                for p in preview[:3]:
+                    context_summary.append("PREV_INSIGHT: " + p)
+        except Exception:
+            pass
+
+    # Build meal_items_list from mealLog
     meal_items_list = []
-    combined_context_str = ""
-    
-    # Populate meal_items_list from mealLog
     for meal_type, data in mealLog.items():
         if isinstance(data, list):
             foods = data
@@ -1021,10 +1200,45 @@ def generate_insights():
             foods = data.get('foods', [])
         for it in foods:
             meal_items_list.append({"mealType": meal_type, "current": it})
-    
-    # The rest of the code...
-    
-    # The LLM generation code here
+
+    # Build previews for inclusion in the system instruction payload
+    if isinstance(digi_data, dict):
+        digi_preview = {k: (str(digi_data.get(k))[:180]) for k in list(digi_data.keys())[:3]}
+    elif digi_data:
+        digi_preview = {"_preview": str(digi_data)[:180]}
+    else:
+        digi_preview = {}
+
+    if isinstance(previous_insights, dict):
+        prev_preview = {k: (str(previous_insights.get(k))[:180]) for k in list(previous_insights.keys())[:3]}
+    else:
+        prev_preview = {}
+
+    # Build combined context
+    combined_context_lines = []
+    for i, line in enumerate(context_summary[:6]):
+        combined_context_lines.append(f"FD[{i+1}]: {line}")
+
+    if digi_data:
+        try:
+            if isinstance(digi_data, dict):
+                keys = list(digi_data.keys())[:4]
+                for k in keys:
+                    v = str(digi_data.get(k))[:140].replace('\n', ' ')
+                    combined_context_lines.append(f"DD:{k} -> {v}")
+            elif isinstance(digi_data, list):
+                for idx, item in enumerate(digi_data[:4]):
+                    item_str = str(item)[:140].replace('\n', ' ')
+                    combined_context_lines.append(f"DD_ITEM[{idx+1}]: {item_str}")
+            else:
+                preview_str = str(digi_data)[:180].replace('\n', ' ')
+                combined_context_lines.append(f"DD_PREVIEW: {preview_str}")
+        except Exception:
+            combined_context_lines.append("DD_PREVIEW: (could not extract detailed preview)")
+
+    combined_context_str = "CONTEXT_WEIGHTING: food_data=60,digi_data=40\n" + "\n".join(combined_context_lines)
+
+    # LLM generation
     system_instruction = (
         "You are a clinical-aware nutrition assistant. "
         "Use the provided userInfo, mealLog, mongoReasoning (from DB alternatives), and matched posts to analyze dietary choices and give concise, practical guidance. "
@@ -1037,27 +1251,24 @@ def generate_insights():
     )
 
     contents = (
-        "You have access to relevant posts from the food database for context (short list):\n"
+        "You have access to relevant posts from the food database and digi_data for context (weighted):\n"
+        + combined_context_str + "\n\n"
         + "\n".join(context_summary)
-        + "\n\nAlso consider user lifestyle factors (budget_for_food, occupation_type, work_schedule, access_to_kitchen, stress_level, meal_source) when choosing recommendations; tailor suggestions to be affordable, suitable for routine, and realistic given constraints.\n\n"
-        + "Using the system instruction (which includes userInfo, mealLog and mongoReasoning), produce a single JSON object (only JSON, no extra text) with the following keys:\n"
-        "1) key_insight (string): a concise 4-5 line insight that explicitly references the user's profile (conditions, goals, BMI) and the meals the user actually ate today; describe how those meals are likely to affect the user's health (positive or negative impacts), and note any immediate concerns or helpful patterns observed. Make it personal by addressing the user by their name, e.g., 'Mr. Sharma,'.\n"
+        + "\n\nAlso consider environmentContext (availability, season) when choosing recommendations; prefer suggestions that use available ingredients or are suitable for the user's location/season.\n\n"
+        + "Using the system instruction (which includes userInfo, mealLog and environmentContext), produce a single JSON object (only JSON, no extra text) with the following keys:\n"
+        "1) key_insight (string): a concise 4-5 line insight that explicitly references the user's profile (conditions, goals, BMI) and the meals the user actually ate today; describe how those meals are likely to affect the user's health (positive or negative impacts), and note any immediate concerns or helpful patterns observed.\n"
         "2) modern_approach (string): a 3-4 line suggestion using modern foods or methods to help the user's goals; use the recommendations and comments from the matched posts where applicable.\n"
         "3) heritage_alternative (string): a 3-4 line set of Indian/heritage alternatives (specific Indian foods or preparations) relevant to the user's goals, drawn from food_data.json recommendations where applicable.\n"
-        "4) simple_swap (array): an array of objects. Each object MUST have: mealType, current, alternative, reasoning (1-2 lines). Use the matched posts, substitutions_from_posts, and mongoReasoning to decide these swaps. The model should decide whether a swap is needed; if not, keep current as alternative and explain why.\n"
-        "5) general_summary (array): a 4-5 step action plan for the next logging (next day). Each step should be a short, encouraging, and realistic action that incorporates the simple_swap, modern_approach, and heritage_alternative where relevant. Subtly reference environmentContext (availability/season) and user lifestyle factors (budget_for_food/occupation_type/work_schedule/access_to_kitchen/stress_level/meal_source) in relevant steps — e.g., mention using an available ingredient for breakfast or choosing a warm monsoon-friendly lunch, or suggesting portable snacks for gig work — but keep it low-key. Include subtle suggestions for accessing the simple_swap alternatives based on occupation_type (e.g., 'as a student, you could prep this during study breaks'), work_schedule (e.g., 'for night shifts, keep this ready the evening before'), access_to_kitchen (e.g., 'if kitchen access is limited, look for pre-made versions at local stores'), and meal_source (e.g., 'when eating roadside, ask vendors for healthier preparation of this alternative'). Prioritize gentle, doable swaps rather than strict overhauls. Personalize each step by mentioning the user's name or relevant profile details.\n\n"
+        "4) simple_swap (array): an array of objects. Each object MUST have: mealType, current, alternative, reasoning (1-2 lines). Use the matched posts, substitutions_from_posts, and mongoReasoning to decide these swaps.\n"
+        "5) general_summary (array): a list of 4-5 short actionable strings the user should generally do for the next logging (next day), personalized using mealLog, userInfo, previous insights, digi_data.json context, and environmentContext. Each should be an encouraging, achievable step that uses the simple_swap, modern_approach, or heritage_alternative where relevant.\n\n"
         "When answering, heavily use the matched posts and the 'recommendations' fields from food_data.json, the digi_data.json content, and any previous insights in insights.json as context. If you cite specific suggested foods, ensure they are realistic Indian items.\n"
         "Return ONLY the JSON object. Keep each string reasonably short (approx 3-4 lines for string fields, 4-5 short strings for general_summary).\n\n"
-        "ADDITIONAL_CONTEXT: substitutions_from_posts: " + json.dumps(substitutions_from_posts[:6]) + "\n"
-        +"ENVIRONMENT_CONTEXT: " + json.dumps(environmentContext) + "\n"
-        +"MONGO_SWAPS_PREVIEW: " + json.dumps(mongo_swaps_preview[:12]) + "\n"
-        +"MEAL_ITEMS_LIST: " + json.dumps(meal_items_list[:40]) + "\n"
-        +"COMBINED_CONTEXT_PREVIEW:\n" + combined_context_str + "\n"
+        "SYSTEM_INSTRUCTION: " + json.dumps({"userInfo": userInfo, "mealLog": mealLog, "environmentContext": environmentContext, "digi_data_preview": digi_preview, "previous_insights": prev_preview}) + "\n\n"
     )
 
     try:
         response = client.models.generate_content(
-            model="gemini-1.5-flash",
+            model="models/gemini-2.5-flash",
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction
             ),
@@ -1065,6 +1276,7 @@ def generate_insights():
         )
 
         raw = (response.text or "")
+        logger.info("Insights generated successfully")
         insights = None
         try:
             insights = json.loads(raw)
@@ -1096,7 +1308,7 @@ def generate_insights():
                     })
             insights['simple_swap'] = new_swaps
 
-        # --- Post-process: ensure each simple_swap item has a hasRecipe boolean
+        # Post-process: ensure each simple_swap item has a hasRecipe boolean
         def _augment_simple_swap_with_has_recipe(obj):
             """Use the LLM to decide hasRecipe for each simple_swap entry, fallback to heuristics on failure."""
             try:
@@ -1119,17 +1331,17 @@ def generate_insights():
                     "is something that typically has a home-cookable recipe (hasRecipe=true) "
                     "or is usually a prepared/ordered-from-vendor/restaurant item (hasRecipe=false). "
                     "Return ONLY a JSON array of objects with fields: index (int), alternative (string), hasRecipe (true|false), reason (short string). "
-                    "Be concise. Use common-sense knowledge about Indian and street foods. See <attachments> above for file contents."
+                    "Be concise. Use common-sense knowledge about Indian and street foods."
                 )
 
-                contents = "\n".join([f"[{i}] {a}" for i, a in enumerate(alternatives)])
+                contents_prompt = "\n".join([f"[{i}] {a}" for i, a in enumerate(alternatives)])
 
                 model_result = None
                 try:
                     resp = client.models.generate_content(
-                        model="gemini-1.5-flash",
+                        model="models/gemini-2.5-flash",
                         config=types.GenerateContentConfig(system_instruction=system_prompt),
-                        contents=contents
+                        contents=contents_prompt
                     )
                     raw_text = resp.text or ""
                     try:
@@ -1209,204 +1421,10 @@ def generate_insights():
         out_path = os.path.join(os.path.dirname(__file__), "insights.json")
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(insights, f, ensure_ascii=False, indent=2)
-
+        
+        logger.info("Insights saved to insights.json")
         return insights
 
-    except Exception:
-        # suppress LLM errors from logging here
-        return {"error": "Failed to generate insights"}
-system_instruction = (
-    "You are a clinical-aware nutrition assistant. "
-    "Use the provided userInfo, mealLog, mongoReasoning (from DB alternatives), and matched posts to analyze dietary choices and give concise, practical guidance. "
-    "Do NOT give medical diagnoses; give food and behavior suggestions consistent with the user's goals and conditions. Consider environmentContext (availability, season) when proposing swaps or meal ideas. "
-    "Also consider user lifestyle factors: budget_for_food (prioritize affordable options), occupation_type (tailor to daily routine), work_schedule (align meal timings), access_to_kitchen (limit cooking-heavy suggestions if limited), stress_level (suggest comforting foods if high), meal_source (contextualize for food safety and preparation).\n\n"
-    "USER_INFO: " + json.dumps(userInfo) + "\n"
-    "MEAL_LOG: " + json.dumps(mealLog) + "\n"
-    "ENVIRONMENT_CONTEXT: " + json.dumps(environmentContext) + "\n"
-    "MONGO_REASONING: " + json.dumps(mongoReasoning) + "\n"
-)
-
-# Compose prompt contents; include post substitutions and compact context
-contents = (
-    "You have access to relevant posts from the food database for context (short list):\n"
-    + "\n".join(context_summary)
-    + "\n\nAlso consider user lifestyle factors (budget_for_food, occupation_type, work_schedule, access_to_kitchen, stress_level, meal_source) when choosing recommendations; tailor suggestions to be affordable, suitable for routine, and realistic given constraints.\n\n"
-    + "Using the system instruction (which includes userInfo, mealLog and mongoReasoning), produce a single JSON object (only JSON, no extra text) with the following keys:\n"
-    "1) key_insight (string): a concise 4-5 line insight that explicitly references the user's profile (conditions, goals, BMI) and the meals the user actually ate today; describe how those meals are likely to affect the user's health (positive or negative impacts), and note any immediate concerns or helpful patterns observed. Make it personal by addressing the user by their name, e.g., 'Mr. Sharma,'.\n"
-    "2) modern_approach (string): a 3-4 line suggestion using modern foods or methods to help the user's goals; use the recommendations and comments from the matched posts where applicable.\n"
-    "3) heritage_alternative (string): a 3-4 line set of Indian/heritage alternatives (specific Indian foods or preparations) relevant to the user's goals, drawn from food_data.json recommendations where applicable.\n"
-    "4) simple_swap (array): an array of objects. Each object MUST have: mealType, current, alternative, reasoning (1-2 lines). Use the matched posts, substitutions_from_posts, and mongoReasoning to decide these swaps. The model should decide whether a swap is needed; if not, keep current as alternative and explain why.\n"
-    "5) general_summary (array): a 4-5 step action plan for the next logging (next day). Each step should be a short, encouraging, and realistic action that incorporates the simple_swap, modern_approach, and heritage_alternative where relevant. Subtly reference environmentContext (availability/season) and user lifestyle factors (budget_for_food/occupation_type/work_schedule/access_to_kitchen/stress_level/meal_source) in relevant steps — e.g., mention using an available ingredient for breakfast or choosing a warm monsoon-friendly lunch, or suggesting portable snacks for gig work — but keep it low-key. Include subtle suggestions for accessing the simple_swap alternatives based on occupation_type (e.g., 'as a student, you could prep this during study breaks'), work_schedule (e.g., 'for night shifts, keep this ready the evening before'), access_to_kitchen (e.g., 'if kitchen access is limited, look for pre-made versions at local stores'), and meal_source (e.g., 'when eating roadside, ask vendors for healthier preparation of this alternative'). Prioritize gentle, doable swaps rather than strict overhauls. Personalize each step by mentioning the user's name or relevant profile details.\n\n"
-    "When answering, heavily use the matched posts and the 'recommendations' fields from food_data.json, the digi_data.json content, and any previous insights in insights.json as context. If you cite specific suggested foods, ensure they are realistic Indian items.\n"
-    "Return ONLY the JSON object. Keep each string reasonably short (approx 3-4 lines for string fields, 4-5 short strings for general_summary).\n\n"
-    "ADDITIONAL_CONTEXT: substitutions_from_posts: " + json.dumps(substitutions_from_posts[:6]) + "\n"
-    +"ENVIRONMENT_CONTEXT: " + json.dumps(environmentContext) + "\n"
-    +"MONGO_SWAPS_PREVIEW: " + json.dumps(mongo_swaps_preview[:12]) + "\n"
-    +"MEAL_ITEMS_LIST: " + json.dumps(meal_items_list[:40]) + "\n"
-    +"COMBINED_CONTEXT_PREVIEW:\n" + combined_context_str + "\n"
-)
-
-try:
-    response = client.models.generate_content(
-        model="gemini-1.5-flash",
-        config=types.GenerateContentConfig(
-            system_instruction=system_instruction
-        ),
-        contents=contents
-    )
-
-    raw = (response.text or "")
-    print("Raw LLM response:", raw)  # Debug print
-    insights = None
-    try:
-        insights = json.loads(raw)
-        print("Parsed insights:", insights)  # Debug print
     except Exception as e:
-        print("JSON parse error:", e)  # Debug print
-        import re
-        m = re.search(r"(\{.*\})", raw, re.S)
-        if m:
-            try:
-                insights = json.loads(m.group(1))
-                print("Parsed from regex:", insights)  # Debug print
-            except Exception as e2:
-                print("Regex parse error:", e2)  # Debug print
-                insights = {"error": "could not parse extracted JSON", "raw": raw}
-        else:
-            print("No JSON found in response")  # Debug print
-            insights = {"error": "no json found in model output", "raw": raw}
-
-    # Post-process simple_swap to ensure one entry per food item
-    if insights and isinstance(insights, dict) and 'simple_swap' in insights and isinstance(insights['simple_swap'], list):
-        existing_swaps = {(s.get('mealType'), s.get('current')): s for s in insights['simple_swap']}
-        new_swaps = []
-        for item in meal_items_list:
-            key = (item['mealType'], item['current'])
-            if key in existing_swaps:
-                new_swaps.append(existing_swaps[key])
-            else:
-                new_swaps.append({
-                    'mealType': item['mealType'],
-                    'current': item['current'],
-                    'alternative': item['current'],
-                    'reasoning': 'No swap needed; this food aligns well with your goals.'
-                })
-        insights['simple_swap'] = new_swaps
-
-    # --- Post-process: ensure each simple_swap item has a hasRecipe boolean
-    def _augment_simple_swap_with_has_recipe(obj):
-        """Use the LLM to decide hasRecipe for each simple_swap entry, fallback to heuristics on failure."""
-        try:
-            swaps = obj.get('simple_swap') if isinstance(obj, dict) else None
-            if not swaps or not isinstance(swaps, list):
-                return
-
-            # Prepare alternatives list for the model
-            alternatives = []
-            for s in swaps:
-                alt = s.get('alternative') if isinstance(s, dict) else None
-                if alt is None:
-                    alternatives.append("")
-                else:
-                    alternatives.append(str(alt))
-
-            # LLM prompt: ask to return a JSON array with index and hasRecipe boolean
-            system_prompt = (
-                "You are a utility that classifies whether a suggested food alternative "
-                "is something that typically has a home-cookable recipe (hasRecipe=true) "
-                "or is usually a prepared/ordered-from-vendor/restaurant item (hasRecipe=false). "
-                "Return ONLY a JSON array of objects with fields: index (int), alternative (string), hasRecipe (true|false), reason (short string). "
-                "Be concise. Use common-sense knowledge about Indian and street foods. See <attachments> above for file contents."
-            )
-
-            contents = "\n".join([f"[{i}] {a}" for i, a in enumerate(alternatives)])
-
-            model_result = None
-            try:
-                resp = client.models.generate_content(
-                    model="gemini-1.5-flash",
-                    config=types.GenerateContentConfig(system_instruction=system_prompt),
-                    contents=contents
-                )
-                raw_text = resp.text or ""
-                try:
-                    model_result = json.loads(raw_text)
-                except Exception:
-                    import re
-                    m = re.search(r"(\[\s*\{.*\}\s*\])", raw_text, re.S)
-                    if m:
-                        try:
-                            model_result = json.loads(m.group(1))
-                        except Exception:
-                            model_result = None
-            except Exception:
-                model_result = None
-
-            # Fallback heuristics in case LLM fails or returns unexpected output
-            restaurant_indicators = [
-                'order', 'ordered', 'restaurant', 'stall', 'vendor', 'takeaway', 'delivery',
-                'zomato', 'swiggy', 'street', 'food court', 'fast food', 'canteen', 'mess'
-            ]
-            home_keywords = [
-                'dal', 'sabzi', 'curry', 'roti', 'paratha', 'rice', 'khichdi', 'idli', 'dosa',
-                'sandwich', 'omelette', 'egg', 'paneer', 'salad', 'smoothie', 'porridge',
-                'upma', 'poha', 'pulao', 'kheer', 'bhaji', 'stew', 'stir fry', 'lentil',
-                'beans', 'vegetable', 'sabji', 'chapati', 'soup', 'pickle'
-            ]
-
-            if isinstance(model_result, list) and all(isinstance(i, dict) for i in model_result):
-                # map results by index
-                for item in model_result:
-                    try:
-                        idx = int(item.get('index'))
-                        if 0 <= idx < len(swaps):
-                            swaps[idx]['hasRecipe'] = bool(item.get('hasRecipe'))
-                            # preserve a short reason if provided
-                            if 'reason' in item and item.get('reason'):
-                                swaps[idx]['hasRecipeReason'] = str(item.get('reason'))
-                            # Generate tags if hasRecipe is true
-                            if swaps[idx]['hasRecipe']:
-                                alt = swaps[idx].get('alternative', '')
-                                swaps[idx]['tags'] = generate_tags(alt)
-                    except Exception:
-                        continue
-            else:
-                # apply heuristics per alternative
-                for i, s in enumerate(swaps):
-                    try:
-                        alt = s.get('alternative') or ''
-                        alt_l = str(alt).lower()
-                        has_recipe = True
-                        if any(ind in alt_l for ind in restaurant_indicators):
-                            has_recipe = False
-                        elif any(hk in alt_l for hk in home_keywords):
-                            has_recipe = True
-                        else:
-                            tokens = [t for t in alt_l.split() if t]
-                            if len(tokens) <= 1:
-                                single = tokens[0] if tokens else ''
-                                has_recipe = bool(single and any(k in single for k in home_keywords))
-                            else:
-                                has_recipe = True
-                        s['hasRecipe'] = has_recipe
-                        # Generate tags if hasRecipe is true
-                        if s['hasRecipe']:
-                            s['tags'] = generate_tags(alt)
-                    except Exception:
-                        s['hasRecipe'] = True
-                        # Generate tags since defaulting to hasRecipe=True
-                        alt = s.get('alternative', '')
-                        s['tags'] = generate_tags(alt)
-        except Exception:
-            # don't let augmentation break the main flow
-            return
-
-    _augment_simple_swap_with_has_recipe(insights)
-
-    out_path = os.path.join(os.path.dirname(__file__), "insights.json")
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(insights, f, ensure_ascii=False, indent=2)
-
-except Exception:
-    # suppress LLM errors from logging here
-    pass
+        logger.error(f"Error generating insights: {e}")
+        return {"error": "Failed to generate insights"}

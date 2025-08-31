@@ -113,15 +113,21 @@ const HomePage = () => {
       route: '/LogMeal'
     },
     {
+      title: 'Family',
+      description: 'Manage family member profiles and track everyone\'s health goals together.',
+      image: require('../assets/images/disc3.jpeg'), // Using existing image
+      route: '/Family'
+    },
+    {
       title: 'Insights',
       description: 'Visualize your progress with simple charts, trends, and personalized feedback.',
-      image: require('../assets/images/disc3.jpeg'), // Using existing image
+      image: require('../assets/images/disc4.jpeg'), // Using existing image
       route: '/Insights'
     },
     {
       title: 'Recipes for You',
       description: 'Discover healthy, heritage-inspired recipes made just for your goals.',
-      image: require('../assets/images/disc4.jpeg'), // Using existing image
+      image: require('../assets/images/disc1.jpeg'), // Using existing image
       route: '/Recipes' // Assuming route
     }
   ];
@@ -157,7 +163,7 @@ const HomePage = () => {
           >
             <MaterialIcons name="person" size={32} color="#FFF" />
           </TouchableOpacity>
-          <Text style={styles.appTitle}>EWET</Text>
+          <Text style={styles.appTitle}>Aahara</Text>
           <TouchableOpacity style={styles.notificationButton}>
             <Ionicons name="notifications" size={28} color="#1F2933" />
             {/* Add dot if unread */}

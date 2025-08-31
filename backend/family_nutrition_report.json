@@ -1,87 +1,101 @@
 {
-  "health_snapshot": "The family exhibits a range of health concerns, including vitamin D deficiency, anemia, hypertension, and prediabetes.  Current dietary habits are high in processed foods and low in nutrient-rich options, contributing to these conditions and hindering weight management goals.",
-  "today_s_focus": "Increase fruit and vegetable intake and reduce processed food consumption.",
+  "health_snapshot": "The family exhibits a concerning reliance on processed and fast foods, leading to several health challenges. Priya is underweight with significant nutrient deficiencies (Vitamin D, Anemia) and high stress, exacerbated by limited kitchen access. Rajesh and Sunita are overweight, with Rajesh managing hypertension and Sunita pre-diabetic, indicating a critical need for improved dietary habits to manage blood pressure and blood sugar, and support weight loss. The current meal patterns are high in unhealthy fats, sugar, and sodium, and low in essential nutrients, fiber, and whole foods.",
+  "today_s_focus": "Transitioning from processed/fast food to nutrient-dense, home-cooked meals, with a primary emphasis on managing blood sugar and blood pressure, while addressing individual nutrient deficiencies.",
   "condition_specific_advice": {
-    "Vitamin D deficiency": "Increase sun exposure (safely) and consume vitamin D-rich foods like milk and eggs. Consider a vitamin D supplement after consulting a doctor.",
-    "Anemia": "Incorporate iron-rich foods like spinach, lentils, and beans into the diet. Pair with Vitamin C-rich foods to enhance iron absorption.",
-    "Hypertension": "Reduce sodium intake, increase potassium-rich foods (bananas, potatoes), and focus on a diet rich in fruits, vegetables, and whole grains.",
-    "Prediabetes": "Prioritize whole grains, lean proteins, and plenty of non-starchy vegetables. Control portion sizes and limit added sugars and refined carbohydrates."
+    "Vitamin D deficiency": "Priya should aim for 10-15 minutes of daily sun exposure (early morning or late afternoon). Incorporate Vitamin D rich foods like fortified milk/curd and mushrooms. Consider a supplement under medical guidance.",
+    "Anemia": "Priya should increase iron-rich foods such as lentils (dal), spinach, and roasted chana. Pair these with Vitamin C rich foods like lemon juice (added to meals) or seasonal fruits to enhance iron absorption. Avoid tea/coffee immediately after iron-rich meals.",
+    "Hypertension": "Rajesh should significantly reduce sodium intake by limiting processed foods, chips, and instant noodles. Focus on increasing potassium-rich foods like bananas, seasonal vegetables, dal, curd, and buttermilk. Prioritize whole grains, lean protein, and plenty of vegetables, while minimizing fried foods and excessive cooking oil.",
+    "Pre-diabetic": "Sunita should prioritize complex carbohydrates with high fiber, such as multigrain atta for chapati and parboiled rice. Control carbohydrate portion sizes and include lean protein and healthy fats in every meal to help stabilize blood sugar. Avoid sugary drinks and refined sugars, and aim for regular, balanced meals."
   },
   "coordinated_plan": {
     "nutritional_targets": {
-      "calories_target": "Priya: 1800-2000, Rajesh: 1800-2200, Sunita: 1600-1800",
-      "protein_target": "Priya: 50g, Rajesh: 70g, Sunita: 60g",
+      "calories_target": "Priya: 1800-2000 kcal; Rajesh: 1800-2000 kcal; Sunita: 1600-1800 kcal (Adjust based on activity levels and progress)",
+      "protein_target": "50-70g daily for adults, focusing on plant-based sources like dal, curd, and paneer.",
       "key_nutrients": [
         "Iron",
         "Vitamin D",
+        "Vitamin C",
         "Fiber",
-        "Potassium"
+        "Potassium",
+        "Magnesium",
+        "B vitamins",
+        "Calcium"
       ]
     },
     "meal_plan": {
       "breakfast": {
-        "meal_name": "Poha with nuts and seeds",
+        "meal_name": "Poha with Vegetables and Curd",
         "ingredients": [
           "Poha",
-          "Nuts (almonds, cashews)",
-          "Seeds (flax, chia)",
-          "Milk/Curd"
+          "Seasonal vegetables (peas, carrots, onions)",
+          "Basic spices (turmeric, mustard seeds, curry leaves)",
+          "Minimal cooking oil",
+          "Lemon juice",
+          "Side of curd"
         ],
-        "nutritional_highlights": "Provides complex carbohydrates, healthy fats, protein, and essential nutrients.",
-        "prep_time": "10 minutes",
-        "calories": "250"
+        "nutritional_highlights": "Complex carbohydrates, fiber, vitamins, probiotics (from curd), low glycemic index, good source of iron. A healthier alternative to instant noodles.",
+        "prep_time": "15-20 minutes",
+        "calories": "~250-300 kcal"
       },
       "lunch": {
-        "meal_name": "Dal, brown rice, and seasonal vegetables",
+        "meal_name": "Balanced Thali (Dal, Multigrain Chapati, Seasonal Vegetable Sabzi, Buttermilk)",
         "ingredients": [
-          "Dal",
-          "Brown rice",
-          "Seasonal vegetables (e.g., spinach, bottle gourd)",
-          "Spices"
+          "Dal (e.g., Moong or Arhar)",
+          "Multigrain chapati (1-2)",
+          "Seasonal vegetable sabzi (e.g., spinach, gourd, beans)",
+          "Basic spices",
+          "Minimal cooking oil",
+          "Buttermilk"
         ],
-        "nutritional_highlights": "High in protein, fiber, and essential vitamins and minerals.",
-        "prep_time": "30 minutes",
-        "calories": "400"
+        "nutritional_highlights": "High fiber, complex carbohydrates, plant-based protein, essential vitamins and minerals. Helps manage blood sugar and blood pressure. Multigrain atta is beneficial for diabetics.",
+        "prep_time": "30-40 minutes",
+        "calories": "~400-500 kcal"
       },
       "dinner": {
-        "meal_name": "Vegetable Chapati with curd and salad",
+        "meal_name": "Vegetable Khichdi or Light Dal-Sabzi with Parboiled Rice",
         "ingredients": [
-          "Chapati flour",
-          "Mixed vegetables",
-          "Curd",
-          "Salad (cucumber, tomato)",
-          "Spices"
+          "Parboiled sella rice",
+          "Moong dal",
+          "Seasonal vegetables (carrots, peas, beans)",
+          "Basic spices",
+          "Minimal cooking oil",
+          "Optional: small side of curd"
         ],
-        "nutritional_highlights": "Good source of fiber, probiotics, and vitamins.",
-        "prep_time": "35 minutes",
-        "calories": "350"
+        "nutritional_highlights": "Easy to digest, good source of protein and fiber. Parboiled rice has a lower glycemic index, making it a better choice for blood sugar management. A healthier alternative to instant noodles or food court meals.",
+        "prep_time": "25-35 minutes",
+        "calories": "~350-450 kcal"
       },
       "snacks": [
-        "Roasted chana",
-        "Banana",
-        "Buttermilk"
+        "Roasted chana (a handful)",
+        "Banana (1)",
+        "Curd or Buttermilk",
+        "Seasonal fruit (e.g., guava, apple)",
+        "Small bowl of sprouts (if easily prepared)"
       ]
     },
     "shopping_list": [
       "Poha",
-      "Nuts",
-      "Seeds",
-      "Milk/Curd",
-      "Dal",
-      "Brown rice",
-      "Seasonal vegetables",
-      "Chapati flour",
-      "Spices",
-      "Cucumber",
-      "Tomato",
+      "Multigrain chapati flour (or whole wheat atta)",
+      "Parboiled sella rice",
+      "Variety of dals (moong, masoor, arhar)",
+      "Seasonal vegetables (spinach, carrots, peas, tomatoes, onions, gourds, beans)",
       "Bananas",
+      "Curd",
+      "Buttermilk",
       "Roasted chana",
-      "Buttermilk"
+      "Basic spices (turmeric, cumin, coriander, chili powder, mustard seeds, curry leaves)",
+      "Cooking oil (minimal use)",
+      "Lemon",
+      "Paneer (for protein and Vitamin D, especially for Priya)"
     ],
     "prep_tips": [
-      "Prepare large batches of dal and rice on weekends for quick meals during the week.",
-      "Involve the family in meal preparation to make it more enjoyable and sustainable.",
-      "Utilize the community kitchen or senior living community kitchen for support when needed."
+      "**Batch Cooking:** Prepare larger quantities of dal or vegetable sabzi that can be refrigerated for 2-3 days, reducing daily cooking time.",
+      "**Smart Snacking:** Keep healthy snacks like roasted chana, bananas, and curd readily available to prevent reaching for processed options.",
+      "**Priya's Packed Meals:** Encourage Priya to pack a healthy lunch from home (e.g., leftover dal-sabzi with chapati or a portion of poha/upma) to avoid fast food, utilizing her limited kitchen access for preparation.",
+      "**Hydration:** Prioritize water intake throughout the day over cold drinks. Buttermilk is an excellent hydrating and probiotic-rich option.",
+      "**Fiber Boost:** Incorporate finely chopped vegetables into poha, upma, dal, and even chapati dough to increase fiber intake for the entire family.",
+      "**Flavor with Spices:** Utilize a variety of Indian spices (turmeric, ginger, garlic, cumin, coriander) to enhance flavor without relying on excessive salt or oil.",
+      "**Multigrain for Rotis:** Consistently use multigrain atta for chapatis to benefit from increased fiber and lower glycemic index, especially for Sunita and Rajesh."
     ]
   }
 }
